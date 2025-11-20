@@ -69,12 +69,6 @@ Creates `app/routes/user/profile/page.py`.
 
     Generate Pydantic models for data validation
 
--   :material-information: [**info**](commands.md#info)
-
-    ---
-
-    Show project information and route count
-
 </div>
 
 ## CLI Options
