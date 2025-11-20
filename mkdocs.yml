@@ -108,6 +108,7 @@ nav:
     - deployment/index.md
     - Production: deployment/production.md
     - Docker: deployment/docker.md
+  - Changelog: changelog.md
   - Contributing: contributing.md
 
 # Extra
