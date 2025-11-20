@@ -1446,6 +1446,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#db" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        db
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="db">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#version" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1756,6 +1795,8 @@
       
         
       
+        
+      
     
     
     
@@ -1909,6 +1950,34 @@
     
   
     Caching
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/database/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database Integration
   
 
     
@@ -2355,6 +2424,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#db" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        db
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="db">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available Commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#version" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2585,14 +2693,72 @@
 <a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>        <span class="c1"># Automatic validation with Pydantic</span>
 <a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">dict</span><span class="p">()}</span>
 </code></pre></div>
+<h2 id="db">db<a class="headerlink" href="#db" title="Permanent link">&para;</a></h2>
+<p>Database management commands for migrations and versioning.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>reroute<span class="w"> </span>db<span class="w"> </span><span class="o">[</span>COMMAND<span class="o">]</span>
+</code></pre></div>
+<h3 id="available-commands">Available Commands<a class="headerlink" href="#available-commands" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>init</code></td>
+<td>Initialize database migrations</td>
+</tr>
+<tr>
+<td><code>migrate</code></td>
+<td>Create a new migration</td>
+</tr>
+<tr>
+<td><code>upgrade</code></td>
+<td>Apply all pending migrations</td>
+</tr>
+<tr>
+<td><code>downgrade</code></td>
+<td>Rollback migrations</td>
+</tr>
+<tr>
+<td><code>current</code></td>
+<td>Show current migration version</td>
+</tr>
+<tr>
+<td><code>history</code></td>
+<td>Show migration history</td>
+</tr>
+</tbody>
+</table>
+<h3 id="examples_3">Examples<a class="headerlink" href="#examples_3" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Initialize database</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>reroute<span class="w"> </span>db<span class="w"> </span>init
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># Create a migration</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>reroute<span class="w"> </span>db<span class="w"> </span>migrate<span class="w"> </span><span class="s2">&quot;Add users table&quot;</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="c1"># Apply migrations</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>reroute<span class="w"> </span>db<span class="w"> </span>upgrade
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="c1"># Check current version</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>reroute<span class="w"> </span>db<span class="w"> </span>current
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="c1"># View migration history</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>reroute<span class="w"> </span>db<span class="w"> </span><span class="nb">history</span>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="c1"># Rollback last migration</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>reroute<span class="w"> </span>db<span class="w"> </span>downgrade
+</code></pre></div>
 <h2 id="version">version<a class="headerlink" href="#version" title="Permanent link">&para;</a></h2>
 <p>Show REROUTE version.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>reroute<span class="w"> </span>--version
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>reroute<span class="w"> </span>--version
 </code></pre></div>
 <h2 id="help">help<a class="headerlink" href="#help" title="Permanent link">&para;</a></h2>
 <p>Show help for commands.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>reroute<span class="w"> </span>--help
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>reroute<span class="w"> </span>&lt;command&gt;<span class="w"> </span>--help
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>reroute<span class="w"> </span>--help
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>reroute<span class="w"> </span>&lt;command&gt;<span class="w"> </span>--help
 </code></pre></div>
 
 
