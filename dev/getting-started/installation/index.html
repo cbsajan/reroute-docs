@@ -406,6 +406,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../../changelog/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Changelog
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../../contributing/" class="md-tabs__link">
         
   
@@ -662,17 +681,6 @@
     <span class="md-ellipsis">
       
         Framework-Specific Installation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#complete-installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Complete Installation
       
     </span>
   </a>
@@ -1917,6 +1925,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../contributing/" class="md-nav__link">
         
   
@@ -1990,17 +2025,6 @@
     <span class="md-ellipsis">
       
         Framework-Specific Installation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#complete-installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Complete Installation
       
     </span>
   </a>
@@ -2084,19 +2108,29 @@
 
 <h1 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h1>
 <p>Learn how to install REROUTE in your Python project.</p>
+<div class="admonition info">
+<p class="admonition-title">Current Version</p>
+<p><strong>Latest Release</strong>: v0.1.2
+<strong>Release Date</strong>: 20-11-2025
+<strong>Python Support</strong>: 3.8, 3.9, 3.10, 3.11, 3.12</p>
+</div>
 <h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Python</strong>: 3.8 or higher</li>
-<li><strong>Framework</strong>: FastAPI, Flask, or Django (at least one)</li>
+<li><strong>Framework</strong>: FastAPI or Flask (at least one)</li>
 </ul>
 <h2 id="basic-installation">Basic Installation<a class="headerlink" href="#basic-installation" title="Permanent link">&para;</a></h2>
 <p>Install REROUTE using pip:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>reroute
 </code></pre></div>
 <p>This installs the core REROUTE package without framework dependencies.</p>
+<div class="admonition tip">
+<p class="admonition-title">Lazy Loading</p>
+<p>Since v0.1.2, REROUTE uses lazy imports for framework adapters. You only need to install the framework you're actually using!</p>
+</div>
 <h2 id="framework-specific-installation">Framework-Specific Installation<a class="headerlink" href="#framework-specific-installation" title="Permanent link">&para;</a></h2>
 <p>Install REROUTE with support for your specific framework:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">FastAPI</label><label for="__tabbed_1_2">Flask</label><label for="__tabbed_1_3">Django</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">FastAPI</label><label for="__tabbed_1_2">Flask</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>reroute<span class="o">[</span>fastapi<span class="o">]</span>
@@ -2108,44 +2142,41 @@
 </code></pre></div>
 <p>This includes Flask and its dependencies.</p>
 </div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span>reroute<span class="o">[</span>django<span class="o">]</span>
-</code></pre></div>
-<p>This includes Django support (coming soon).</p>
 </div>
 </div>
-</div>
-<h2 id="complete-installation">Complete Installation<a class="headerlink" href="#complete-installation" title="Permanent link">&para;</a></h2>
-<p>To install REROUTE with all framework adapters:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>pip<span class="w"> </span>install<span class="w"> </span>reroute<span class="o">[</span>all<span class="o">]</span>
-</code></pre></div>
 <h2 id="development-installation">Development Installation<a class="headerlink" href="#development-installation" title="Permanent link">&para;</a></h2>
 <p>For contributing to REROUTE:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Clone the repository</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/cbsajan/reroute.git
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nb">cd</span><span class="w"> </span>reroute
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># Create virtual environment</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="nb">source</span><span class="w"> </span>venv/bin/activate<span class="w">  </span><span class="c1"># On Windows: venv\Scripts\activate</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="c1"># Install in editable mode with dev dependencies</span>
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Clone the repository</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/cbsajan/reroute.git
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nb">cd</span><span class="w"> </span>reroute
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># Create virtual environment</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="nb">source</span><span class="w"> </span>venv/bin/activate<span class="w">  </span><span class="c1"># On Windows: venv\Scripts\activate</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="c1"># Install in editable mode with dev dependencies</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
 </code></pre></div>
 <h2 id="verify-installation">Verify Installation<a class="headerlink" href="#verify-installation" title="Permanent link">&para;</a></h2>
 <p>Check that REROUTE is installed correctly:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import reroute; print(reroute.__version__)&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import reroute; print(reroute.__version__)&quot;</span>
 </code></pre></div>
 <p>Or use the CLI:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>reroute<span class="w"> </span>--version
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>reroute<span class="w"> </span>--version
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># Output: REROUTE CLI v0.1.2</span>
 </code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Automatic Update Notifications</p>
+<p>Since v0.1.2, REROUTE automatically checks for updates when you run <code>reroute --version</code> or any CLI command. You'll see a notification if a newer version is available!</p>
+</div>
 <h2 id="update-reroute">Update REROUTE<a class="headerlink" href="#update-reroute" title="Permanent link">&para;</a></h2>
 <p>To update to the latest version:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>reroute
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>reroute
 </code></pre></div>
+<p>REROUTE will notify you when updates are available through the CLI.</p>
 <h2 id="uninstall">Uninstall<a class="headerlink" href="#uninstall" title="Permanent link">&para;</a></h2>
 <p>To remove REROUTE:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>pip<span class="w"> </span>uninstall<span class="w"> </span>reroute
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>pip<span class="w"> </span>uninstall<span class="w"> </span>reroute
 </code></pre></div>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <ul>
