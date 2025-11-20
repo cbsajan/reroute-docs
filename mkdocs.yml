@@ -1,0 +1,121 @@
+site_name: REROUTE Documentation
+site_url: https://cbsajan.github.io/reroute-docs
+site_description: Modern file-based routing for Python backends
+site_author: C B Sajan
+repo_url: https://github.com/cbsajan/reroute
+repo_name: cbsajan/reroute
+
+theme:
+  name: material
+  palette:
+    # Light mode
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - navigation.tracking
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+
+  icon:
+    repo: fontawesome/brands/github
+
+# Extensions
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
+# Plugins
+plugins:
+  - search:
+      lang:
+        - en
+  - tags
+
+# Page tree
+nav:
+  - Home: index.md
+  - Getting Started:
+    - getting-started/index.md
+    - Installation: getting-started/installation.md
+    - Quick Start: getting-started/quickstart.md
+    - First Route: getting-started/first-route.md
+  - Guides:
+    - guides/index.md
+    - File-based Routing: guides/file-routing.md
+    - Class-based Routes: guides/class-routes.md
+    - Decorators: guides/decorators.md
+    - Lifecycle Hooks: guides/lifecycle-hooks.md
+    - Configuration: guides/configuration.md
+    - CORS Setup: guides/cors.md
+  - Adapters:
+    - adapters/index.md
+    - FastAPI: adapters/fastapi.md
+    - Flask: adapters/flask.md
+    - Django: adapters/django.md
+  - CLI:
+    - cli/index.md
+    - Commands: cli/commands.md
+    - Scaffolding: cli/scaffolding.md
+  - API Reference:
+    - api/index.md
+    - RouteBase: api/routebase.md
+    - Parameters: api/params.md
+    - Decorators: api/decorators.md
+    - Config: api/config.md
+    - Adapters: api/adapters.md
+  - Examples:
+    - examples/index.md
+    - Basic CRUD: examples/basic-crud.md
+    - Authentication: examples/authentication.md
+    - Rate Limiting: examples/rate-limiting.md
+    - Caching: examples/caching.md
+  - Deployment:
+    - deployment/index.md
+    - Production: deployment/production.md
+    - Docker: deployment/docker.md
+  - Contributing: contributing.md
+
+# Extra
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/cbsajan/reroute
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/reroute
+  version:
+    provider: mike
