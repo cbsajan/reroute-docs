@@ -168,20 +168,6 @@ class UsersRoutes(RouteBase):
         return {"user": user.dict()}
 ```
 
-## info
-
-Show project information.
-
-```bash
-reroute info
-```
-
-Displays:
-- REROUTE version
-- Project structure
-- Route count
-- Configuration
-
 ## version
 
 Show REROUTE version.
