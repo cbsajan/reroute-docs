@@ -168,6 +168,47 @@ class UsersRoutes(RouteBase):
         return {"user": user.dict()}
 ```
 
+## db
+
+Database management commands for migrations and versioning.
+
+```bash
+reroute db [COMMAND]
+```
+
+### Available Commands
+
+| Command | Description |
+|---------|-------------|
+| `init` | Initialize database migrations |
+| `migrate` | Create a new migration |
+| `upgrade` | Apply all pending migrations |
+| `downgrade` | Rollback migrations |
+| `current` | Show current migration version |
+| `history` | Show migration history |
+
+### Examples
+
+```bash
+# Initialize database
+reroute db init
+
+# Create a migration
+reroute db migrate "Add users table"
+
+# Apply migrations
+reroute db upgrade
+
+# Check current version
+reroute db current
+
+# View migration history
+reroute db history
+
+# Rollback last migration
+reroute db downgrade
+```
+
 ## version
 
 Show REROUTE version.

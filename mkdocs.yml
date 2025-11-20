@@ -104,6 +104,7 @@ nav:
     - Authentication: examples/authentication.md
     - Rate Limiting: examples/rate-limiting.md
     - Caching: examples/caching.md
+    - Database Integration: examples/database.md
   - Deployment:
     - deployment/index.md
     - Production: deployment/production.md

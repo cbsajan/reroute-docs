@@ -1,6 +1,9 @@
 # Django Adapter
 
-Django adapter integration (Coming Soon)
+!!! warning "Not Yet Available"
+    The Django adapter is **not yet implemented**. This page shows planned features for a future release.
+    **Current Status:** Planned for future development
+    **Available Now:** [FastAPI Adapter](fastapi.md)
 
 ## Status
 

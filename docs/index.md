@@ -42,7 +42,7 @@ REROUTE brings the simplicity and elegance of Next.js-style file-based routing t
 
     ---
 
-    Works with FastAPI, Flask, Django, and more
+    Works with FastAPI (Flask & Django coming soon)
 
     Switch frameworks without rewriting routes
 
@@ -61,7 +61,8 @@ pip install reroute
 ### 2. Create a route file
 
 ```python title="app/routes/user/page.py"
-from reroute import RouteBase, cache, rate_limit
+from reroute import RouteBase
+from reroute.decorators import cache, rate_limit
 
 class UserRoutes(RouteBase):
     tag = "Users"

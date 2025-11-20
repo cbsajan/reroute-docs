@@ -73,11 +73,12 @@ Creates `app/routes/user/profile/page.py`.
 
 ## CLI Options
 
-All commands support:
+Global options:
 
-- `--help` - Show command help
-- `--verbose` - Enable verbose output
-- `--version` - Show REROUTE version
+- `-V, --version` - Show REROUTE version and exit
+- `--help` - Show help message and exit
+
+All commands also support `--help` to show command-specific help.
 
 ## Examples
 

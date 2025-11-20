@@ -1,6 +1,9 @@
 # Flask Adapter
 
-Flask adapter integration (Coming Soon)
+!!! warning "Not Yet Available"
+    The Flask adapter is **not yet implemented**. This page shows planned features for a future release.
+    **Current Status:** In development
+    **Available Now:** [FastAPI Adapter](fastapi.md)
 
 ## Status
 

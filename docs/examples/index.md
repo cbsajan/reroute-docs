@@ -30,6 +30,12 @@ Real-world examples and patterns for building APIs with REROUTE.
 
     Improve performance with caching
 
+-   :material-database-outline: [**Database Integration**](database.md)
+
+    ---
+
+    Connect to databases with SQLAlchemy, Tortoise ORM, and more
+
 </div>
 
 ## Patterns
@@ -56,7 +62,8 @@ class UserRoutes(RouteBase):
 ### With Decorators
 
 ```python
-from reroute import RouteBase, rate_limit, cache
+from reroute import RouteBase
+from reroute.decorators import rate_limit, cache
 
 class ProductRoutes(RouteBase):
     @cache(duration=300)
@@ -100,6 +107,7 @@ Browse complete example applications:
 - [Authentication](authentication.md) - JWT authentication
 - [Rate Limiting](rate-limiting.md) - API rate limiting patterns
 - [Caching](caching.md) - Response caching strategies
+- [Database Integration](database.md) - SQL and ORM integration (SQLAlchemy, Tortoise ORM)
 
 ## Example Repository
 
