@@ -50,3 +50,6 @@ versions.json
 *.bak
 *.backup
 .~*
+
+# Local-only documentation (not pushed to GitHub)
+PUBLISHING.md
