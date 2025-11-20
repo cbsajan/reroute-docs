@@ -37,12 +37,28 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          pip install mkdocs mkdocs-material
+          pip install mkdocs mkdocs-material mike
+
+      - name: Configure Git for mike
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
 
       - name: Build documentation
         run: mkdocs build --strict
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages with versioning
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          mkdocs gh-deploy --force --clean --verbose
+          # Extract version from tag or use 'latest' as alias
+          VERSION="${GITHUB_REF#refs/tags/v}"
+          if [[ "$VERSION" == "refs/heads/main" ]]; then
+            VERSION="dev"
+          fi
+
+          # Deploy with mike (creates/updates gh-pages branch)
+          mike deploy --push --update-aliases $VERSION latest
+
+          # Set latest as default version
+          mike set-default --push latest

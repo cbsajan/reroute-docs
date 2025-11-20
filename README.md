@@ -12,10 +12,13 @@ REROUTE brings Next.js-style file-based routing to Python web frameworks like Fa
 
 **Key Features:**
 - File-based routing (Next.js style)
-- Class-based route handlers
+- Class-based route handlers with lifecycle hooks
+- FastAPI-style parameter injection (Query, Path, Header, Body, etc.)
+- Pydantic model generation for data validation
 - Powerful decorators (rate limiting, caching, validation)
-- Multi-framework support
-- CLI tools for scaffolding
+- Multi-framework support (FastAPI, Flask, Django)
+- CLI tools for scaffolding and code generation
+- Environment configuration with .env support
 - Zero configuration required
 
 ## Local Development
@@ -35,12 +38,16 @@ cd reroute-docs
 
 2. Install dependencies:
 ```bash
-pip install mkdocs mkdocs-material mkdocs-i18n
+pip install -r requirements.txt
+# Or manually:
+pip install mkdocs mkdocs-material mike
 ```
 
 3. Run local server:
 ```bash
 mkdocs serve
+# Or with versioning:
+mike serve
 ```
 
 4. Visit [http://localhost:8000](http://localhost:8000)
@@ -65,20 +72,32 @@ docs/
 │   └── first-route.md
 ├── guides/                     # Feature guides
 │   ├── file-routing.md
+│   ├── class-routes.md
 │   ├── decorators.md
-│   └── lifecycle-hooks.md
+│   ├── lifecycle-hooks.md
+│   ├── configuration.md
+│   └── cors.md
 ├── adapters/                   # Framework adapters
 │   ├── fastapi.md
 │   ├── flask.md
 │   └── django.md
 ├── cli/                        # CLI documentation
-│   └── commands.md
+│   ├── commands.md
+│   └── scaffolding.md
 ├── api/                        # API reference
-│   └── reference.md
+│   ├── routebase.md
+│   ├── params.md              # Parameter injection
+│   ├── decorators.md
+│   ├── config.md              # Configuration & .env
+│   └── adapters.md
 ├── examples/                   # Examples and recipes
-│   └── basic-crud.md
+│   ├── basic-crud.md
+│   ├── authentication.md
+│   ├── rate-limiting.md
+│   └── caching.md
 └── deployment/                 # Deployment guides
-    └── production.md
+    ├── production.md
+    └── docker.md
 ```
 
 ## Contributing
@@ -100,34 +119,77 @@ Contributions are welcome! To contribute to the documentation:
 - Follow existing formatting style
 - Keep pages focused and organized
 
-## Multi-language Support
-
-This documentation supports multiple languages:
-
-- English (default)
-- Spanish
-- French
-- German
-- Chinese
-- Japanese
-
-To add a new language, see the [Translation Guide](TRANSLATING.md).
-
 ## Deployment
 
-Documentation is automatically deployed to GitHub Pages when changes are pushed to the `main` branch.
+📖 **[Complete Publishing Guide](PUBLISHING.md)** - Detailed deployment instructions
 
-The deployment workflow:
-1. Builds the documentation with MkDocs
-2. Deploys to the `gh-pages` branch
-3. GitHub Pages serves the content
+### Automatic Deployment (GitHub Actions)
+
+Documentation is automatically deployed to GitHub Pages when you push to `main`:
+
+```bash
+git add .
+git commit -m "docs: update feature documentation"
+git push origin main
+```
+
+**What happens automatically:**
+1. GitHub Actions triggers on push to main
+2. Builds documentation with MkDocs
+3. Deploys with mike for version management
+4. Updates `gh-pages` branch
+5. Live in ~2-3 minutes at: `https://cbsajan.github.io/reroute-docs`
+
+### Manual Deployment
+
+For manual control or version releases:
+
+```bash
+# Deploy new version
+mike deploy 0.2.0 latest --update-aliases
+mike set-default latest
+git push origin gh-pages
+```
+
+### Versioning with Mike
+
+The documentation supports multiple versions:
+- **Latest**: Always points to the newest version
+- **Specific versions**: v0.1.0, v0.2.0, etc.
+- **Dev**: Development version from main branch
+
+**Commands:**
+```bash
+mike list                    # List all versions
+mike serve                   # Serve locally with version selector
+mike delete 0.1.0            # Delete a version
+```
+
+### First-Time Setup
+
+1. **Enable GitHub Pages:**
+   - Go to Settings → Pages
+   - Source: `gh-pages` branch, `/ (root)` folder
+   - Save
+
+2. **First deployment:**
+   ```bash
+   mike deploy 0.1.0 latest --update-aliases
+   mike set-default latest
+   git push origin gh-pages
+   ```
+
+3. **Update URL placeholders** in reroute repository:
+   - Replace `DOCS_URL_PLACEHOLDER` with `https://cbsajan.github.io/reroute-docs`
+   - Files: README.md, CONTRIBUTING.md, archive/README.md
 
 ## Technology Stack
 
 - **MkDocs**: Documentation framework
-- **Material for MkDocs**: Theme
+- **Material for MkDocs**: Beautiful, responsive theme
+- **Mike**: Version management for documentation
 - **GitHub Pages**: Hosting
-- **GitHub Actions**: CI/CD
+- **GitHub Actions**: Automated CI/CD deployment
 
 ## Links
 
