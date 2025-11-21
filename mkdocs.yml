@@ -100,6 +100,8 @@ nav:
     - Adapters: api/adapters.md
   - Examples:
     - examples/index.md
+    - Flask Complete Example: examples/flask-example.md
+    - FastAPI Complete Example: examples/fastapi-example.md
     - Basic CRUD: examples/basic-crud.md
     - Authentication: examples/authentication.md
     - Rate Limiting: examples/rate-limiting.md
@@ -110,6 +112,7 @@ nav:
     - Production: deployment/production.md
     - Docker: deployment/docker.md
   - Changelog: changelog.md
+  - Implementation Status: IMPLEMENTATION_STATUS.md
   - Contributing: contributing.md
 
 # Extra

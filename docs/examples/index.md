@@ -2,6 +2,26 @@
 
 Real-world examples and patterns for building APIs with REROUTE.
 
+## Framework-Specific Examples
+
+Complete end-to-end examples for each supported framework:
+
+<div class="grid cards" markdown>
+
+-   :material-flask: [**Flask Complete Example**](flask-example.md)
+
+    ---
+
+    Full Flask application with Spectree OpenAPI, validation, and best practices
+
+-   :zap: [**FastAPI Complete Example**](fastapi-example.md)
+
+    ---
+
+    Async FastAPI application with background tasks, caching, and deployment guide
+
+</div>
+
 ## Basic Examples
 
 <div class="grid cards" markdown>

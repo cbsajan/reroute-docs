@@ -2,8 +2,8 @@
 
 This document tracks the implementation status of features documented in REROUTE to ensure documentation accuracy.
 
-**Last Updated:** 2025-11-20
-**Version:** 0.1.2
+**Last Updated:** 2025-11-21
+**Version:** 0.1.4
 
 ---
 
@@ -35,8 +35,8 @@ This document tracks the implementation status of features documented in REROUTE
 
 | Adapter | Status | Location | Notes |
 |---------|--------|----------|-------|
-| FastAPI | ✅ | `reroute/adapters/fastapi.py` | Fully implemented with lazy imports |
-| Flask | 🚧 | `docs/adapters/flask.md` | Marked as "Not Yet Available" |
+| FastAPI | ✅ | `reroute/adapters/fastapi.py` | Fully implemented with auto-reload and route removal |
+| Flask | ✅ | `reroute/adapters/flask.py` | Fully implemented with Spectree OpenAPI (v0.1.4) |
 | Django | 🚧 | `docs/adapters/django.md` | Marked as "Not Yet Available" |
 
 ---
@@ -185,6 +185,74 @@ This document tracks the implementation status of features documented in REROUTE
 ---
 
 ## Version History
+
+### v0.1.4 (2025-11-21)
+
+#### Added - Flask Adapter Implementation
+- ✅ **Flask Adapter with Spectree** - Full OpenAPI documentation support
+  - Automatic Swagger UI at `/swagger/`
+  - Scalar UI at `/scalar/`
+  - OpenAPI JSON spec at `/openapi.json`
+  - ReDoc disabled (broken CDN in Spectree library)
+
+- ✅ **Dynamic HTTP Method Decorators** - Clean adapter API
+  - `@adapter.get(path)` - GET requests
+  - `@adapter.post(path)` - POST requests
+  - `@adapter.put(path)` - PUT requests
+  - `@adapter.patch(path)` - PATCH requests
+  - `@adapter.delete(path)` - DELETE requests
+  - `@adapter.head(path)` - HEAD requests
+  - `@adapter.options(path)` - OPTIONS requests
+  - `@adapter.route(path, methods=[])` - Generic route
+
+- ✅ **Request/Response Validation** - Automatic validation with Pydantic via Spectree
+  - Extracts REROUTE params (Query, Body, Path) into Pydantic models
+  - Seamless integration with existing parameter injection
+
+#### Enhanced - FastAPI Adapter
+- ✅ **Auto-Reload Detection** - Automatically constructs import string (`main:app`) for uvicorn
+  - Uses `inspect.currentframe()` to detect caller module
+  - No more "must pass application as import string" warnings
+  - Works seamlessly with `AUTO_RELOAD = True` or `reload=True` parameter
+
+- ✅ **Route Removal for Disabled Endpoints** - Properly removes routes when OpenAPI paths set to `None`
+  - Iterates `app.routes` and removes disabled documentation endpoints
+  - Setting `REDOC_PATH = None` now returns 404 (route completely removed)
+  - Same for `DOCS_PATH` and `JSON_PATH`
+
+- ✅ **Explicit None Handling** - Ensures empty strings treated as `None` for OpenAPI paths
+
+#### Configuration
+- ✅ **OpenAPI Configuration Section** - New nested class in Config
+  - `OpenAPI.ENABLE` - Enable/disable documentation
+  - `OpenAPI.DOCS_PATH` - Swagger UI endpoint (set to `None` to disable)
+  - `OpenAPI.REDOC_PATH` - ReDoc endpoint (Flask: `None`, FastAPI: `"/redoc"`)
+  - `OpenAPI.JSON_PATH` - OpenAPI JSON spec endpoint
+  - `OpenAPI.TITLE` - API title (auto-generated if `None`)
+  - `OpenAPI.VERSION` - API version
+  - `OpenAPI.DESCRIPTION` - API description (auto-generated if `None`)
+
+#### Parameter Override Support
+- ✅ **Runtime Configuration** - `run_server()` kwargs override config values
+  - Flask: `adapter.run_server(port=8080, debug=True)`
+  - FastAPI: `adapter.run_server(port=8080, reload=False, workers=4)`
+  - Config defaults merged with kwargs (kwargs take precedence)
+
+#### Documentation
+- ✅ **Complete Flask Adapter Documentation** - Comprehensive guide at `docs/adapters/flask.md`
+- ✅ **Enhanced FastAPI Adapter Documentation** - Updated with v0.1.4 features
+- ✅ **Framework-Specific Examples** - Separate Flask and FastAPI complete examples
+
+#### Dependencies
+- ✅ Added `spectree>=1.2.0` to Flask extras
+- ✅ Added `colorama>=0.4.0` for Windows console colors
+
+#### Fixed
+- ✅ Flask parameter override in `run_server()`
+- ✅ FastAPI parameter override in `run_server()`
+- ✅ FastAPI ReDoc disable (`REDOC_PATH = None` now removes route completely)
+- ✅ Colorama initialization for Windows
+- ✅ Uvicorn reload warning ("must pass application as import string")
 
 ### v0.1.3 (Unreleased - 2025-11-21)
 
