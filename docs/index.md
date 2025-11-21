@@ -50,22 +50,30 @@ REROUTE brings the simplicity and elegance of Next.js-style file-based routing t
 
 ## Quick Example
 
-Create a file-based route in 3 steps:
+Get started in 2 minutes using CLI commands:
 
-### 1. Install REROUTE
+### 1. Install & Initialize
 
 ```bash
-pip install reroute
+pip install reroute[fastapi]
+reroute init my-app --framework fastapi
+cd my-app
 ```
 
-### 2. Create a route file
+### 2. Generate a Route
 
-```python title="app/routes/user/page.py"
+```bash
+reroute create route --path /user --name User --methods GET,POST
+```
+
+This creates `app/routes/user/page.py`:
+
+```python
 from reroute import RouteBase
 from reroute.decorators import cache, rate_limit
 
 class UserRoutes(RouteBase):
-    tag = "Users"
+    tag = "User"
 
     @cache(duration=60)
     def get(self):
@@ -76,39 +84,13 @@ class UserRoutes(RouteBase):
         return {"message": "User created"}
 ```
 
-### 3. Register with your framework
+### 3. Run Your API
 
-=== "FastAPI"
+```bash
+python main.py  # Already created by init!
+```
 
-    ```python title="main.py"
-    from fastapi import FastAPI
-    from reroute.adapters import FastAPIAdapter
-    from pathlib import Path
-
-    app = FastAPI()
-    adapter = FastAPIAdapter(
-        fastapi_app=app,
-        app_dir=Path(__file__).parent / "app"
-    )
-    adapter.register_routes()
-    ```
-
-=== "Flask"
-
-    ```python title="app.py"
-    from flask import Flask
-    from reroute.adapters import FlaskAdapter
-    from pathlib import Path
-
-    app = Flask(__name__)
-    adapter = FlaskAdapter(
-        flask_app=app,
-        app_dir=Path(__file__).parent / "app"
-    )
-    adapter.register_routes()
-    ```
-
-That's it! Your routes are now available at `/api/v1/user` with automatic OpenAPI documentation.
+That's it! Your routes are now available at `/user` with automatic OpenAPI documentation at `/docs`.
 
 ## Features
 
@@ -129,12 +111,12 @@ app/routes/
 
 Built-in decorators for common API patterns:
 
-- `@rate_limit("5/min")` - Rate limiting per IP/user
-- `@cache(duration=60)` - Response caching
-- `@requires("admin")` - Role-based access
-- `@validate(schema)` - Request validation
-- `@timeout(5)` - Request timeout
-- `@log_requests()` - Automatic logging
+- `@rate_limit("5/min")` - Rate limiting per IP/user ✅ **Available**
+- `@cache(duration=60)` - Response caching ✅ **Available**
+- `@requires("admin")` - Role-based access 🚧 **Coming Soon**
+- `@validate(schema)` - Request validation 🚧 **Coming Soon**
+- `@timeout(5)` - Request timeout 🚧 **Coming Soon**
+- `@log_requests()` - Automatic logging 🚧 **Coming Soon**
 
 ### Lifecycle Hooks
 
@@ -178,7 +160,7 @@ class MyConfig(Config):
 
     ---
 
-    Get up and running in 5 minutes
+    Get up and running in 2 minutes
 
 -   :books: [**Guides**](guides/index.md)
 
