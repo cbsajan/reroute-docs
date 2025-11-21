@@ -15,6 +15,10 @@
         <link rel="canonical" href="https://cbsajan.github.io/reroute-docs/dev/IMPLEMENTATION_STATUS/">
       
       
+        <link rel="prev" href="../changelog/">
+      
+      
+        <link rel="next" href="../contributing/">
       
       
         
@@ -25,7 +29,7 @@
     
     
       
-        <title>REROUTE Implementation Status - REROUTE Documentation</title>
+        <title>Implementation Status - REROUTE Documentation</title>
       
     
     
@@ -114,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              REROUTE Implementation Status
+              Implementation Status
             
           </span>
         </div>
@@ -407,6 +411,27 @@
     
   
   Changelog
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Implementation Status
 
       </a>
     </li>
@@ -1467,6 +1492,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1519,6 +1548,62 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/flask-example/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flask Complete Example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/fastapi-example/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FastAPI Complete Example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -1833,6 +1918,579 @@
       
   
   
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementation Status
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementation Status
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#legend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Legend
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Features
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adapters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adapters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decorators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decorators
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLI Commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CLI Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cli-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLI Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#routebase-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RouteBase Methods
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration-defaults-to-verify" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Defaults to Verify
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#database-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Database Integration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generated-model-schemas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generated Model Schemas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation-issues-found-audit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation Issues Found (Audit)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Documentation Issues Found (Audit)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#critical-issues-fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Critical Issues - Fixed ✅
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remaining-issues-pending" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remaining Issues - Pending ⚠️
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version History
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version History">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#v014-2025-11-21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v0.1.4 (2025-11-21)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="v0.1.4 (2025-11-21)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added-flask-adapter-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added - Flask Adapter Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enhanced-fastapi-adapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enhanced - FastAPI Adapter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameter-override-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameter Override Support
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#v013-unreleased-2025-11-21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v0.1.3 (Unreleased - 2025-11-21)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="v0.1.3 (Unreleased - 2025-11-21)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#technical-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Technical Changes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#v012-current-2025-11-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v0.1.2 (Current - 2025-11-20)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#v011-2025-11-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v0.1.1 (2025-11-20)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#v010-2025-11-19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v0.1.0 (2025-11-19)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-refactoring-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLI Refactoring Status
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CLI Refactoring Status">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#completed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Completed ✅
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#in-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In Progress 🚧
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-generation-clarification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Generation Clarification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simplified-init-flow-planned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simplified Init Flow (Planned)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#planned-features-v020" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Planned Features (v0.2.0)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation-accuracy-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation Accuracy Checklist
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Documentation Accuracy Checklist">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#before-each-release" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before Each Release
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monthly-maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monthly Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contact
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
   
   
     <li class="md-nav__item">
@@ -2067,6 +2725,100 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#v014-2025-11-21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v0.1.4 (2025-11-21)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="v0.1.4 (2025-11-21)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added-flask-adapter-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added - Flask Adapter Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enhanced-fastapi-adapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enhanced - FastAPI Adapter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameter-override-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameter Override Support
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#v013-unreleased-2025-11-21" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2090,7 +2842,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed" class="md-nav__link">
+  <a href="#fixed_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Fixed
@@ -2309,8 +3061,8 @@
 
 <h1 id="reroute-implementation-status">REROUTE Implementation Status<a class="headerlink" href="#reroute-implementation-status" title="Permanent link">&para;</a></h1>
 <p>This document tracks the implementation status of features documented in REROUTE to ensure documentation accuracy.</p>
-<p><strong>Last Updated:</strong> 2025-11-20
-<strong>Version:</strong> 0.1.2</p>
+<p><strong>Last Updated:</strong> 2025-11-21
+<strong>Version:</strong> 0.1.4</p>
 <hr />
 <h2 id="legend">Legend<a class="headerlink" href="#legend" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2388,13 +3140,13 @@
 <td>FastAPI</td>
 <td>✅</td>
 <td><code>reroute/adapters/fastapi.py</code></td>
-<td>Fully implemented with lazy imports</td>
+<td>Fully implemented with auto-reload and route removal</td>
 </tr>
 <tr>
 <td>Flask</td>
-<td>🚧</td>
-<td><code>docs/adapters/flask.md</code></td>
-<td>Marked as "Not Yet Available"</td>
+<td>✅</td>
+<td><code>reroute/adapters/flask.py</code></td>
+<td>Fully implemented with Spectree OpenAPI (v0.1.4)</td>
 </tr>
 <tr>
 <td>Django</td>
@@ -2930,6 +3682,92 @@
 </ol>
 <hr />
 <h2 id="version-history">Version History<a class="headerlink" href="#version-history" title="Permanent link">&para;</a></h2>
+<h3 id="v014-2025-11-21">v0.1.4 (2025-11-21)<a class="headerlink" href="#v014-2025-11-21" title="Permanent link">&para;</a></h3>
+<h4 id="added-flask-adapter-implementation">Added - Flask Adapter Implementation<a class="headerlink" href="#added-flask-adapter-implementation" title="Permanent link">&para;</a></h4>
+<ul>
+<li>✅ <strong>Flask Adapter with Spectree</strong> - Full OpenAPI documentation support</li>
+<li>Automatic Swagger UI at <code>/swagger/</code></li>
+<li>Scalar UI at <code>/scalar/</code></li>
+<li>OpenAPI JSON spec at <code>/openapi.json</code></li>
+<li>
+<p>ReDoc disabled (broken CDN in Spectree library)</p>
+</li>
+<li>
+<p>✅ <strong>Dynamic HTTP Method Decorators</strong> - Clean adapter API</p>
+</li>
+<li><code>@adapter.get(path)</code> - GET requests</li>
+<li><code>@adapter.post(path)</code> - POST requests</li>
+<li><code>@adapter.put(path)</code> - PUT requests</li>
+<li><code>@adapter.patch(path)</code> - PATCH requests</li>
+<li><code>@adapter.delete(path)</code> - DELETE requests</li>
+<li><code>@adapter.head(path)</code> - HEAD requests</li>
+<li><code>@adapter.options(path)</code> - OPTIONS requests</li>
+<li>
+<p><code>@adapter.route(path, methods=[])</code> - Generic route</p>
+</li>
+<li>
+<p>✅ <strong>Request/Response Validation</strong> - Automatic validation with Pydantic via Spectree</p>
+</li>
+<li>Extracts REROUTE params (Query, Body, Path) into Pydantic models</li>
+<li>Seamless integration with existing parameter injection</li>
+</ul>
+<h4 id="enhanced-fastapi-adapter">Enhanced - FastAPI Adapter<a class="headerlink" href="#enhanced-fastapi-adapter" title="Permanent link">&para;</a></h4>
+<ul>
+<li>✅ <strong>Auto-Reload Detection</strong> - Automatically constructs import string (<code>main:app</code>) for uvicorn</li>
+<li>Uses <code>inspect.currentframe()</code> to detect caller module</li>
+<li>No more "must pass application as import string" warnings</li>
+<li>
+<p>Works seamlessly with <code>AUTO_RELOAD = True</code> or <code>reload=True</code> parameter</p>
+</li>
+<li>
+<p>✅ <strong>Route Removal for Disabled Endpoints</strong> - Properly removes routes when OpenAPI paths set to <code>None</code></p>
+</li>
+<li>Iterates <code>app.routes</code> and removes disabled documentation endpoints</li>
+<li>Setting <code>REDOC_PATH = None</code> now returns 404 (route completely removed)</li>
+<li>
+<p>Same for <code>DOCS_PATH</code> and <code>JSON_PATH</code></p>
+</li>
+<li>
+<p>✅ <strong>Explicit None Handling</strong> - Ensures empty strings treated as <code>None</code> for OpenAPI paths</p>
+</li>
+</ul>
+<h4 id="configuration_1">Configuration<a class="headerlink" href="#configuration_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li>✅ <strong>OpenAPI Configuration Section</strong> - New nested class in Config</li>
+<li><code>OpenAPI.ENABLE</code> - Enable/disable documentation</li>
+<li><code>OpenAPI.DOCS_PATH</code> - Swagger UI endpoint (set to <code>None</code> to disable)</li>
+<li><code>OpenAPI.REDOC_PATH</code> - ReDoc endpoint (Flask: <code>None</code>, FastAPI: <code>"/redoc"</code>)</li>
+<li><code>OpenAPI.JSON_PATH</code> - OpenAPI JSON spec endpoint</li>
+<li><code>OpenAPI.TITLE</code> - API title (auto-generated if <code>None</code>)</li>
+<li><code>OpenAPI.VERSION</code> - API version</li>
+<li><code>OpenAPI.DESCRIPTION</code> - API description (auto-generated if <code>None</code>)</li>
+</ul>
+<h4 id="parameter-override-support">Parameter Override Support<a class="headerlink" href="#parameter-override-support" title="Permanent link">&para;</a></h4>
+<ul>
+<li>✅ <strong>Runtime Configuration</strong> - <code>run_server()</code> kwargs override config values</li>
+<li>Flask: <code>adapter.run_server(port=8080, debug=True)</code></li>
+<li>FastAPI: <code>adapter.run_server(port=8080, reload=False, workers=4)</code></li>
+<li>Config defaults merged with kwargs (kwargs take precedence)</li>
+</ul>
+<h4 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h4>
+<ul>
+<li>✅ <strong>Complete Flask Adapter Documentation</strong> - Comprehensive guide at <code>docs/adapters/flask.md</code></li>
+<li>✅ <strong>Enhanced FastAPI Adapter Documentation</strong> - Updated with v0.1.4 features</li>
+<li>✅ <strong>Framework-Specific Examples</strong> - Separate Flask and FastAPI complete examples</li>
+</ul>
+<h4 id="dependencies">Dependencies<a class="headerlink" href="#dependencies" title="Permanent link">&para;</a></h4>
+<ul>
+<li>✅ Added <code>spectree&gt;=1.2.0</code> to Flask extras</li>
+<li>✅ Added <code>colorama&gt;=0.4.0</code> for Windows console colors</li>
+</ul>
+<h4 id="fixed">Fixed<a class="headerlink" href="#fixed" title="Permanent link">&para;</a></h4>
+<ul>
+<li>✅ Flask parameter override in <code>run_server()</code></li>
+<li>✅ FastAPI parameter override in <code>run_server()</code></li>
+<li>✅ FastAPI ReDoc disable (<code>REDOC_PATH = None</code> now removes route completely)</li>
+<li>✅ Colorama initialization for Windows</li>
+<li>✅ Uvicorn reload warning ("must pass application as import string")</li>
+</ul>
 <h3 id="v013-unreleased-2025-11-21">v0.1.3 (Unreleased - 2025-11-21)<a class="headerlink" href="#v013-unreleased-2025-11-21" title="Permanent link">&para;</a></h3>
 <h4 id="added">Added<a class="headerlink" href="#added" title="Permanent link">&para;</a></h4>
 <ul>
@@ -2949,7 +3787,7 @@
 <li>Prevents duplicate methods and maintains proper method ordering (GET, POST, PUT, PATCH, DELETE)</li>
 <li>Shows clear feedback: "Existing: GET | Adding: POST | Final: GET, POST"</li>
 </ul>
-<h4 id="fixed">Fixed<a class="headerlink" href="#fixed" title="Permanent link">&para;</a></h4>
+<h4 id="fixed_1">Fixed<a class="headerlink" href="#fixed_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li>🐛 <strong>BUG FIX</strong>: <code>reroute create route --methods GET</code> now correctly generates only specified methods instead of all methods</li>
 <li>Before: Always generated GET, POST, PUT, DELETE regardless of --methods parameter</li>
@@ -3201,6 +4039,44 @@
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../changelog/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Changelog">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Changelog
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../contributing/" class="md-footer__link md-footer__link--next" aria-label="Next: Contributing">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Contributing
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">
