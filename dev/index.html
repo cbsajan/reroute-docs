@@ -571,10 +571,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-install-reroute" class="md-nav__link">
+  <a href="#1-install-initialize" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Install REROUTE
+        1. Install &amp; Initialize
       
     </span>
   </a>
@@ -582,10 +582,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-create-a-route-file" class="md-nav__link">
+  <a href="#2-generate-a-route" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Create a route file
+        2. Generate a Route
       
     </span>
   </a>
@@ -593,10 +593,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-register-with-your-framework" class="md-nav__link">
+  <a href="#3-run-your-api" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Register with your framework
+        3. Run Your API
       
     </span>
   </a>
@@ -2112,10 +2112,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-install-reroute" class="md-nav__link">
+  <a href="#1-install-initialize" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Install REROUTE
+        1. Install &amp; Initialize
       
     </span>
   </a>
@@ -2123,10 +2123,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-create-a-route-file" class="md-nav__link">
+  <a href="#2-generate-a-route" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Create a route file
+        2. Generate a Route
       
     </span>
   </a>
@@ -2134,10 +2134,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-register-with-your-framework" class="md-nav__link">
+  <a href="#3-run-your-api" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Register with your framework
+        3. Run Your API
       
     </span>
   </a>
@@ -2299,57 +2299,34 @@
 </ul>
 </div>
 <h2 id="quick-example">Quick Example<a class="headerlink" href="#quick-example" title="Permanent link">&para;</a></h2>
-<p>Create a file-based route in 3 steps:</p>
-<h3 id="1-install-reroute">1. Install REROUTE<a class="headerlink" href="#1-install-reroute" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>reroute
+<p>Get started in 2 minutes using CLI commands:</p>
+<h3 id="1-install-initialize">1. Install &amp; Initialize<a class="headerlink" href="#1-install-initialize" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>reroute<span class="o">[</span>fastapi<span class="o">]</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>reroute<span class="w"> </span>init<span class="w"> </span>my-app<span class="w"> </span>--framework<span class="w"> </span>fastapi
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">cd</span><span class="w"> </span>my-app
 </code></pre></div>
-<h3 id="2-create-a-route-file">2. Create a route file<a class="headerlink" href="#2-create-a-route-file" title="Permanent link">&para;</a></h3>
-<div class="highlight"><span class="filename">app/routes/user/page.py</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">reroute</span><span class="w"> </span><span class="kn">import</span> <span class="n">RouteBase</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">reroute.decorators</span><span class="w"> </span><span class="kn">import</span> <span class="n">cache</span><span class="p">,</span> <span class="n">rate_limit</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="k">class</span><span class="w"> </span><span class="nc">UserRoutes</span><span class="p">(</span><span class="n">RouteBase</span><span class="p">):</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="n">tag</span> <span class="o">=</span> <span class="s2">&quot;Users&quot;</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="nd">@cache</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;users&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;Bob&quot;</span><span class="p">]}</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="nd">@rate_limit</span><span class="p">(</span><span class="s2">&quot;5/min&quot;</span><span class="p">)</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;User created&quot;</span><span class="p">}</span>
+<h3 id="2-generate-a-route">2. Generate a Route<a class="headerlink" href="#2-generate-a-route" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>reroute<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>--path<span class="w"> </span>/user<span class="w"> </span>--name<span class="w"> </span>User<span class="w"> </span>--methods<span class="w"> </span>GET,POST
 </code></pre></div>
-<h3 id="3-register-with-your-framework">3. Register with your framework<a class="headerlink" href="#3-register-with-your-framework" title="Permanent link">&para;</a></h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">FastAPI</label><label for="__tabbed_1_2">Flask</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><span class="filename">main.py</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">reroute.adapters</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPIAdapter</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">adapter</span> <span class="o">=</span> <span class="n">FastAPIAdapter</span><span class="p">(</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="n">fastapi_app</span><span class="o">=</span><span class="n">app</span><span class="p">,</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="n">app_dir</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;app&quot;</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="p">)</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="n">adapter</span><span class="o">.</span><span class="n">register_routes</span><span class="p">()</span>
+<p>This creates <code>app/routes/user/page.py</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">reroute</span><span class="w"> </span><span class="kn">import</span> <span class="n">RouteBase</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">reroute.decorators</span><span class="w"> </span><span class="kn">import</span> <span class="n">cache</span><span class="p">,</span> <span class="n">rate_limit</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">class</span><span class="w"> </span><span class="nc">UserRoutes</span><span class="p">(</span><span class="n">RouteBase</span><span class="p">):</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="n">tag</span> <span class="o">=</span> <span class="s2">&quot;User&quot;</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="nd">@cache</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;users&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;Bob&quot;</span><span class="p">]}</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="nd">@rate_limit</span><span class="p">(</span><span class="s2">&quot;5/min&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;User created&quot;</span><span class="p">}</span>
 </code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><span class="filename">app.py</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">Flask</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">reroute.adapters</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlaskAdapter</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">adapter</span> <span class="o">=</span> <span class="n">FlaskAdapter</span><span class="p">(</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="n">flask_app</span><span class="o">=</span><span class="n">app</span><span class="p">,</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="n">app_dir</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;app&quot;</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="p">)</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="n">adapter</span><span class="o">.</span><span class="n">register_routes</span><span class="p">()</span>
+<h3 id="3-run-your-api">3. Run Your API<a class="headerlink" href="#3-run-your-api" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>main.py<span class="w">  </span><span class="c1"># Already created by init!</span>
 </code></pre></div>
-</div>
-</div>
-</div>
-<p>That's it! Your routes are now available at <code>/api/v1/user</code> with automatic OpenAPI documentation.</p>
+<p>That's it! Your routes are now available at <code>/user</code> with automatic OpenAPI documentation at <code>/docs</code>.</p>
 <h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
 <h3 id="file-based-routing">File-based Routing<a class="headerlink" href="#file-based-routing" title="Permanent link">&para;</a></h3>
 <p>Organize your API by filesystem structure. Each folder becomes a route segment:</p>
@@ -2364,12 +2341,12 @@
 <h3 id="decorators">Decorators<a class="headerlink" href="#decorators" title="Permanent link">&para;</a></h3>
 <p>Built-in decorators for common API patterns:</p>
 <ul>
-<li><code>@rate_limit("5/min")</code> - Rate limiting per IP/user</li>
-<li><code>@cache(duration=60)</code> - Response caching</li>
-<li><code>@requires("admin")</code> - Role-based access</li>
-<li><code>@validate(schema)</code> - Request validation</li>
-<li><code>@timeout(5)</code> - Request timeout</li>
-<li><code>@log_requests()</code> - Automatic logging</li>
+<li><code>@rate_limit("5/min")</code> - Rate limiting per IP/user ✅ <strong>Available</strong></li>
+<li><code>@cache(duration=60)</code> - Response caching ✅ <strong>Available</strong></li>
+<li><code>@requires("admin")</code> - Role-based access 🚧 <strong>Coming Soon</strong></li>
+<li><code>@validate(schema)</code> - Request validation 🚧 <strong>Coming Soon</strong></li>
+<li><code>@timeout(5)</code> - Request timeout 🚧 <strong>Coming Soon</strong></li>
+<li><code>@log_requests()</code> - Automatic logging 🚧 <strong>Coming Soon</strong></li>
 </ul>
 <h3 id="lifecycle-hooks">Lifecycle Hooks<a class="headerlink" href="#lifecycle-hooks" title="Permanent link">&para;</a></h3>
 <p>Control request/response flow with lifecycle methods:</p>
@@ -2403,7 +2380,7 @@
 <li>
 <p><img alt="🚀" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f680.svg" title=":rocket:" /> <a href="getting-started/quickstart/"><strong>Quick Start</strong></a></p>
 <hr />
-<p>Get up and running in 5 minutes</p>
+<p>Get up and running in 2 minutes</p>
 </li>
 <li>
 <p><img alt="📚" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f4da.svg" title=":books:" /> <a href="guides/"><strong>Guides</strong></a></p>
