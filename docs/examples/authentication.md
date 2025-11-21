@@ -5,35 +5,44 @@ Implement authentication with REROUTE.
 ## Secure Route
 
 ```python
-from reroute import RouteBase, requires
+from reroute import RouteBase
+from reroute.params import Header
+from fastapi import HTTPException
 
 class SecureRoutes(RouteBase):
     tag = "Secure Endpoints"
 
     def before_request(self):
-        """Check authentication"""
-        auth_header = self.get_header("Authorization")
-        if not auth_header:
-            raise Unauthorized("Missing authentication")
-
-        token = auth_header.replace("Bearer ", "")
-        if not self.verify_token(token):
-            raise Unauthorized("Invalid token")
-
+        """Check authentication before each request"""
+        # Authentication is handled via Header parameter in route methods
         return None
 
-    def verify_token(self, token):
+    def verify_token(self, token: str) -> bool:
         """Verify JWT token"""
         # Implementation here
         return token == "valid_token"
 
-    @requires("admin")
-    def delete(self):
-        """Admin-only endpoint"""
+    def delete(self, authorization: str = Header(None)):
+        """Admin-only endpoint - requires valid token"""
+        if not authorization:
+            raise HTTPException(status_code=401, detail="Missing authentication")
+
+        token = authorization.replace("Bearer ", "")
+        if not self.verify_token(token):
+            raise HTTPException(status_code=401, detail="Invalid token")
+
+        # Additional admin role check would go here
         return {"deleted": True}
 
-    def get(self):
+    def get(self, authorization: str = Header(None)):
         """Authenticated endpoint"""
+        if not authorization:
+            raise HTTPException(status_code=401, detail="Missing authentication")
+
+        token = authorization.replace("Bearer ", "")
+        if not self.verify_token(token):
+            raise HTTPException(status_code=401, detail="Invalid token")
+
         return {"data": "secure"}
 ```
 

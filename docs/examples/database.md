@@ -4,7 +4,31 @@ Learn how to integrate databases with REROUTE using popular Python ORMs.
 
 ## Overview
 
-REROUTE includes built-in database migration commands via `reroute db`. You can use any Python ORM or database library with REROUTE routes.
+REROUTE includes built-in database migration commands via `reroute db` and auto-generates Pydantic models via `reroute create model`. You can use any Python ORM or database library with REROUTE routes.
+
+## Quick Start Workflow
+
+!!! tip "Future Enhancement (v0.2.0)"
+    `reroute init` will soon ask about database support during project setup and automatically configure the database connection, initialize migrations, and generate example models!
+
+**Current Manual Workflow:**
+
+```bash
+# 1. Generate Pydantic model schemas
+reroute create model --name User
+
+# 2. Initialize database migrations
+reroute db init
+
+# 3. Create migration
+reroute db migrate "create users table"
+
+# 4. Apply migrations
+reroute db upgrade
+
+# 5. Generate CRUD route
+reroute create crud --path /users --name User
+```
 
 ## Supported ORMs
 
@@ -16,6 +40,18 @@ REROUTE includes built-in database migration commands via `reroute db`. You can 
 ---
 
 ## SQLAlchemy (Recommended)
+
+### Quick Start with CLI
+
+Use REROUTE CLI to generate models automatically:
+
+```bash
+# Generate User model with Pydantic schemas
+reroute create model --name User
+
+# This creates app/models/user.py with:
+# - UserBase, UserCreate, UserUpdate, UserInDB, UserResponse
+```
 
 ### Installation
 
@@ -240,6 +276,80 @@ class DatabaseConfig(Config):
     @classmethod
     def get_database_url(cls):
         return cls.PROD_DATABASE_URL if not cls.DEBUG else cls.DEV_DATABASE_URL
+```
+
+---
+
+## Complete Example: CLI-Generated Database App
+
+### Step-by-Step
+
+```bash
+# 1. Initialize project
+reroute init my-blog --framework fastapi
+
+# 2. Navigate to project
+cd my-blog
+
+# 3. Generate Post model
+reroute create model --name Post
+
+# 4. Generate User model
+reroute create model --name User
+
+# 5. Generate CRUD routes
+reroute create crud --path /posts --name Post --http-test
+reroute create crud --path /users --name User --http-test
+
+# 6. Initialize database
+reroute db init
+
+# 7. Create migration
+reroute db migrate "initial schema"
+
+# 8. Apply migration
+reroute db upgrade
+```
+
+### Generated Structure
+
+```
+my-blog/
+├── app/
+│   ├── models/
+│   │   ├── post.py      # PostBase, PostCreate, PostUpdate, PostInDB, PostResponse
+│   │   └── user.py      # UserBase, UserCreate, UserUpdate, UserInDB, UserResponse
+│   └── routes/
+│       ├── posts/
+│       │   └── page.py  # Full CRUD: GET, POST, PUT, DELETE
+│       └── users/
+│           └── page.py  # Full CRUD operations
+├── tests/
+│   ├── posts.http      # HTTP test file
+│   └── users.http      # HTTP test file
+├── main.py             # FastAPI app
+└── migrations/         # Database migrations
+```
+
+### Using Generated Models
+
+The CLI-generated models work seamlessly with your routes:
+
+```python title="app/routes/posts/page.py"
+from reroute import RouteBase
+from reroute.params import Body
+from app.models.post import PostCreate, PostResponse
+from app.database import get_db
+from sqlalchemy.orm import Session
+
+class PostsRoutes(RouteBase):
+    tag = "Posts"
+
+    def post(self, post: PostCreate = Body(...)):
+        """Create a new post - using CLI-generated model"""
+        db: Session = next(get_db())
+        # Your database logic here
+        return PostResponse(**post.dict())
 ```
 
 ---

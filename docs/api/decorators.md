@@ -7,7 +7,7 @@ Built-in decorators for REROUTE routes.
 Limit request rate per IP or user.
 
 ```python
-from reroute import rate_limit
+from reroute.decorators import rate_limit
 
 @rate_limit("5/min")
 def post(self):
@@ -22,7 +22,7 @@ def post(self):
 Cache responses for a duration.
 
 ```python
-from reroute import cache
+from reroute.decorators import cache
 
 @cache(duration=60)
 def get(self):
@@ -34,10 +34,13 @@ def get(self):
 
 ## requires
 
+!!! warning "Not Yet Implemented"
+    This decorator is planned but not yet available.
+
 Require specific permissions or roles.
 
 ```python
-from reroute import requires
+from reroute.decorators import requires
 
 @requires("admin")
 def delete(self):
@@ -49,10 +52,13 @@ def delete(self):
 
 ## validate
 
+!!! warning "Not Yet Implemented"
+    This decorator is planned but not yet available. Use Pydantic models for validation instead.
+
 Validate request data against a schema.
 
 ```python
-from reroute import validate
+from reroute.decorators import validate
 
 @validate(schema)
 def post(self):
@@ -64,10 +70,13 @@ def post(self):
 
 ## timeout
 
+!!! warning "Not Yet Implemented"
+    This decorator is planned but not yet available.
+
 Set request timeout.
 
 ```python
-from reroute import timeout
+from reroute.decorators import timeout
 
 @timeout(5)
 def get(self):

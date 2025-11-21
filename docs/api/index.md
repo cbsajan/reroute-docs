@@ -68,15 +68,15 @@ class MyRoute(RouteBase):
 ### Decorators
 
 ```python
-from reroute import rate_limit, cache, requires, validate
+from reroute.decorators import rate_limit, cache
 
 @rate_limit("5/min")
 @cache(duration=60)
-@requires("admin")
-@validate(schema)
 def my_endpoint(self):
     pass
 ```
+
+**Note:** `rate_limit` and `cache` are currently implemented. Other decorators like `requires` and `validate` are planned for future releases.
 
 ### Config
 

@@ -7,7 +7,8 @@ Complete example of CRUD operations with REROUTE.
 `app/routes/user/page.py`:
 
 ```python
-from reroute import RouteBase, rate_limit, cache
+from reroute import RouteBase
+from reroute.decorators import rate_limit, cache
 
 class UserRoutes(RouteBase):
     """User CRUD operations"""

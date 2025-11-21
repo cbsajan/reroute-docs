@@ -1,6 +1,6 @@
 # Quick Start
 
-Build your first REROUTE application in 5 minutes!
+Build your first REROUTE application in 2 minutes using CLI commands!
 
 ## Step 1: Install REROUTE
 
@@ -8,39 +8,54 @@ Build your first REROUTE application in 5 minutes!
 pip install reroute[fastapi]
 ```
 
-## Step 2: Create Project Structure
+## Step 2: Initialize Your Project
+
+Use the REROUTE CLI to create your project structure automatically:
 
 ```bash
-mkdir my-reroute-app
+reroute init my-reroute-app --framework fastapi
 cd my-reroute-app
-mkdir -p app/routes/user
 ```
 
-Your structure should look like:
+This creates a complete project structure with everything you need:
 
 ```
 my-reroute-app/
 ├── app/
+│   ├── __init__.py
 │   └── routes/
-│       └── user/
-│           └── page.py
-└── main.py
+│       └── __init__.py
+├── main.py          # Auto-generated entry point
+├── .gitignore
+└── requirements.txt
 ```
 
-## Step 3: Create a Route
+## Step 3: Generate a Route
 
-Create `app/routes/user/page.py`:
+Use the CLI to generate your first route:
+
+```bash
+reroute create route --path /user --name User --methods GET,POST
+```
+
+This creates `app/routes/user/page.py` with GET and POST methods:
 
 ```python
 from reroute import RouteBase
+from reroute.decorators import rate_limit, cache
 
 class UserRoutes(RouteBase):
-    """User management routes"""
+    """UserRoutes handles /user endpoints."""
 
-    tag = "Users"
+    tag = "User"
 
+    def __init__(self):
+        super().__init__()
+        self.data = []
+
+    @cache(duration=60)
     def get(self):
-        """Get all users"""
+        """Handle GET requests - retrieve user"""
         return {
             "users": [
                 {"id": 1, "name": "Alice"},
@@ -48,14 +63,17 @@ class UserRoutes(RouteBase):
             ]
         }
 
+    @rate_limit("10/min")
     def post(self):
-        """Create a user"""
+        """Handle POST requests - create new user"""
         return {"message": "User created", "id": 3}
 ```
 
-## Step 4: Create Main Application
+**Tip:** Edit the generated file to customize the response data!
 
-Create `main.py`:
+## Step 4: Your Application is Ready!
+
+The `reroute init` command already created `main.py` for you:
 
 ```python
 from fastapi import FastAPI
@@ -74,6 +92,8 @@ if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
 ```
+
+**No manual setup required!** Everything is configured and ready to run.
 
 ## Step 5: Run the Application
 
@@ -98,13 +118,18 @@ curl -X POST http://localhost:8000/user
 
 ## Add More Features
 
+### Customize Your Generated Routes
+
+The generated route already includes decorators! Edit `app/routes/user/page.py` to customize:
+
 ### Rate Limiting
 
 ```python
-from reroute import RouteBase, rate_limit
+from reroute import RouteBase
+from reroute.decorators import rate_limit
 
 class UserRoutes(RouteBase):
-    @rate_limit("5/min")
+    @rate_limit("5/min")  # Limit to 5 requests per minute
     def post(self):
         return {"message": "User created"}
 ```
@@ -112,10 +137,11 @@ class UserRoutes(RouteBase):
 ### Caching
 
 ```python
-from reroute import RouteBase, cache
+from reroute import RouteBase
+from reroute.decorators import cache
 
 class UserRoutes(RouteBase):
-    @cache(duration=60)
+    @cache(duration=60)  # Cache for 60 seconds
     def get(self):
         return {"users": [...]}
 ```

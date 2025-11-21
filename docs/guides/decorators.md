@@ -5,7 +5,8 @@ Use decorators to add functionality to your routes.
 ## Rate Limiting
 
 ```python
-from reroute import RouteBase, rate_limit
+from reroute import RouteBase
+from reroute.decorators import rate_limit
 
 class MyRoutes(RouteBase):
     @rate_limit("5/min")
@@ -16,7 +17,7 @@ class MyRoutes(RouteBase):
 ## Caching
 
 ```python
-from reroute import cache
+from reroute.decorators import cache
 
 @cache(duration=60)
 def get(self):
@@ -25,8 +26,11 @@ def get(self):
 
 ## Authentication
 
+!!! warning "Not Yet Implemented"
+    The `@requires` decorator is planned but not yet available.
+
 ```python
-from reroute import requires
+from reroute.decorators import requires
 
 @requires("admin")
 def delete(self):
@@ -35,8 +39,11 @@ def delete(self):
 
 ## Validation
 
+!!! warning "Not Yet Implemented"
+    The `@validate` decorator is planned but not yet available. Use Pydantic models for validation.
+
 ```python
-from reroute import validate
+from reroute.decorators import validate
 
 @validate(schema)
 def post(self):

@@ -5,7 +5,8 @@ Protect your API with rate limiting.
 ## Basic Rate Limiting
 
 ```python
-from reroute import RouteBase, rate_limit
+from reroute import RouteBase
+from reroute.decorators import rate_limit
 
 class APIRoutes(RouteBase):
     @rate_limit("5/min")

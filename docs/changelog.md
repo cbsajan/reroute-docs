@@ -2,7 +2,25 @@
 
 All notable changes to REROUTE are documented here.
 
-## [0.1.2] - 20-11-2025
+## [Unreleased] - 2025-11-21
+
+### Documentation
+- **BREAKING**: Fixed incorrect decorator imports throughout documentation
+  - Changed `from reroute import rate_limit, cache` to `from reroute.decorators import`
+  - Affects: quickstart, API reference, guides, and all examples
+- Updated quickstart guide to use CLI commands instead of manual file creation
+  - Replaced `mkdir` commands with `reroute init`
+  - Replaced manual code writing with `reroute create route`
+  - Reduced setup time from 5 minutes to 2 minutes
+- Added warnings for unimplemented decorators (`@requires`, `@validate`, `@timeout`)
+- Created IMPLEMENTATION_STATUS.md tracking file for feature accuracy
+
+### Fixed
+- Documentation now accurately reflects actual REROUTE features
+- Removed fake features and methods from examples
+- Corrected import statements across all documentation pages
+
+## [0.1.2] - 2025-11-20
 
 ### Added
 - Lazy imports for optional framework dependencies
