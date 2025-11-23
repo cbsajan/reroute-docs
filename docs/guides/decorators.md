@@ -28,17 +28,22 @@ class MyRoutes(RouteBase):
 
 ## Validation
 
+REROUTE uses Pydantic models for request validation:
+
 ```python
 from reroute import RouteBase
-from reroute.decorators import validate
+from reroute.params import Body
+from pydantic import BaseModel
+
+class UserCreate(BaseModel):
+    name: str
+    age: int
 
 class MyRoutes(RouteBase):
-    @validate(schema={"name": str, "age": int})
-    def post(self):
-        return {"validated": True}
+    def post(self, user: UserCreate = Body()):
+        """Automatically validates request body against UserCreate schema"""
+        return {"validated": True, "user": user.dict()}
 ```
-
-For complex validation, use Pydantic models with `Body()` parameter.
 
 ## Combining Decorators
 
@@ -46,7 +51,13 @@ Stack multiple decorators for powerful route protection:
 
 ```python
 from reroute import RouteBase
-from reroute.decorators import rate_limit, cache, validate
+from reroute.decorators import rate_limit, cache
+from reroute.params import Body
+from pydantic import BaseModel
+
+class UserCreate(BaseModel):
+    email: str
+    name: str
 
 class MyRoutes(RouteBase):
     @rate_limit("10/min")
@@ -56,13 +67,12 @@ class MyRoutes(RouteBase):
         return {"data": "..."}
 
     @rate_limit("5/min")
-    @validate(schema={"email": str, "name": str})
-    def post(self):
-        """Rate-limited and validated endpoint"""
-        return {"created": True}
+    def post(self, user: UserCreate = Body()):
+        """Rate-limited endpoint with Pydantic validation"""
+        return {"created": True, "user": user.dict()}
 ```
 
-Decorators are applied from bottom to top (validate → rate_limit).
+Decorators are applied from bottom to top (innermost first).
 
 ## Learn More
 

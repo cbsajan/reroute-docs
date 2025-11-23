@@ -112,7 +112,7 @@ nav:
     - Production: deployment/production.md
     - Docker: deployment/docker.md
   - Changelog: changelog.md
-  - Implementation Status: IMPLEMENTATION_STATUS.md
+
   - Contributing: contributing.md
 
 # Extra
