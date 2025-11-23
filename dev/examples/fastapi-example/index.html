@@ -2772,26 +2772,33 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Create a new REROUTE project</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>reroute<span class="w"> </span>init
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Choose FastAPI when prompted</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>?<span class="w"> </span>Select<span class="w"> </span>framework:<span class="w"> </span>FastAPI
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>?<span class="w"> </span>Project<span class="w"> </span>name:<span class="w"> </span>my-fastapi-api
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>?<span class="w"> </span>Host:<span class="w"> </span><span class="m">0</span>.0.0.0
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>?<span class="w"> </span>Port:<span class="w"> </span><span class="m">7376</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># Navigate to project directory</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="nb">cd</span><span class="w"> </span>my-fastapi-api
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1"># Generate user model (Pydantic schemas)</span>
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>reroute<span class="w"> </span>create<span class="w"> </span>model<span class="w"> </span>--name<span class="w"> </span>User
-<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1"># Generate user routes (handles both list and individual user operations)</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="c1"># Add --http-test flag to generate .http test file automatically</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>reroute<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>--path<span class="w"> </span>/users<span class="w"> </span>--name<span class="w"> </span>UserRoutes<span class="w"> </span>--methods<span class="w"> </span>GET,POST,PUT,DELETE<span class="w"> </span>--http-test
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Interactive prompts:</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>?<span class="w"> </span>Project<span class="w"> </span>name:<span class="w"> </span>my-fastapi-api
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>?<span class="w"> </span>Which<span class="w"> </span>framework<span class="w"> </span>would<span class="w"> </span>you<span class="w"> </span>like<span class="w"> </span>to<span class="w"> </span>use?<span class="w"> </span>fastapi
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>?<span class="w"> </span>Would<span class="w"> </span>you<span class="w"> </span>like<span class="w"> </span>to<span class="w"> </span>generate<span class="w"> </span><span class="nb">test</span><span class="w"> </span>cases?<span class="w"> </span>Yes
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1"># Review and confirm:</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># Project Name: my-fastapi-api</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="c1"># Framework: FASTAPI</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="c1"># Host: 0.0.0.0</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1"># Port: 7376</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="c1"># Include Tests: Yes</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>?<span class="w"> </span>Does<span class="w"> </span>this<span class="w"> </span>look<span class="w"> </span>correct?<span class="w"> </span>Yes
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="c1"># Navigate to project directory</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="nb">cd</span><span class="w"> </span>my-fastapi-api
 <a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>
-<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="c1"># Generate product routes with HTTP test file</span>
-<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>reroute<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>--path<span class="w"> </span>/products<span class="w"> </span>--name<span class="w"> </span>ProductRoutes<span class="w"> </span>--methods<span class="w"> </span>GET,POST<span class="w"> </span>--http-test
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="c1"># Generate user model (Pydantic schemas)</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>reroute<span class="w"> </span>create<span class="w"> </span>model<span class="w"> </span>--name<span class="w"> </span>User
 <a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>
-<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="c1"># Your project structure is now ready!</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="c1"># Generate user routes (handles both list and individual user operations)</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="c1"># Add --http-test flag to generate .http test file automatically</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>reroute<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>--path<span class="w"> </span>/users<span class="w"> </span>--name<span class="w"> </span>UserRoutes<span class="w"> </span>--methods<span class="w"> </span>GET,POST,PUT,DELETE<span class="w"> </span>--http-test
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="c1"># Generate product routes with HTTP test file</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>reroute<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>--path<span class="w"> </span>/products<span class="w"> </span>--name<span class="w"> </span>ProductRoutes<span class="w"> </span>--methods<span class="w"> </span>GET,POST<span class="w"> </span>--http-test
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="c1"># Your project structure is now ready!</span>
 </code></pre></div>
 <p><strong>Note</strong>: The <code>--http-test</code> flag is optional. If included, REROUTE automatically generates a <code>.http</code> test file with pre-configured API test requests for the route.</p>
 <p><strong>Generated Structure:</strong>
