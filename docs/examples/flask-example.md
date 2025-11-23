@@ -25,11 +25,18 @@ my-flask-api/
 # Create a new REROUTE project
 reroute init
 
-# Choose Flask when prompted
-? Select framework: Flask
+# Interactive prompts:
 ? Project name: my-flask-api
-? Host: 0.0.0.0
-? Port: 7376
+? Which framework would you like to use? flask
+? Would you like to generate test cases? Yes
+
+# Review and confirm:
+# Project Name: my-flask-api
+# Framework: FLASK
+# Host: 0.0.0.0
+# Port: 7376
+# Include Tests: Yes
+? Does this look correct? Yes
 
 # Navigate to project directory
 cd my-flask-api
