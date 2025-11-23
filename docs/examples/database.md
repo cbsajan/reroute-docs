@@ -415,6 +415,201 @@ class HealthRoutes(RouteBase):
 
 ---
 
+## Peewee ORM
+
+Peewee is a lightweight ORM that's easy to learn and use.
+
+### Installation
+
+```bash
+pip install peewee
+```
+
+### Setup
+
+```python title="app/database.py"
+from peewee import *
+
+# SQLite database
+db = SqliteDatabase('app.db')
+
+# PostgreSQL example
+# db = PostgresqlDatabase('mydb', user='postgres', password='secret', host='localhost', port=5432)
+
+class BaseModel(Model):
+    class Meta:
+        database = db
+
+class User(BaseModel):
+    username = CharField(unique=True)
+    email = CharField()
+    created_at = DateTimeField(constraints=[SQL('DEFAULT CURRENT_TIMESTAMP')])
+
+# Create tables
+db.connect()
+db.create_tables([User])
+```
+
+### Using in Routes
+
+```python title="app/routes/users/page.py"
+from reroute import RouteBase
+from reroute.params import Body, Query
+from app.database import User
+from pydantic import BaseModel
+
+class UserCreate(BaseModel):
+    username: str
+    email: str
+
+class UsersRoutes(RouteBase):
+    tag = "Users"
+
+    def get(self, skip: int = Query(0), limit: int = Query(100)):
+        """Get all users with pagination"""
+        users = list(User.select().offset(skip).limit(limit).dicts())
+        return {"users": users, "total": User.select().count()}
+
+    def post(self, user: UserCreate = Body()):
+        """Create a new user"""
+        new_user = User.create(**user.dict())
+        return {"id": new_user.id, **user.dict()}
+
+    def delete(self, user_id: int = Query(...)):
+        """Delete a user by ID"""
+        deleted = User.delete_by_id(user_id)
+        if deleted:
+            return {"deleted": True, "id": user_id}
+        return {"error": "User not found"}, 404
+```
+
+### Transactions
+
+```python
+from peewee import Database
+
+def post(self, user: UserCreate = Body()):
+    """Create user with transaction"""
+    with db.atomic():  # Automatic rollback on exception
+        user = User.create(**user.dict())
+        # Other operations...
+        return {"id": user.id}
+```
+
+---
+
+## Raw SQL
+
+For maximum control, use raw SQL queries with a database driver.
+
+### SQLite Example
+
+```python title="app/database.py"
+import sqlite3
+from contextlib import contextmanager
+
+DATABASE_PATH = 'app.db'
+
+@contextmanager
+def get_db():
+    """Context manager for database connections"""
+    conn = sqlite3.connect(DATABASE_PATH)
+    conn.row_factory = sqlite3.Row  # Return rows as dictionaries
+    try:
+        yield conn
+    finally:
+        conn.close()
+
+def init_db():
+    """Initialize database schema"""
+    with get_db() as conn:
+        conn.execute('''
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT UNIQUE NOT NULL,
+                email TEXT NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        conn.commit()
+```
+
+### Using in Routes
+
+```python title="app/routes/users/page.py"
+from reroute import RouteBase
+from reroute.params import Body, Query
+from app.database import get_db
+from pydantic import BaseModel
+
+class UserCreate(BaseModel):
+    username: str
+    email: str
+
+class UsersRoutes(RouteBase):
+    tag = "Users"
+
+    def get(self, skip: int = Query(0), limit: int = Query(100)):
+        """Get all users with raw SQL"""
+        with get_db() as conn:
+            cursor = conn.execute(
+                'SELECT * FROM users ORDER BY id LIMIT ? OFFSET ?',
+                (limit, skip)
+            )
+            users = [dict(row) for row in cursor.fetchall()]
+
+            count = conn.execute('SELECT COUNT(*) FROM users').fetchone()[0]
+
+            return {"users": users, "total": count}
+
+    def post(self, user: UserCreate = Body()):
+        """Create user with raw SQL"""
+        with get_db() as conn:
+            cursor = conn.execute(
+                'INSERT INTO users (username, email) VALUES (?, ?)',
+                (user.username, user.email)
+            )
+            conn.commit()
+            return {"id": cursor.lastrowid, **user.dict()}
+
+    def delete(self, user_id: int = Query(...)):
+        """Delete user by ID"""
+        with get_db() as conn:
+            cursor = conn.execute('DELETE FROM users WHERE id = ?', (user_id,))
+            conn.commit()
+            if cursor.rowcount > 0:
+                return {"deleted": True, "id": user_id}
+            return {"error": "User not found"}, 404
+```
+
+### PostgreSQL Example with psycopg2
+
+```python
+import psycopg2
+from psycopg2.extras import RealDictCursor
+from contextlib import contextmanager
+
+DATABASE_URL = "postgresql://user:password@localhost/dbname"
+
+@contextmanager
+def get_db():
+    """PostgreSQL connection context manager"""
+    conn = psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
+    try:
+        yield conn
+    except Exception:
+        conn.rollback()
+        raise
+    else:
+        conn.commit()
+    finally:
+        conn.close()
+
+# Usage in routes (same pattern as SQLite example above)
+```
+
+---
+
 ## Next Steps
 
 - [API Reference](../api/index.md) - Complete API documentation

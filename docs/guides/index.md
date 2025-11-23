@@ -48,6 +48,12 @@ Comprehensive guides to master REROUTE's features.
 
     Configure cross-origin requests
 
+-   :material-tools: [**Troubleshooting**](troubleshooting.md)
+
+    ---
+
+    Common issues and solutions
+
 </div>
 
 ## Topics
@@ -58,6 +64,7 @@ Comprehensive guides to master REROUTE's features.
 - [Lifecycle Hooks](lifecycle-hooks.md) - before_request, after_request, on_error
 - [Configuration](configuration.md) - Custom configuration options
 - [CORS Setup](cors.md) - Enable and configure CORS
+- [Troubleshooting](troubleshooting.md) - Common issues and solutions
 
 ## What's Next?
 

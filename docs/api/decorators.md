@@ -32,53 +32,38 @@ def get(self):
 **Parameters:**
 - `duration` (int): Cache duration in seconds
 
-## validate
+## Request Validation
 
-Validate request data against a schema.
-
-```python
-from reroute.decorators import validate
-
-@validate(schema={"name": str, "age": int})
-def post(self):
-    return {"validated": True}
-```
-
-**Parameters:**
-- `schema` (Dict[str, type], optional): Schema defining expected field types
-- `validator_func` (Callable, optional): Custom validation function
-
-**Example with custom validator:**
-```python
-def validate_user_data(data):
-    if data.get("age", 0) < 18:
-        raise ValueError("User must be 18 or older")
-    return True
-
-@validate(validator_func=validate_user_data)
-def post(self):
-    return {"validated": True}
-```
-
-**Note:** For complex validation, consider using Pydantic models with `Body()` parameter instead.
-
-## timeout
-
-Set request timeout to prevent long-running requests.
+REROUTE uses Pydantic models for request validation instead of decorators:
 
 ```python
-from reroute.decorators import timeout
+from reroute import RouteBase
+from reroute.params import Body
+from pydantic import BaseModel, field_validator
 
-@timeout(5)
-def get(self):
-    # This request will timeout after 5 seconds
-    return {"data": "..."}
+class UserCreate(BaseModel):
+    name: str
+    age: int
+
+    @field_validator('age')
+    def validate_age(cls, v):
+        if v < 18:
+            raise ValueError('User must be 18 or older')
+        return v
+
+class MyRoutes(RouteBase):
+    def post(self, user: UserCreate = Body()):
+        """Request body is automatically validated against UserCreate schema"""
+        return {"validated": True, "user": user.dict()}
 ```
 
-**Parameters:**
-- `seconds` (int): Timeout in seconds
+**Advantages:**
+- Automatic validation and error messages
+- Type hints and IDE autocomplete
+- OpenAPI schema generation
+- Field validation with `@field_validator`
 
-**Note:** If request exceeds timeout, it will be terminated and return a timeout error.
+See [Database Examples](../examples/database.md) for more validation patterns.
 
 ## log_requests
 

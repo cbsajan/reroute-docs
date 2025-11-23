@@ -4,9 +4,17 @@ Build your first REROUTE application in 2 minutes using CLI commands!
 
 ## Step 1: Install REROUTE
 
-```bash
-pip install reroute[fastapi]
-```
+=== "pip"
+
+    ```bash
+    pip install reroute[fastapi]
+    ```
+
+=== "uv (faster)"
+
+    ```bash
+    uv pip install reroute[fastapi]
+    ```
 
 ## Step 2: Initialize Your Project
 
@@ -25,18 +33,30 @@ my-reroute-app/
 │   ├── __init__.py
 │   └── routes/
 │       └── __init__.py
-├── main.py          # Auto-generated entry point
-├── .gitignore
-└── requirements.txt
+├── main.py           # Auto-generated entry point
+├── pyproject.toml    # Modern dependency management (v0.1.5+)
+├── requirements.txt  # Legacy (will be removed in v0.3.0)
+└── .gitignore
 ```
 
 **Optional but recommended:** Install project dependencies:
 
-```bash
-pip install -r requirements.txt
-```
+=== "pip"
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+=== "uv (faster)"
+
+    ```bash
+    uv pip install -e .
+    ```
 
 This ensures all required packages (FastAPI, uvicorn, etc.) are installed for your project.
+
+!!! info "Modern Python Packaging"
+    Starting with v0.1.5, projects include `pyproject.toml` for modern dependency management. Use `uv` for 10-100x faster installations!
 
 ## Step 3: Generate a Route
 
