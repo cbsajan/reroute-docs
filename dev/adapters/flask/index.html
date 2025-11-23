@@ -2634,7 +2634,7 @@
 <a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Welcome endpoint&quot;&quot;&quot;</span>
 <a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="k">return</span> <span class="p">{</span>
 <a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>        <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Welcome to My API&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>        <span class="s2">&quot;docs&quot;</span><span class="p">:</span> <span class="s2">&quot;/swagger/&quot;</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>        <span class="s2">&quot;docs&quot;</span><span class="p">:</span> <span class="s2">&quot;/docs&quot;</span>  <span class="c1"># Swagger UI path (configurable via DOCS_PATH)</span>
 <a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    <span class="p">}</span>
 <a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>
 <a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="c1"># Run server</span>
@@ -2667,12 +2667,13 @@
 </code></pre></div>
 <p><strong>Note</strong>: ReDoc is disabled for Flask due to broken CDN URLs in Spectree. Use Swagger UI or Scalar UI instead.</p>
 <h2 id="documentation-uis">Documentation UIs<a class="headerlink" href="#documentation-uis" title="Permanent link">&para;</a></h2>
-<p>When OpenAPI is enabled, the following endpoints are available:</p>
+<p>When OpenAPI is enabled, the following endpoints are available (paths are configurable):</p>
 <ul>
-<li><strong>Swagger UI</strong>: <code>http://localhost:7376/swagger/</code></li>
-<li><strong>Scalar UI</strong>: <code>http://localhost:7376/scalar/</code></li>
-<li><strong>OpenAPI Spec</strong>: <code>http://localhost:7376/openapi.json</code></li>
+<li><strong>Swagger UI</strong>: <code>http://localhost:7376/docs</code> (configured via <code>DOCS_PATH</code>)</li>
+<li><strong>Scalar UI</strong>: <code>http://localhost:7376/scalar/</code> (separate endpoint, always available when OpenAPI enabled)</li>
+<li><strong>OpenAPI Spec</strong>: <code>http://localhost:7376/openapi.json</code> (configured via <code>JSON_PATH</code>)</li>
 </ul>
+<p><strong>Note:</strong> The actual paths depend on your configuration. The defaults shown above match the config example.</p>
 <h3 id="disabling-documentation">Disabling Documentation<a class="headerlink" href="#disabling-documentation" title="Permanent link">&para;</a></h3>
 <p>To disable specific UIs, set their paths to <code>None</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">OpenAPI</span><span class="p">:</span>

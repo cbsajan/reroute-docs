@@ -2166,6 +2166,78 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#problem-1-command-not-found-reroute" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem 1: Command not found: reroute
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-2-invalid-value-for-path-path-cannot-contain-invalid-character" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem 2: Invalid value for '--path': Path cannot contain invalid character
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-3-not-in-a-reroute-project-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem 3: Not in a REROUTE project directory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-4-class-already-exists-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem 4: Class already exists error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-5-generated-code-has-incorrect-imports" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem 5: Generated code has incorrect imports
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#learn-more" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2211,11 +2283,11 @@
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">cd</span><span class="w"> </span>my-project
 </code></pre></div>
 <h3 id="create-a-route">Create a Route<a class="headerlink" href="#create-a-route" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>reroute<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>user
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>reroute<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>--path<span class="w"> </span>/user<span class="w"> </span>--name<span class="w"> </span>User
 </code></pre></div>
 <p>This creates <code>app/routes/user/page.py</code> with boilerplate code.</p>
 <h3 id="create-a-nested-route">Create a Nested Route<a class="headerlink" href="#create-a-nested-route" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>reroute<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>user/profile
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>reroute<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>--path<span class="w"> </span>/user/profile<span class="w"> </span>--name<span class="w"> </span>UserProfile
 </code></pre></div>
 <p>Creates <code>app/routes/user/profile/page.py</code>.</p>
 <h2 id="available-commands">Available Commands<a class="headerlink" href="#available-commands" title="Permanent link">&para;</a></h2>
@@ -2258,12 +2330,12 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>reroute<span class="w"> </span>init<span class="w"> </span>my-app<span class="w"> </span>--framework<span class="w"> </span>flask
 </code></pre></div>
 <h3 id="create-multiple-routes">Create Multiple Routes<a class="headerlink" href="#create-multiple-routes" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>reroute<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>user
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>reroute<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>product
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>reroute<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>order
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>reroute<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>--path<span class="w"> </span>/user<span class="w"> </span>--name<span class="w"> </span>User
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>reroute<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>--path<span class="w"> </span>/product<span class="w"> </span>--name<span class="w"> </span>Product
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>reroute<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>--path<span class="w"> </span>/order<span class="w"> </span>--name<span class="w"> </span>Order
 </code></pre></div>
 <h3 id="create-with-custom-methods">Create with Custom Methods<a class="headerlink" href="#create-with-custom-methods" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>reroute<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>user<span class="w"> </span>--methods<span class="w"> </span>GET<span class="w"> </span>POST<span class="w"> </span>PUT<span class="w"> </span>DELETE
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>reroute<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>--path<span class="w"> </span>/user<span class="w"> </span>--name<span class="w"> </span>User<span class="w"> </span>--methods<span class="w"> </span>GET,POST,PUT,DELETE
 </code></pre></div>
 <h2 id="interactive-mode">Interactive Mode<a class="headerlink" href="#interactive-mode" title="Permanent link">&para;</a></h2>
 <p>The CLI features an interactive mode with auto-completion:</p>
@@ -2278,6 +2350,59 @@
 <a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="nt">&quot;template_style&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;minimal&quot;</span>
 <a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="p">}</span>
 </code></pre></div>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="problem-1-command-not-found-reroute">Problem 1: Command not found: reroute<a class="headerlink" href="#problem-1-command-not-found-reroute" title="Permanent link">&para;</a></h3>
+<p><strong>Error:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>bash:<span class="w"> </span>reroute:<span class="w"> </span><span class="nb">command</span><span class="w"> </span>not<span class="w"> </span>found
+</code></pre></div></p>
+<p><strong>Solutions:</strong>
+1. Install REROUTE: <code>pip install reroute</code>
+2. Ensure pip bin directory is in PATH:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.local/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span><span class="w">  </span><span class="c1"># Linux/Mac</span>
+</code></pre></div>
+3. Use python module syntax: <code>python -m reroute --version</code></p>
+<h3 id="problem-2-invalid-value-for-path-path-cannot-contain-invalid-character">Problem 2: Invalid value for '--path': Path cannot contain invalid character<a class="headerlink" href="#problem-2-invalid-value-for-path-path-cannot-contain-invalid-character" title="Permanent link">&para;</a></h3>
+<p><strong>Error:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Error: Invalid value for &#39;--path&#39;: Path cannot contain invalid character: :
+</code></pre></div></p>
+<p><strong>Cause:</strong>
+Trying to use <code>:id</code> syntax in path (not supported on Windows)</p>
+<p><strong>Solution:</strong>
+Use query parameters instead of path parameters in folder names:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># Wrong:</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>reroute<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>--path<span class="w"> </span>/users/:id
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="c1"># Correct:</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>reroute<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>--path<span class="w"> </span>/users<span class="w"> </span>--name<span class="w"> </span>Users
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="c1"># Then use query parameter: user_id: int = Query(...)</span>
+</code></pre></div></p>
+<h3 id="problem-3-not-in-a-reroute-project-directory">Problem 3: Not in a REROUTE project directory<a class="headerlink" href="#problem-3-not-in-a-reroute-project-directory" title="Permanent link">&para;</a></h3>
+<p><strong>Error:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>[ERROR] Not in a REROUTE project directory!
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>Run &#39;reroute init&#39; first to create a project.
+</code></pre></div></p>
+<p><strong>Solution:</strong>
+1. Initialize a project first: <code>reroute init my-api</code>
+2. Navigate into the project: <code>cd my-api</code>
+3. Then run other commands: <code>reroute create route --path /users --name Users</code></p>
+<h3 id="problem-4-class-already-exists-error">Problem 4: Class already exists error<a class="headerlink" href="#problem-4-class-already-exists-error" title="Permanent link">&para;</a></h3>
+<p><strong>Error:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>[ERROR] Class &#39;Users&#39; already exists in app/routes/users/page.py!
+</code></pre></div></p>
+<p><strong>Cause:</strong>
+Trying to create a route with a class name that already exists</p>
+<p><strong>Solutions:</strong>
+1. Use a different name: <code>reroute create route --path /users --name UserRoutes</code>
+2. Delete the existing route file first
+3. Use <code>--methods</code> to add methods to existing route</p>
+<h3 id="problem-5-generated-code-has-incorrect-imports">Problem 5: Generated code has incorrect imports<a class="headerlink" href="#problem-5-generated-code-has-incorrect-imports" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom:</strong>
+Generated code imports from <code>fastapi</code> instead of <code>reroute.params</code></p>
+<p><strong>Solution:</strong>
+Update REROUTE to the latest version:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>reroute
+</code></pre></div></p>
+<p>Templates were fixed in v0.1.4 to use cross-framework imports.</p>
 <h2 id="learn-more">Learn More<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="commands/">Command Reference</a> - Detailed command documentation</li>
