@@ -35,7 +35,7 @@ reroute init
 cd my-flask-api
 
 # Generate user model (Pydantic schemas)
-reroute create model --name user
+reroute create model --name User
 
 # Generate user routes (handles both list and individual user operations)
 # Add --http-test flag to generate .http test file automatically
@@ -508,6 +508,99 @@ curl -X DELETE "http://localhost:7376/users?user_id=1"
 8. **Error Handling** - Proper HTTP status codes
 9. **File-Based Routing** - Organized route structure
 10. **Auto-Generated HTTP Tests** - `.http` files with `--http-test` flag
+
+## Troubleshooting
+
+### Problem 1: IndentationError in config.py
+
+**Error:**
+```
+IndentationError: unexpected indent
+```
+
+**Solution:**
+This is caused by a bug in earlier versions of the REROUTE template. Update REROUTE to the latest version:
+```bash
+pip install --upgrade reroute
+```
+
+Or manually fix `config.py` by ensuring each line under `class OpenAPI:` is properly indented with 8 spaces.
+
+### Problem 2: ModuleNotFoundError: No module named 'spectree'
+
+**Error:**
+```
+ModuleNotFoundError: No module named 'spectree'
+```
+
+**Solution:**
+Flask adapter requires Spectree for OpenAPI support. Install it:
+```bash
+pip install spectree
+```
+
+Or install with Flask extras:
+```bash
+pip install reroute[flask]
+```
+
+### Problem 3: Routes not being registered
+
+**Symptom:** Routes defined in `app/routes/` are not accessible (404 errors)
+
+**Common Causes:**
+1. **Missing page.py file:** Route files must be named `page.py`
+2. **Wrong directory structure:** Ensure routes are in `app/routes/`
+3. **Class not inheriting RouteBase:** Route class must inherit from `reroute.RouteBase`
+
+**Solution:**
+```python
+# Correct structure:
+# app/routes/users/page.py
+from reroute import RouteBase
+
+class UserRoutes(RouteBase):  # Must inherit RouteBase
+    def get(self):
+        return {"message": "Users"}
+```
+
+### Problem 4: Swagger UI shows 404
+
+**Symptom:** Accessing `/swagger/` returns 404
+
+**Solutions:**
+1. Check `config.py` has OpenAPI enabled:
+```python
+class OpenAPI:
+    ENABLE = True
+    DOCS_PATH = "/docs"
+```
+
+2. Ensure Spectree is installed: `pip install spectree`
+
+3. Verify Flask app is using the adapter:
+```python
+adapter = FlaskAdapter(flask_app=app, app_dir="./app", config=AppConfig)
+adapter.register_routes()
+```
+
+### Problem 5: CORS errors in browser
+
+**Error:** `Access-Control-Allow-Origin` header missing
+
+**Solution:**
+Enable CORS in `config.py`:
+```python
+class AppConfig(Config):
+    ENABLE_CORS = True
+    CORS_ALLOW_ORIGINS = ["http://localhost:3000"]  # Add your frontend URL
+    CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "DELETE"]
+```
+
+Or install Flask-CORS manually if not working:
+```bash
+pip install flask-cors
+```
 
 ## Next Steps
 

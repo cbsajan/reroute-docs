@@ -32,68 +32,75 @@ def get(self):
 **Parameters:**
 - `duration` (int): Cache duration in seconds
 
-## requires
-
-!!! warning "Not Yet Implemented"
-    This decorator is planned but not yet available.
-
-Require specific permissions or roles.
-
-```python
-from reroute.decorators import requires
-
-@requires("admin")
-def delete(self):
-    return {"deleted": True}
-```
-
-**Parameters:**
-- `role` (str): Required role
-
 ## validate
-
-!!! warning "Not Yet Implemented"
-    This decorator is planned but not yet available. Use Pydantic models for validation instead.
 
 Validate request data against a schema.
 
 ```python
 from reroute.decorators import validate
 
-@validate(schema)
+@validate(schema={"name": str, "age": int})
 def post(self):
     return {"validated": True}
 ```
 
 **Parameters:**
-- `schema`: Validation schema
+- `schema` (Dict[str, type], optional): Schema defining expected field types
+- `validator_func` (Callable, optional): Custom validation function
+
+**Example with custom validator:**
+```python
+def validate_user_data(data):
+    if data.get("age", 0) < 18:
+        raise ValueError("User must be 18 or older")
+    return True
+
+@validate(validator_func=validate_user_data)
+def post(self):
+    return {"validated": True}
+```
+
+**Note:** For complex validation, consider using Pydantic models with `Body()` parameter instead.
 
 ## timeout
 
-!!! warning "Not Yet Implemented"
-    This decorator is planned but not yet available.
-
-Set request timeout.
+Set request timeout to prevent long-running requests.
 
 ```python
 from reroute.decorators import timeout
 
 @timeout(5)
 def get(self):
+    # This request will timeout after 5 seconds
     return {"data": "..."}
 ```
 
 **Parameters:**
 - `seconds` (int): Timeout in seconds
 
+**Note:** If request exceeds timeout, it will be terminated and return a timeout error.
+
 ## log_requests
 
-Automatic request logging.
+Automatic request logging with customizable logger.
 
 ```python
-from reroute import log_requests
+from reroute.decorators import log_requests
 
 @log_requests()
 def get(self):
     return {"data": "..."}
 ```
+
+**Example with custom logger:**
+```python
+def custom_logger(request, response, duration):
+    print(f"{request.method} {request.path} - {response.status_code} ({duration}ms)")
+
+@log_requests(logger_func=custom_logger)
+def get(self):
+    return {"data": "..."}
+```
+
+**Parameters:**
+- `logger_func` (Callable, optional): Custom logging function that receives (request, response, duration)

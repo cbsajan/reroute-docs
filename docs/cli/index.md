@@ -28,7 +28,7 @@ cd my-project
 ### Create a Route
 
 ```bash
-reroute create route user
+reroute create route --path /user --name User
 ```
 
 This creates `app/routes/user/page.py` with boilerplate code.
@@ -36,7 +36,7 @@ This creates `app/routes/user/page.py` with boilerplate code.
 ### Create a Nested Route
 
 ```bash
-reroute create route user/profile
+reroute create route --path /user/profile --name UserProfile
 ```
 
 Creates `app/routes/user/profile/page.py`.
@@ -97,15 +97,15 @@ reroute init my-app --framework flask
 ### Create Multiple Routes
 
 ```bash
-reroute create route user
-reroute create route product
-reroute create route order
+reroute create route --path /user --name User
+reroute create route --path /product --name Product
+reroute create route --path /order --name Order
 ```
 
 ### Create with Custom Methods
 
 ```bash
-reroute create route user --methods GET POST PUT DELETE
+reroute create route --path /user --name User --methods GET,POST,PUT,DELETE
 ```
 
 ## Interactive Mode
@@ -129,6 +129,85 @@ CLI behavior can be customized via `.rerouterc` file:
   "template_style": "minimal"
 }
 ```
+
+## Troubleshooting
+
+### Problem 1: Command not found: reroute
+
+**Error:**
+```bash
+bash: reroute: command not found
+```
+
+**Solutions:**
+1. Install REROUTE: `pip install reroute`
+2. Ensure pip bin directory is in PATH:
+   ```bash
+   export PATH="$HOME/.local/bin:$PATH"  # Linux/Mac
+   ```
+3. Use python module syntax: `python -m reroute --version`
+
+### Problem 2: Invalid value for '--path': Path cannot contain invalid character
+
+**Error:**
+```
+Error: Invalid value for '--path': Path cannot contain invalid character: :
+```
+
+**Cause:**
+Trying to use `:id` syntax in path (not supported on Windows)
+
+**Solution:**
+Use query parameters instead of path parameters in folder names:
+```bash
+# Wrong:
+reroute create route --path /users/:id
+
+# Correct:
+reroute create route --path /users --name Users
+# Then use query parameter: user_id: int = Query(...)
+```
+
+### Problem 3: Not in a REROUTE project directory
+
+**Error:**
+```
+[ERROR] Not in a REROUTE project directory!
+Run 'reroute init' first to create a project.
+```
+
+**Solution:**
+1. Initialize a project first: `reroute init my-api`
+2. Navigate into the project: `cd my-api`
+3. Then run other commands: `reroute create route --path /users --name Users`
+
+### Problem 4: Class already exists error
+
+**Error:**
+```
+[ERROR] Class 'Users' already exists in app/routes/users/page.py!
+```
+
+**Cause:**
+Trying to create a route with a class name that already exists
+
+**Solutions:**
+1. Use a different name: `reroute create route --path /users --name UserRoutes`
+2. Delete the existing route file first
+3. Use `--methods` to add methods to existing route
+
+### Problem 5: Generated code has incorrect imports
+
+**Symptom:**
+Generated code imports from `fastapi` instead of `reroute.params`
+
+**Solution:**
+Update REROUTE to the latest version:
+```bash
+pip install --upgrade reroute
+```
+
+Templates were fixed in v0.1.4 to use cross-framework imports.
 
 ## Learn More
 

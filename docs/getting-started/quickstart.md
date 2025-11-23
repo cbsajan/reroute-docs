@@ -30,6 +30,14 @@ my-reroute-app/
 └── requirements.txt
 ```
 
+**Optional but recommended:** Install project dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+This ensures all required packages (FastAPI, uvicorn, etc.) are installed for your project.
+
 ## Step 3: Generate a Route
 
 Use the CLI to generate your first route:

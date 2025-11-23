@@ -39,7 +39,7 @@ def root():
     """Welcome endpoint"""
     return {
         "message": "Welcome to My API",
-        "docs": "/swagger/"
+        "docs": "/docs"  # Swagger UI path (configurable via DOCS_PATH)
     }
 
 # Run server
@@ -79,11 +79,13 @@ class AppConfig(Config):
 
 ## Documentation UIs
 
-When OpenAPI is enabled, the following endpoints are available:
+When OpenAPI is enabled, the following endpoints are available (paths are configurable):
 
-- **Swagger UI**: `http://localhost:7376/swagger/`
-- **Scalar UI**: `http://localhost:7376/scalar/`
-- **OpenAPI Spec**: `http://localhost:7376/openapi.json`
+- **Swagger UI**: `http://localhost:7376/docs` (configured via `DOCS_PATH`)
+- **Scalar UI**: `http://localhost:7376/scalar/` (separate endpoint, always available when OpenAPI enabled)
+- **OpenAPI Spec**: `http://localhost:7376/openapi.json` (configured via `JSON_PATH`)
+
+**Note:** The actual paths depend on your configuration. The defaults shown above match the config example.
 
 ### Disabling Documentation
 

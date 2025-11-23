@@ -35,7 +35,7 @@ reroute init
 cd my-fastapi-api
 
 # Generate user model (Pydantic schemas)
-reroute create model --name user
+reroute create model --name User
 
 # Generate user routes (handles both list and individual user operations)
 # Add --http-test flag to generate .http test file automatically
@@ -216,12 +216,13 @@ from fastapi import HTTPException, BackgroundTasks, Depends  # ✅ FastAPI-speci
 **app/routes/users/page.py**
 
 ```python
+import asyncio
+from typing import Optional
+
 from reroute import RouteBase
 from reroute.params import Query, Body  # REROUTE's parameter injection
 from fastapi import HTTPException  # FastAPI's exception handling
 from app.models.user import UserCreate, UserUpdate, UserResponse
-from typing import Optional
-import asyncio
 
 # In-memory storage (use async database in production)
 users_db = []
@@ -349,11 +350,12 @@ class UserRoutes(RouteBase):
 **app/routes/products/page.py**
 
 ```python
+import asyncio
+
 from reroute import RouteBase
 from reroute.decorators import cache
 from reroute.params import Query  # REROUTE's parameter injection
 from fastapi import BackgroundTasks  # FastAPI's background tasks
-import asyncio
 
 class ProductRoutes(RouteBase):
     """Product management endpoints with caching"""
@@ -612,6 +614,111 @@ spec:
         - name: WORKERS
           value: "2"
 ```
+
+## Troubleshooting
+
+### Problem 1: IndentationError in config.py
+
+**Error:**
+```
+IndentationError: unexpected indent
+```
+
+**Solution:**
+This is caused by a bug in earlier versions of the REROUTE template. Update REROUTE to the latest version:
+```bash
+pip install --upgrade reroute
+```
+
+Or manually fix `config.py` by ensuring each line under `class OpenAPI:` is properly indented with 8 spaces.
+
+### Problem 2: Auto-reload not working
+
+**Symptom:** Changes to route files don't trigger server restart
+
+**Solutions:**
+1. Ensure `AUTO_RELOAD = True` in `config.py`:
+```python
+class AppConfig(Config):
+    AUTO_RELOAD = True
+```
+
+2. Run with reload enabled:
+```python
+adapter.run_server(reload=True)
+```
+
+3. Check uvicorn is installed: `pip install uvicorn[standard]`
+
+### Problem 3: RuntimeWarning: coroutine was never awaited
+
+**Error:**
+```
+RuntimeWarning: coroutine 'UserRoutes.get' was never awaited
+```
+
+**Solution:**
+Ensure async route methods are called with `await`:
+```python
+# Correct:
+async def get(self):
+    result = await some_async_function()
+    return result
+
+# Wrong:
+def get(self):  # Missing 'async'
+    result = await some_function()  # Can't await in non-async function
+```
+
+### Problem 4: HTTPException not returning proper status codes
+
+**Symptom:** All errors return 500 instead of specified status codes
+
+**Solution:**
+Use FastAPI's `HTTPException` for error handling:
+```python
+from fastapi import HTTPException  # FastAPI-specific
+
+async def get(self, user_id: int):
+    user = await get_user(user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
+```
+
+Don't return tuples like Flask - FastAPI uses `HTTPException`.
+
+### Problem 5: Pydantic validation errors
+
+**Error:**
+```
+pydantic.error_wrappers.ValidationError: 1 validation error
+```
+
+**Common Causes:**
+1. **Missing required fields:** Request body doesn't include all required fields
+2. **Wrong data types:** Sending string where int is expected
+3. **Email validation:** Invalid email format when using `EmailStr`
+
+**Solution:**
+1. Check your Pydantic model requirements:
+```python
+class UserCreate(BaseModel):
+    name: str  # Required
+    email: EmailStr  # Required and must be valid email
+    age: Optional[int] = None  # Optional
+```
+
+2. Send correct data in requests:
+```json
+{
+  "name": "John",
+  "email": "valid@email.com",
+  "age": 30
+}
+```
+
+3. Install email validation: `pip install pydantic[email]`
 
 ## Next Steps
 
