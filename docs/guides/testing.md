@@ -895,5 +895,5 @@ jobs:
 
 - [Error Handling](error-handling.md) - Test error scenarios
 - [Security](security.md) - Test authentication and authorization
-- [Hooks](../api/hooks.md) - Learn more about REROUTE hooks
+- [Lifecycle Hooks](lifecycle-hooks.md) - Learn more about REROUTE hooks
 - [Decorators](../api/decorators.md) - Learn more about REROUTE decorators

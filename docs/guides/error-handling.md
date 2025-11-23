@@ -488,5 +488,5 @@ def test_error_handling():
 ## Next Steps
 
 - [Security Best Practices](security.md) - Secure your error handling
-- [Logging](logging.md) - Set up proper error logging
-- [Testing](../guides/testing.md) - Test your error handlers
+- [Testing](testing.md) - Test your error handlers
+- [Lifecycle Hooks](lifecycle-hooks.md) - Learn about before_request, after_request, and on_error hooks

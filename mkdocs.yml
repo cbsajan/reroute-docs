@@ -82,6 +82,10 @@ nav:
     - Lifecycle Hooks: guides/lifecycle-hooks.md
     - Configuration: guides/configuration.md
     - CORS Setup: guides/cors.md
+    - Error Handling: guides/error-handling.md
+    - Security: guides/security.md
+    - Testing: guides/testing.md
+    - Troubleshooting: guides/troubleshooting.md
   - Adapters:
     - adapters/index.md
     - FastAPI: adapters/fastapi.md
