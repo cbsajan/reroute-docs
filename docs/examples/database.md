@@ -107,27 +107,32 @@ class User(Base):
 ```python title="app/routes/users/page.py"
 from reroute import RouteBase
 from reroute.params import Query, Body
-from app.database import get_db
+from app.database import SessionLocal
 from app.models.user import User
-from sqlalchemy.orm import Session
 
 class UsersRoutes(RouteBase):
     tag = "Users"
 
     def get(self, skip: int = Query(0), limit: int = Query(100)):
         """List all users with pagination"""
-        db: Session = next(get_db())
-        users = db.query(User).offset(skip).limit(limit).all()
-        return {"users": [{"id": u.id, "email": u.email, "name": u.name} for u in users]}
+        db = SessionLocal()
+        try:
+            users = db.query(User).offset(skip).limit(limit).all()
+            return {"users": [{"id": u.id, "email": u.email, "name": u.name} for u in users]}
+        finally:
+            db.close()
 
     def post(self, email: str = Body(...), name: str = Body(...)):
         """Create a new user"""
-        db: Session = next(get_db())
-        user = User(email=email, name=name)
-        db.add(user)
-        db.commit()
-        db.refresh(user)
-        return {"id": user.id, "email": user.email, "name": user.name}
+        db = SessionLocal()
+        try:
+            user = User(email=email, name=name)
+            db.add(user)
+            db.commit()
+            db.refresh(user)
+            return {"id": user.id, "email": user.email, "name": user.name}
+        finally:
+            db.close()
 ```
 
 ---

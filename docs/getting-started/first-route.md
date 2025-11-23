@@ -146,7 +146,7 @@ Each HTTP method can accept different parameters based on your framework:
         def get(self, request: Request):
             return {"ip": request.client.host}
 
-        def post(self, request: Request):
+        async def post(self, request: Request):
             body = await request.json()
             return {"received": body}
     ```

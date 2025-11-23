@@ -17,48 +17,52 @@ class MyRoutes(RouteBase):
 ## Caching
 
 ```python
+from reroute import RouteBase
 from reroute.decorators import cache
 
-@cache(duration=60)
-def get(self):
-    return {"data": "cached"}
-```
-
-## Authentication
-
-!!! warning "Not Yet Implemented"
-    The `@requires` decorator is planned but not yet available.
-
-```python
-from reroute.decorators import requires
-
-@requires("admin")
-def delete(self):
-    return {"deleted": True}
+class MyRoutes(RouteBase):
+    @cache(duration=60)
+    def get(self):
+        return {"data": "cached"}
 ```
 
 ## Validation
 
-!!! warning "Not Yet Implemented"
-    The `@validate` decorator is planned but not yet available. Use Pydantic models for validation.
-
 ```python
+from reroute import RouteBase
 from reroute.decorators import validate
 
-@validate(schema)
-def post(self):
-    return {"validated": True}
+class MyRoutes(RouteBase):
+    @validate(schema={"name": str, "age": int})
+    def post(self):
+        return {"validated": True}
 ```
+
+For complex validation, use Pydantic models with `Body()` parameter.
 
 ## Combining Decorators
 
+Stack multiple decorators for powerful route protection:
+
 ```python
-@rate_limit("10/min")
-@cache(duration=30)
-@requires("user")
-def get(self):
-    return {"data": "..."}
+from reroute import RouteBase
+from reroute.decorators import rate_limit, cache, validate
+
+class MyRoutes(RouteBase):
+    @rate_limit("10/min")
+    @cache(duration=30)
+    def get(self):
+        """Rate-limited and cached endpoint"""
+        return {"data": "..."}
+
+    @rate_limit("5/min")
+    @validate(schema={"email": str, "name": str})
+    def post(self):
+        """Rate-limited and validated endpoint"""
+        return {"created": True}
 ```
+
+Decorators are applied from bottom to top (validate → rate_limit).
 
 ## Learn More
 

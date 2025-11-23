@@ -40,18 +40,19 @@ class UserRoutes(RouteBase):
         return {"deleted": True}
 ```
 
-## Custom Rate Limit Response
+## How Rate Limiting Works
 
-```python
-class CustomRateLimit(RouteBase):
-    def on_error(self, error):
-        if isinstance(error, RateLimitExceeded):
-            return {
-                "error": "Rate limit exceeded",
-                "retry_after": error.retry_after
-            }
-        return {"error": str(error)}
+When a rate limit is exceeded, REROUTE automatically returns a `429 Too Many Requests` response:
+
+```json
+{
+  "error": "Rate limit exceeded",
+  "limit": "5/min",
+  "retry_after": 42
+}
 ```
+
+The `@rate_limit` decorator tracks requests per IP address and returns the error response automatically - no custom error handling needed!
 
 ## Testing
 
