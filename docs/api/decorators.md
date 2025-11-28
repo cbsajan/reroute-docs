@@ -119,7 +119,7 @@ class UserCreate(BaseModel):
 class MyRoutes(RouteBase):
     def post(self, user: UserCreate = Body()):
         """Request body is automatically validated"""
-        return {"validated": True, "user": user.dict()}
+        return {"validated": True, "user": user.model_dump()}
 ```
 
 **Advantages of Pydantic:**
@@ -166,22 +166,22 @@ def post(self):
 
 ## requires
 
-Authentication and authorization decorator.
+Authentication and authorization decorator with fail-safe design. **Enhanced in v0.2.0.**
 
 ```python
 from reroute.decorators import requires
 
-# Role-based authorization
-@requires("admin")
+# Role-based authorization with check function
+@requires("admin", check_func=lambda self: self.user.has_role("admin"))
 def delete(self):
     return {"deleted": True}
 
-# Multiple roles (OR logic)
-@requires("admin", "moderator")
+# Multiple roles (OR logic) - user needs at least one
+@requires("admin", "moderator", check_func=lambda self: self.user.has_any_role(["admin", "moderator"]))
 def put(self):
     return {"updated": True}
 
-# Custom authentication check
+# Authentication only (no role check)
 @requires(check_func=lambda self: self.is_authenticated())
 def get(self):
     return {"data": "..."}
@@ -189,13 +189,40 @@ def get(self):
 
 **Parameters:**
 - `*roles` (str): Required roles for access
-- `check_func` (Callable, optional): Custom authentication check function
+- `check_func` (Callable): Authentication/authorization check function that returns `True` or `False`
 
 **Returns:**
-- `401 Unauthorized` if authentication fails
-- `403 Forbidden` if authorization fails
+- `401 Unauthorized` if authentication fails (no roles specified)
+- `403 Forbidden` if authorization fails (roles specified but check failed)
 
-**Note:** Role-based checking requires integration with your auth system.
+!!! important "check_func Required for Role Checks"
+    When specifying roles, you must provide a `check_func` that validates the user's roles. This ensures explicit authorization logic in your application.
+
+**Example with Flask:**
+```python
+from reroute.decorators import requires
+from flask import g
+
+def is_admin(self):
+    return hasattr(g, 'user') and g.user.role == 'admin'
+
+@requires("admin", check_func=is_admin)
+def delete(self):
+    return {"deleted": True}
+```
+
+**Example with FastAPI:**
+```python
+from reroute.decorators import requires
+
+def check_auth(self, request=None):
+    # Your JWT/session validation logic
+    return request and hasattr(request.state, 'user')
+
+@requires(check_func=check_auth)
+def get(self, request):
+    return {"user": request.state.user}
+```
 
 ## log_requests
 

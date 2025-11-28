@@ -132,7 +132,7 @@ class UsersRoutes(RouteBase):
     def post(self, user: UserCreate = Body(..., description="User data")):
         return {
             "message": "User created",
-            "user": user.dict()
+            "user": user.model_dump()
         }
 ```
 
@@ -189,14 +189,42 @@ class FormRoutes(RouteBase):
 
 Handle file uploads.
 
+!!! note "Framework-Specific"
+    File handling differs between frameworks:
+
+    - **FastAPI**: Use `UploadFile` type for streaming large files
+    - **Flask**: Access files via `request.files`
+
+### FastAPI Example
+
 ```python
+from fastapi import UploadFile
 from reroute.params import File
 
 class UploadRoutes(RouteBase):
-    def post(self, file: bytes = File(..., description="Upload file")):
+    async def post(self, file: UploadFile = File(..., description="Upload file")):
+        contents = await file.read()
         return {
             "filename": file.filename,
-            "size": len(file)
+            "size": len(contents),
+            "content_type": file.content_type
+        }
+```
+
+### Flask Example
+
+```python
+from flask import request
+from reroute import RouteBase
+
+class UploadRoutes(RouteBase):
+    def post(self):
+        file = request.files.get('file')
+        if not file:
+            return {"error": "No file uploaded"}, 400
+        return {
+            "filename": file.filename,
+            "size": len(file.read())
         }
 ```
 
@@ -240,7 +268,7 @@ class UserDetailRoutes(RouteBase):
         # All parameters automatically extracted and validated
         return {
             "id": id,
-            "user": user.dict(),
+            "user": user.model_dump(),
             "force": force
         }
 ```
@@ -303,13 +331,14 @@ When validation fails, REROUTE returns a detailed error response:
 
 5. **Combine with Pydantic for complex validation**
    ```python
-   from pydantic import BaseModel, EmailStr, validator
+   from pydantic import BaseModel, EmailStr, field_validator
 
    class UserCreate(BaseModel):
        email: EmailStr
        age: int
 
-       @validator('age')
+       @field_validator('age')
+       @classmethod
        def validate_age(cls, v):
            if v < 18:
                raise ValueError('Must be 18 or older')

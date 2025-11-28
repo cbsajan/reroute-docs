@@ -24,7 +24,7 @@ adapter.register_routes()
 
 ## FlaskAdapter
 
-Integrate REROUTE with Flask (Coming Soon).
+Integrate REROUTE with Flask. Includes OpenAPI documentation via Spectree.
 
 ```python
 from reroute.adapters import FlaskAdapter
@@ -70,3 +70,61 @@ Scan and discover route files.
 ```python
 routes = adapter.discover_routes()
 ```
+
+### run_server()
+Start the development server with optional parameter overrides.
+
+```python
+# FastAPI
+adapter.run_server(port=8080, reload=True)
+
+# Flask
+adapter.run_server(port=5000, debug=True)
+```
+
+---
+
+## Quick Start Examples
+
+### FastAPI (Recommended for async)
+
+```python
+from fastapi import FastAPI
+from reroute.adapters import FastAPIAdapter
+from pathlib import Path
+
+app = FastAPI(title="My API")
+
+adapter = FastAPIAdapter(
+    fastapi_app=app,
+    app_dir=Path("./app")
+)
+adapter.register_routes()
+adapter.run_server(port=8000)
+```
+
+### Flask (Great for traditional apps)
+
+```python
+from flask import Flask
+from reroute.adapters import FlaskAdapter
+from pathlib import Path
+
+app = Flask(__name__)
+
+adapter = FlaskAdapter(
+    flask_app=app,
+    app_dir=Path("./app")
+)
+adapter.register_routes()
+adapter.run_server(port=5000)
+```
+
+---
+
+## See Also
+
+- [FastAPI Adapter Guide](../adapters/fastapi.md) - Complete FastAPI integration
+- [Flask Adapter Guide](../adapters/flask.md) - Complete Flask integration
+- [Configuration](config.md) - Adapter configuration options
+- [Getting Started](../getting-started/quickstart.md) - First steps with REROUTE

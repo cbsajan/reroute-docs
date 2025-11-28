@@ -354,7 +354,7 @@ class PostsRoutes(RouteBase):
         """Create a new post - using CLI-generated model"""
         db: Session = next(get_db())
         # Your database logic here
-        return PostResponse(**post.dict())
+        return PostResponse(**post.model_dump())
 ```
 
 ---
@@ -472,8 +472,8 @@ class UsersRoutes(RouteBase):
 
     def post(self, user: UserCreate = Body()):
         """Create a new user"""
-        new_user = User.create(**user.dict())
-        return {"id": new_user.id, **user.dict()}
+        new_user = User.create(**user.model_dump())
+        return {"id": new_user.id, **user.model_dump()}
 
     def delete(self, user_id: int = Query(...)):
         """Delete a user by ID"""
@@ -491,7 +491,7 @@ from peewee import Database
 def post(self, user: UserCreate = Body()):
     """Create user with transaction"""
     with db.atomic():  # Automatic rollback on exception
-        user = User.create(**user.dict())
+        user = User.create(**user.model_dump())
         # Other operations...
         return {"id": user.id}
 ```
@@ -570,7 +570,7 @@ class UsersRoutes(RouteBase):
                 (user.username, user.email)
             )
             conn.commit()
-            return {"id": cursor.lastrowid, **user.dict()}
+            return {"id": cursor.lastrowid, **user.model_dump()}
 
     def delete(self, user_id: int = Query(...)):
         """Delete user by ID"""

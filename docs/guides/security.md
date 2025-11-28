@@ -19,6 +19,200 @@ Security should be a priority from day one. This guide covers:
 
 ---
 
+## Built-in Security Features (v0.2.0+)
+
+REROUTE includes enterprise-grade security features that protect your applications by default.
+
+### 1. Column-Validated Database Queries
+
+The `Model.get_all()` method includes built-in column validation for the `order_by` parameter, ensuring only valid database columns are accepted:
+
+```python
+from reroute.db.models import Model
+from sqlalchemy import Column, String
+
+class User(Model):
+    __tablename__ = 'users'
+    name = Column(String(100))
+    email = Column(String(100))
+
+# Valid column names work seamlessly
+users = User.get_all(session, order_by='name')  # Works
+users = User.get_all(session, order_by='created_at')  # Works
+
+# Invalid column names are rejected with helpful errors
+users = User.get_all(session, order_by='invalid_column')  # Raises ValueError
+```
+
+The error message provides developer guidance:
+```
+ValueError: Invalid order_by column: 'invalid_column'.
+Valid columns are: created_at, email, id, name, updated_at
+```
+
+### 2. Input-Validated CLI Commands
+
+All CLI commands include input validation to ensure safe operation:
+
+```bash
+# Database migration commands accept validated inputs
+reroute db downgrade --steps 1  # Valid (integer 1-100)
+reroute db downgrade --steps 5  # Valid
+
+# Invalid inputs are rejected
+reroute db downgrade --steps 0    # Error: must be >= 1
+reroute db downgrade --steps 101  # Error: max 100 steps
+```
+
+### 3. Bounded Cache with LRU Eviction
+
+The `@cache` decorator includes automatic memory management with configurable limits:
+
+```python
+from reroute.decorators import cache
+
+@cache(duration=300)
+def expensive_operation(key):
+    return perform_calculation(key)
+```
+
+**Built-in cache management:**
+- Maximum size: 1000 entries (prevents unbounded growth)
+- Eviction strategy: LRU (Least Recently Used)
+- Background cleanup: Every 60 seconds
+- Full observability: Errors are logged for monitoring
+
+### 4. Fail-Safe Authorization with @requires
+
+The `@requires` decorator implements a fail-safe authorization pattern - access is denied by default unless explicitly granted:
+
+```python
+from reroute.decorators import requires
+
+# Authentication check (returns 401 if fails)
+@requires(check_func=lambda self: self.is_authenticated())
+def get(self):
+    return {"data": "protected"}
+
+# Role-based authorization (returns 403 if fails)
+def is_admin(self):
+    return self.current_user.get('role') == 'admin'
+
+@requires("admin", check_func=is_admin)
+def delete_user(self, user_id: int):
+    return {"deleted": True}
+```
+
+**Authorization response codes:**
+- `401 Unauthorized` - Authentication failed
+- `403 Forbidden` - Role/permission check failed
+- `500 Internal Server Error` - Misconfigured decorator (fail-safe)
+
+!!! important "Explicit Authorization Required"
+    When specifying roles, you must provide a `check_func` that implements your authorization logic. This ensures security is explicitly defined in your application.
+
+---
+
+## Security Logging (OWASP A09)
+
+REROUTE v0.2.0 includes a comprehensive security logging system for monitoring and SIEM integration.
+
+### SecurityLogger
+
+The `SecurityLogger` provides structured JSON logging for security-relevant events:
+
+```python
+from reroute.logging import security_logger
+
+# Log authentication events
+security_logger.log_auth_success(user="john@example.com", ip_address="192.168.1.1")
+security_logger.log_auth_failure(user="unknown", reason="Invalid password", ip_address="192.168.1.1")
+
+# Log authorization events
+security_logger.log_authz_failure(
+    user="john@example.com",
+    resource="/admin/users",
+    required_roles=["admin"],
+    ip_address="192.168.1.1"
+)
+
+# Log rate limiting
+security_logger.log_rate_limit(endpoint="/api/login", ip_address="10.0.0.1", limit="5/min")
+
+# Log validation failures
+security_logger.log_validation_failure(endpoint="/api/users", errors=["Invalid email format"])
+
+# Log suspicious activity
+security_logger.log_suspicious(description="Unusual request pattern detected", ip_address="10.0.0.1")
+```
+
+### Security Event Types
+
+| Event Type | Severity | Use Case |
+|------------|----------|----------|
+| `AUTH_SUCCESS` | INFO | Successful login |
+| `AUTH_FAILURE` | MEDIUM | Failed login attempt |
+| `AUTHZ_FAILURE` | MEDIUM | Permission denied |
+| `RATE_LIMIT_EXCEEDED` | MEDIUM | Rate limit hit |
+| `VALIDATION_FAILURE` | LOW | Invalid input |
+| `SUSPICIOUS_REQUEST` | HIGH | Anomaly detected |
+
+### Automatic Sensitive Data Redaction
+
+The security logger automatically redacts sensitive fields from logs:
+
+```python
+# These fields are automatically redacted
+SENSITIVE_FIELDS = {
+    'password', 'secret', 'token', 'api_key', 'credit_card',
+    'ssn', 'private_key', 'connection_string', ...
+}
+
+# Example: password is automatically redacted
+security_logger.log_auth_failure(user="john", password="secret123")
+# Output: {"user": "john", "password": "[REDACTED]", ...}
+```
+
+### JSON Output for SIEM Integration
+
+All security events are logged in JSON format for easy integration with security tools:
+
+```json
+{
+  "timestamp": "2025-11-28T10:30:00.000Z",
+  "event_type": "auth_failure",
+  "severity": "MEDIUM",
+  "message": "Authentication failed: Invalid password",
+  "details": {
+    "user": "john@example.com",
+    "ip_address": "192.168.1.100",
+    "reason": "Invalid password"
+  }
+}
+```
+
+### Integration with Decorators
+
+Security logging is automatically integrated with REROUTE decorators:
+
+```python
+from reroute.decorators import rate_limit, requires
+
+# Rate limit events are automatically logged
+@rate_limit("5/min", per_ip=True)
+def post(self):
+    return {"created": True}
+# When limit exceeded: security_logger.log_rate_limit() is called
+
+# Authorization failures are automatically logged
+@requires("admin", check_func=is_admin)
+def delete(self):
+    return {"deleted": True}
+# When denied: security_logger.log_authz_failure() is called
+```
+
+---
+
 ## Input Validation
 
 ### Always Validate User Input
@@ -39,12 +233,13 @@ class UserRoutes(RouteBase):
 ```python
 from reroute import RouteBase
 from reroute.params import Query
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 class UserQuery(BaseModel):
     user_id: int = Field(..., ge=1, le=999999)
 
-    @validator('user_id')
+    @field_validator('user_id')
+    @classmethod
     def validate_user_id(cls, v):
         if v < 0:
             raise ValueError('User ID must be positive')
@@ -63,17 +258,18 @@ class UserRoutes(RouteBase):
 ### Pydantic Validation
 
 ```python
-from pydantic import BaseModel, Field, validator, EmailStr
+from pydantic import BaseModel, Field, field_validator, EmailStr
 from reroute import RouteBase
 from reroute.params import Body
 
 class UserCreate(BaseModel):
-    username: str = Field(..., min_length=3, max_length=50, regex=r'^[a-zA-Z0-9_]+$')
+    username: str = Field(..., min_length=3, max_length=50, pattern=r'^[a-zA-Z0-9_]+$')
     email: EmailStr
     password: str = Field(..., min_length=8)
     age: int = Field(..., ge=13, le=120)
 
-    @validator('password')
+    @field_validator('password')
+    @classmethod
     def validate_password(cls, v):
         if not any(c.isupper() for c in v):
             raise ValueError('Password must contain uppercase letter')

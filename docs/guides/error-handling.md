@@ -303,7 +303,7 @@ class UserRoutes(RouteBase):
         Returns 422 Unprocessable Entity if validation fails.
         """
         # If we reach here, validation passed
-        return self.create_user(user.dict())
+        return self.create_user(user.model_dump())
 
     def on_error(self, error: Exception):
         """Handle validation errors."""

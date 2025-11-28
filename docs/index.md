@@ -111,12 +111,12 @@ app/routes/
 
 Built-in decorators for common API patterns:
 
-- `@rate_limit("5/min")` - Rate limiting per IP/user ✅ **Available**
-- `@cache(duration=60)` - Response caching ✅ **Available**
-- `@requires("admin")` - Role-based access 🚧 **Coming Soon**
-- `@validate(schema)` - Request validation 🚧 **Coming Soon**
-- `@timeout(5)` - Request timeout 🚧 **Coming Soon**
-- `@log_requests()` - Automatic logging 🚧 **Coming Soon**
+- `@rate_limit("5/min")` - Rate limiting per IP/user
+- `@cache(duration=60)` - Response caching with LRU eviction
+- `@requires("admin", check_func=...)` - Role-based access control
+- `@validate(schema={...})` - Request validation
+- `@timeout(5)` - Request timeout handling
+- `@log_requests()` - Automatic request logging
 
 ### Lifecycle Hooks
 

@@ -165,7 +165,7 @@ from reroute.params import Body
 class UsersRoutes(RouteBase):
     def post(self, user: UserCreate = Body(...)):
         # Automatic validation with Pydantic
-        return {"user": user.dict()}
+        return {"user": user.model_dump()}
 ```
 
 ## db
