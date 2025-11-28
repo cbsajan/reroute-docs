@@ -80,6 +80,79 @@ All notable changes to REROUTE are documented here.
 
 ---
 
+## [0.1.7] - 2025-11-28
+
+### Security Enhancements
+
+#### Column-Validated Database Queries
+- **Enhanced**: `Model.get_all()` now includes built-in column validation for `order_by` parameter
+- Uses SQLAlchemy's `inspect().mapper.column_attrs` for validation
+- Provides helpful error messages listing valid column names
+- **Test Coverage**: 4 test cases
+
+#### Input-Validated CLI Commands
+- **Enhanced**: All CLI commands now include comprehensive input validation
+- `reroute db downgrade --steps` validates as positive integer (1-100)
+- Clear error messages for invalid inputs
+- **Test Coverage**: 5 test cases
+
+#### Bounded Cache with LRU Eviction
+- **Enhanced**: `@cache` decorator now includes automatic memory management
+- Maximum cache size: 1000 entries
+- LRU (Least Recently Used) eviction strategy
+- Background cleanup every 60 seconds
+- Full error logging for observability
+- **Test Coverage**: 4 test cases
+
+#### Fail-Safe Authorization
+- **Enhanced**: `@requires` decorator implements fail-safe authorization pattern
+- Access denied by default unless explicitly granted
+- Proper HTTP status codes: 401 (auth), 403 (authz), 500 (config error)
+- Integrated error logging
+- **Breaking Change**: `@requires("role")` now requires explicit `check_func` parameter
+- **Test Coverage**: 7 test cases
+
+### Added
+
+#### Security Logging (OWASP A09)
+- **New**: `SecurityLogger` class for structured security event logging
+- JSON-formatted output for SIEM integration
+- Automatic sensitive data redaction (passwords, tokens, API keys)
+- Security event types: AUTH_SUCCESS, AUTH_FAILURE, AUTHZ_FAILURE, RATE_LIMIT_EXCEEDED, etc.
+- Integrated with `@rate_limit` and `@requires` decorators
+
+#### Health Check Endpoint
+- **New**: Built-in `/health` endpoint for monitoring and load balancers
+- Configurable via `HEALTH_CHECK_ENABLED` and `HEALTH_CHECK_PATH`
+- Returns service status, name, and version in JSON format
+- Automatically registered with FastAPI and Flask adapters
+
+#### Error Response Helper
+- **New**: `error_response()` helper function in decorators module
+- Consistent error response formatting across the application
+- Supports custom error types and detailed messages
+
+### Enhanced
+- **Rate Limiter**: Added bounded storage with LRU eviction (max 10,000 keys)
+- **Cache**: Thread-safe operations with double-checked locking
+- **Decorators**: Added `__all__` exports for cleaner imports
+
+### Test Suite
+- Comprehensive security test suite (`tests/test_security_fixes.py`)
+- 27 test cases covering security features
+- Integration tests and platform-specific edge cases
+
+### Documentation
+- Added "Security Logging (OWASP A09)" section to security guide
+- Updated security best practices with new feature examples
+- Added Health Check configuration documentation
+
+### Breaking Changes
+- **@requires decorator**: Now requires explicit `check_func` parameter when roles are specified
+  - Migration: Add `check_func` parameter with your authorization logic
+
+---
+
 ## [Unreleased]
 
 ### Documentation

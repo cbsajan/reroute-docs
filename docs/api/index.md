@@ -76,7 +76,7 @@ def my_endpoint(self):
     pass
 ```
 
-**Note:** `rate_limit` and `cache` are currently implemented. Other decorators like `requires` and `validate` are planned for future releases.
+**Note:** All decorators (`rate_limit`, `cache`, `requires`, `validate`, `timeout`, `log_requests`) are fully implemented. See [Decorators API](decorators.md) for detailed documentation.
 
 ### Config
 

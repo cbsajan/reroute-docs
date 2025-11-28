@@ -116,6 +116,45 @@ Logging level.
 - Default: `"INFO"`
 - Options: `"DEBUG"`, `"INFO"`, `"WARNING"`, `"ERROR"`, `"CRITICAL"`
 
+## Health Check Options (v0.2.0+)
+
+Built-in health check endpoint for monitoring and load balancers.
+
+### HEALTH_CHECK_ENABLED
+Enable the health check endpoint.
+- Type: `bool`
+- Default: `True`
+
+### HEALTH_CHECK_PATH
+Path for the health check endpoint.
+- Type: `str`
+- Default: `"/health"`
+
+**Usage:**
+```python
+from reroute import Config
+
+class AppConfig(Config):
+    # Enable health check (default)
+    HEALTH_CHECK_ENABLED = True
+    HEALTH_CHECK_PATH = "/health"
+
+# Or disable if using custom health checks
+class CustomConfig(Config):
+    HEALTH_CHECK_ENABLED = False
+```
+
+**Response Format:**
+```json
+{
+  "status": "healthy",
+  "service": "My API",
+  "version": "1.0.0"
+}
+```
+
+The health check endpoint is automatically registered with both FastAPI and Flask adapters.
+
 ## Environment Variables
 
 ### Loading from .env Files
