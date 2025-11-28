@@ -2521,12 +2521,12 @@
 <h3 id="decorators">Decorators<a class="headerlink" href="#decorators" title="Permanent link">&para;</a></h3>
 <p>Built-in decorators for common API patterns:</p>
 <ul>
-<li><code>@rate_limit("5/min")</code> - Rate limiting per IP/user ✅ <strong>Available</strong></li>
-<li><code>@cache(duration=60)</code> - Response caching ✅ <strong>Available</strong></li>
-<li><code>@requires("admin")</code> - Role-based access 🚧 <strong>Coming Soon</strong></li>
-<li><code>@validate(schema)</code> - Request validation 🚧 <strong>Coming Soon</strong></li>
-<li><code>@timeout(5)</code> - Request timeout 🚧 <strong>Coming Soon</strong></li>
-<li><code>@log_requests()</code> - Automatic logging 🚧 <strong>Coming Soon</strong></li>
+<li><code>@rate_limit("5/min")</code> - Rate limiting per IP/user</li>
+<li><code>@cache(duration=60)</code> - Response caching with LRU eviction</li>
+<li><code>@requires("admin", check_func=...)</code> - Role-based access control</li>
+<li><code>@validate(schema={...})</code> - Request validation</li>
+<li><code>@timeout(5)</code> - Request timeout handling</li>
+<li><code>@log_requests()</code> - Automatic request logging</li>
 </ul>
 <h3 id="lifecycle-hooks">Lifecycle Hooks<a class="headerlink" href="#lifecycle-hooks" title="Permanent link">&para;</a></h3>
 <p>Control request/response flow with lifecycle methods:</p>

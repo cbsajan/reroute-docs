@@ -3060,7 +3060,7 @@
 <a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="sd">        Returns 422 Unprocessable Entity if validation fails.</span>
 <a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="sd">        &quot;&quot;&quot;</span>
 <a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>        <span class="c1"># If we reach here, validation passed</span>
-<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">dict</span><span class="p">())</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">model_dump</span><span class="p">())</span>
 <a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>
 <a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">):</span>
 <a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle validation errors.&quot;&quot;&quot;</span>

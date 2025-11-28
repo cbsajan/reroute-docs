@@ -1673,8 +1673,69 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#run_server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        run_server()
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Start Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Start Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fastapi-recommended-for-async" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FastAPI (Recommended for async)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flask-great-for-traditional-apps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flask (Great for traditional apps)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
+      
+    </span>
+  </a>
   
 </li>
       
@@ -2259,8 +2320,69 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#run_server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        run_server()
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Start Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Start Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fastapi-recommended-for-async" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FastAPI (Recommended for async)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flask-great-for-traditional-apps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flask (Great for traditional apps)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
+      
+    </span>
+  </a>
   
 </li>
       
@@ -2302,7 +2424,7 @@
 - <code>app_dir</code> (Path): Application directory
 - <code>config</code> (Config): Configuration class</p>
 <h2 id="flaskadapter">FlaskAdapter<a class="headerlink" href="#flaskadapter" title="Permanent link">&para;</a></h2>
-<p>Integrate REROUTE with Flask (Coming Soon).</p>
+<p>Integrate REROUTE with Flask. Includes OpenAPI documentation via Spectree.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">reroute.adapters</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlaskAdapter</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">adapter</span> <span class="o">=</span> <span class="n">FlaskAdapter</span><span class="p">(</span>
@@ -2334,6 +2456,52 @@
 <p>Scan and discover route files.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">routes</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">discover_routes</span><span class="p">()</span>
 </code></pre></div>
+<h3 id="run_server">run_server()<a class="headerlink" href="#run_server" title="Permanent link">&para;</a></h3>
+<p>Start the development server with optional parameter overrides.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># FastAPI</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">adapter</span><span class="o">.</span><span class="n">run_server</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">,</span> <span class="n">reload</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># Flask</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">adapter</span><span class="o">.</span><span class="n">run_server</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="quick-start-examples">Quick Start Examples<a class="headerlink" href="#quick-start-examples" title="Permanent link">&para;</a></h2>
+<h3 id="fastapi-recommended-for-async">FastAPI (Recommended for async)<a class="headerlink" href="#fastapi-recommended-for-async" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">reroute.adapters</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPIAdapter</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;My API&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">adapter</span> <span class="o">=</span> <span class="n">FastAPIAdapter</span><span class="p">(</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    <span class="n">fastapi_app</span><span class="o">=</span><span class="n">app</span><span class="p">,</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>    <span class="n">app_dir</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;./app&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="p">)</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">adapter</span><span class="o">.</span><span class="n">register_routes</span><span class="p">()</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="n">adapter</span><span class="o">.</span><span class="n">run_server</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">8000</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="flask-great-for-traditional-apps">Flask (Great for traditional apps)<a class="headerlink" href="#flask-great-for-traditional-apps" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">Flask</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">reroute.adapters</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlaskAdapter</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">adapter</span> <span class="o">=</span> <span class="n">FlaskAdapter</span><span class="p">(</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>    <span class="n">flask_app</span><span class="o">=</span><span class="n">app</span><span class="p">,</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    <span class="n">app_dir</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;./app&quot;</span><span class="p">)</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="p">)</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="n">adapter</span><span class="o">.</span><span class="n">register_routes</span><span class="p">()</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="n">adapter</span><span class="o">.</span><span class="n">run_server</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../../adapters/fastapi/">FastAPI Adapter Guide</a> - Complete FastAPI integration</li>
+<li><a href="../../adapters/flask/">Flask Adapter Guide</a> - Complete Flask integration</li>
+<li><a href="../config/">Configuration</a> - Adapter configuration options</li>
+<li><a href="../../getting-started/quickstart/">Getting Started</a> - First steps with REROUTE</li>
+</ul>
 
 
 
