@@ -6,12 +6,30 @@ Learn how to integrate databases with REROUTE using popular Python ORMs.
 
 REROUTE includes built-in database migration commands via `reroute db` and auto-generates Pydantic models via `reroute create model`. You can use any Python ORM or database library with REROUTE routes.
 
-## Quick Start Workflow
+## Quick Start with CLI
 
-!!! tip "Future Enhancement (v0.2.0)"
-    `reroute init` will soon ask about database support during project setup and automatically configure the database connection, initialize migrations, and generate example models!
+!!! tip "New in v0.2.0"
+    Use `--database` flag during project initialization for automatic database setup!
 
-**Current Manual Workflow:**
+### Option 1: Database Setup During Init (Recommended)
+
+```bash
+# Initialize project with database support
+reroute init myapi --framework fastapi --database postgresql
+
+# Or use short flag
+reroute init myapi -db sqlite
+```
+
+This automatically generates:
+
+| File | Description |
+|------|-------------|
+| `app/database.py` | SQLAlchemy connection with pooling |
+| `app/db_models/user.py` | Example User model |
+| `.env.example` | Database URL template |
+
+### Option 2: Manual Setup
 
 ```bash
 # 1. Generate Pydantic model schemas

@@ -153,7 +153,77 @@ All notable changes to REROUTE are documented here.
 
 ---
 
-## [Unreleased]
+## [0.1.9] - 2025-12-06
+
+### Added
+
+#### CLI Workflow Improvements
+- **New Flag**: `--dry-run` for `create route` and `create crud` commands
+  - Preview changes without creating files
+  - Shows what files would be created and their contents
+- **New Flag**: `--auto-migrate` for `create crud` command
+  - Automatically creates and applies database migration after CRUD generation
+  - Runs `alembic revision --autogenerate` followed by `alembic upgrade head`
+  - Graceful error handling with helpful tips if migrations not set up
+
+### Fixed
+
+#### Security Bug Fixes
+- **Fixed**: `me.py.j2` - IndexError on malformed Bearer token
+  - Added bounds check before splitting Authorization header
+  - Prevents crash on headers like "Bearer" (without token)
+- **Fixed**: `password.py.j2` - bcrypt ValueError on invalid hash
+  - Added try-except around `bcrypt.checkpw()`
+  - Returns `False` instead of crashing on invalid hash format
+- **Fixed**: `db_commands.py` - Missing `sys.exit(1)` after error handling
+  - `current()` and `history()` commands now properly exit on error
+- **Fixed**: `create_command.py` - Redundant path operation
+  - Cleaned up path handling for cross-platform compatibility
+
+---
+
+## [0.1.8] - 2025-11-30
+
+### Added
+
+#### CLI Improvements
+- **Progress Indicators**: All CLI commands now show real-time progress with `[ OK ]` / `[FAIL]` status
+- **Actionable Suggestions**: Every error includes a `[TIP]` with specific commands to resolve the issue
+- **Destructive Action Warnings**: Commands like `db downgrade` now require confirmation before executing
+- **Global Exception Handling**: Consistent error formatting across all commands
+
+#### Database Init Flag (Preview for v0.2.0)
+- **New Flag**: `reroute init --database postgresql` (or `-db sqlite`)
+- Shows preview message when used (feature flag disabled until v0.2.0)
+- Will generate database.py, .env.example, and example User model when enabled
+
+#### DBModel Command (Preview for v0.2.0)
+- **New Command**: `reroute create dbmodel --name User` (hidden until v0.2.0)
+- Generates SQLAlchemy models inheriting from `reroute.db.models.Model`
+- Creates files in `app/db_models/` with id, created_at, updated_at inherited from base
+- Shows preview message when run (feature flag disabled)
+- **New Utility**: `to_pascal_case()` helper for model class names (without "Routes" suffix)
+
+#### Auth Scaffolding Command (Preview for v0.2.0)
+- **New Command**: `reroute create auth --method jwt` (hidden until v0.2.0)
+- Generates complete JWT authentication system:
+  - `app/auth/` module with jwt.py, password.py utilities
+  - `app/models/auth.py` with Pydantic schemas
+  - `app/routes/auth/` with login, register, refresh, me routes
+  - JWT configuration in config.py with auto-generated secret
+- Uses REROUTE's file-based routing pattern (each route has `page.py`)
+- Includes `TODO(human)` comments for database integration
+- Dependencies: `pyjwt`, `bcrypt`
+
+#### Feature Flags System
+- **New**: `FEATURE_FLAGS` dictionary in `reroute/__init__.py`
+- Allows features to be implemented but hidden until target release
+- Commands can be hidden with `hidden=True` in Click decorator
+
+### Changed
+- **CLI Entry Point**: `__main__.py` now uses `main()` function with global error handling
+- **DB Commands**: All database commands updated with progress indicators and error codes
+- **Init Command**: Now shows step-by-step progress during project creation
 
 ### Documentation
 - **BREAKING**: Fixed incorrect decorator imports throughout documentation
@@ -165,11 +235,16 @@ All notable changes to REROUTE are documented here.
   - Reduced setup time from 5 minutes to 2 minutes
 - Added warnings for unimplemented decorators (`@requires`, `@validate`, `@timeout`)
 - Created IMPLEMENTATION_STATUS.md tracking file for feature accuracy
+- **Added**: Documentation for `create dbmodel` command (preview)
+- **Added**: Documentation for `create auth` command (preview)
+- **Added**: CLI Features section documenting progress indicators and error handling
 
 ### Fixed
 - Documentation now accurately reflects actual REROUTE features
 - Removed fake features and methods from examples
 - Corrected import statements across all documentation pages
+
+---
 
 ## [0.1.2] - 2025-11-20
 
