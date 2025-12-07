@@ -13,10 +13,34 @@ reroute init [project-name] [OPTIONS]
 ### Options
 - `--framework` - Framework to use (fastapi, flask)
 - `--config` - Configuration type (dev, prod)
-- `--host` - Server host (default: 0.0.0.0)
+- `--package-manager` - Package manager to use (uv, pip - default: uv)
+- `--host` - Server host (default: 127.0.0.1)
 - `--port` - Server port (default: 7376)
 - `--description` - Project description
-- `--database`, `-db` - Database type (Coming in v0.2.0)
+- `--database`, `-db` - Database type (postgresql, mysql, sqlite, mongodb)
+
+### Package Manager Options
+
+The `--package-manager` option controls how dependencies are installed:
+
+#### UV (Default)
+```bash
+reroute init myapi --package-manager uv
+
+# Generated setup instructions:
+#   uv venv
+#   uv sync
+#   uv run main.py
+```
+
+#### PIP (Traditional)
+```bash
+reroute init myapi --package-manager pip
+
+# Generated setup instructions:
+#   pip install -r requirements.txt
+#   python main.py
+```
 
 ### Examples
 ```bash
@@ -28,20 +52,17 @@ reroute init my-api --framework fastapi
 
 # With specific framework and config
 reroute init my-api --framework flask --config prod
-```
 
-### Database Setup (Coming in v0.2.0)
-
-!!! info "Preview Feature"
-    The `--database` flag is implemented but will be enabled in v0.2.0. Running it now shows a preview message.
-
-When enabled, you'll be able to use:
-```bash
+# With database setup
 reroute init my-api --framework fastapi --database postgresql
 reroute init my-api -db sqlite
 ```
 
-This will generate:
+### Database Setup
+
+The `--database` flag automatically sets up database configuration:
+
+When used, it generates:
 - `app/database.py` - Database connection configuration
 - `app/db_models/user.py` - Example User model
 - `.env.example` - Environment template with database URL
@@ -176,10 +197,7 @@ reroute create model --name User
 reroute generate model --name Post
 ```
 
-## create dbmodel (Coming in v0.2.0)
-
-!!! info "Preview Feature"
-    This command is implemented but hidden until v0.2.0 release. Running it shows a preview message.
+## create dbmodel
 
 Generate SQLAlchemy database models that inherit from `reroute.db.models.Model`.
 
@@ -192,14 +210,13 @@ reroute create dbmodel [OPTIONS]
 
 ### Examples
 ```bash
-# Will show preview message until v0.2.0
 reroute create dbmodel --name User
 reroute create dbmodel --name Product
 ```
 
-### What It Will Generate
+### What It Generates
 
-When enabled in v0.2.0, this command creates database models in `app/db_models/`:
+This command creates database models in `app/db_models/`:
 
 ```python
 # app/db_models/user.py
@@ -262,10 +279,7 @@ class UsersRoutes(RouteBase):
         return {"user": user.model_dump()}
 ```
 
-## create auth (Coming in v0.2.0)
-
-!!! info "Preview Feature"
-    This command is implemented but hidden until v0.2.0 release. Running it shows a preview message.
+## create auth
 
 Generate JWT authentication scaffolding with complete login, register, token refresh, and profile routes.
 
@@ -278,14 +292,13 @@ reroute create auth [OPTIONS]
 
 ### Examples
 ```bash
-# Will show preview message until v0.2.0
 reroute create auth --method jwt
 reroute create auth -m jwt
 ```
 
-### What It Will Generate
+### What It Generates
 
-When enabled in v0.2.0, this command creates a complete auth system:
+This command creates a complete auth system:
 
 **Auth Module** (`app/auth/`):
 
@@ -405,6 +418,55 @@ reroute db history
 # Rollback last migration
 reroute db downgrade
 ```
+
+## install
+
+Control package installation behavior and .egg-info creation.
+
+```bash
+reroute install [OPTIONS]
+```
+
+### Options
+- `--no-egg-info` - Prevent .egg-info directory creation (default)
+
+### Examples
+
+```bash
+# Install without creating .egg-info (default behavior)
+reroute install --no-egg-info
+
+# Environment variable control
+export REROUTE_CREATE_EGG_INFO=False
+```
+
+### .egg-info Control
+
+By default, REROUTE does not create `.egg-info` directories. You can control this behavior:
+
+**Via Environment Variable**:
+```env
+# .env file
+REROUTE_CREATE_EGG_INFO=False
+```
+
+**Via CLI**:
+```bash
+reroute install --no-egg-info
+```
+
+**In Code**:
+```python
+import os
+os.environ["REROUTE_CREATE_EGG_INFO"] = "False"
+```
+
+### Why Control .egg-info?
+
+- **Clean Projects**: Prevents unwanted metadata directories
+- **Git Cleanliness**: No need to add .egg-info to .gitignore
+- **Development**: Cleaner project structure
+- **Production**: Avoids unnecessary packaging artifacts
 
 ## version
 

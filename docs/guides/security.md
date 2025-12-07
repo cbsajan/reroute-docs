@@ -1,21 +1,78 @@
-# Security Best Practices
+# Security Guide
 
-Build secure REROUTE applications with these essential security practices and patterns.
+Build secure REROUTE applications with comprehensive security features and best practices built-in by default.
 
 ---
 
 ## Overview
 
-Security should be a priority from day one. This guide covers:
+REROUTE prioritizes security by default with comprehensive built-in protections. This guide covers:
 
-- Input validation and sanitization
-- Authentication and authorization
-- SQL injection prevention
-- XSS protection
-- CORS configuration (using REROUTE's built-in settings)
-- API security
-- Secret management
-- Common vulnerabilities
+- **Secure by Default**: New projects start with secure configurations
+- **Input validation and sanitization**: Built-in validation with Pydantic
+- **Authentication and authorization**: JWT, OAuth, role-based access control
+- **SQL injection prevention**: Parameterized queries and ORM safety
+- **XSS protection**: HTML sanitization and auto-escaping
+- **CORS configuration**: Secure defaults and easy customization
+- **API security**: Rate limiting, authentication, and authorization
+- **Secret management**: Environment variables and secure key generation
+- **Error sanitization**: Production-safe error handling
+- **Security logging**: Comprehensive security event tracking
+- **Common vulnerabilities**: Prevention and detection
+
+---
+
+## 🔒 Secure by Default (Latest Version)
+
+Every new REROUTE project now starts with secure configurations:
+
+### Secure Default Configuration
+
+When you create a new project, it automatically includes:
+
+```bash
+# .env.example - Generated with secure defaults
+REROUTE_DEBUG=False                    # Debug disabled (prevents info disclosure)
+REROUTE_HOST=127.0.0.1                # Localhost only (prevents external access)
+REROUTE_SECRET_KEY=your-secret-key-change-in-production  # Placeholder for secure key
+REROUTE_CORS_ORIGINS=http://localhost:7376,http://127.0.0.1:7376  # Restricted origins
+```
+
+### Automatic Security Features
+
+1. **Error Sanitization**: Production errors don't expose sensitive information
+2. **Secure Host Binding**: Development binds to localhost only
+3. **Restricted CORS**: Only allows specific origins by default
+4. **Config Loading Security**: Explicit config loading prevents race conditions
+5. **Secret Key Generation**: Tools to generate cryptographically secure keys
+
+### Generate Secure Secrets
+
+```bash
+# Generate secure secret key
+python -c "import secrets; print(secrets.token_urlsafe(32))"
+# Output: eVadsvMtnimvuFcAyOq54M4wS2QvZxC-dmnEZkOUu9I
+
+# Generate secure API key
+python -c "import secrets; print('api_' + secrets.token_urlsafe(24))"
+```
+
+### Production Checklist
+
+Before deploying to production:
+
+```bash
+# ✅ DO: Update configuration
+REROUTE_DEBUG=False
+REROUTE_SECRET_KEY=<your-generated-secure-key>
+REROUTE_HOST=0.0.0.0  # Behind firewall/load balancer
+REROUTE_CORS_ORIGINS=https://yourdomain.com,https://api.yourdomain.com
+
+# ❌ DON'T: Use insecure defaults
+REROUTE_DEBUG=True              # Exposes stack traces
+REROUTE_SECRET_KEY=default-key   # Predictable key
+REROUTE_CORS_ORIGINS=*          # Allows any origin
+```
 
 ---
 
@@ -110,6 +167,84 @@ def delete_user(self, user_id: int):
 
 !!! important "Explicit Authorization Required"
     When specifying roles, you must provide a `check_func` that implements your authorization logic. This ensures security is explicitly defined in your application.
+
+### 5. Template Injection Prevention (v0.2.0+)
+
+REROUTE includes hardened Jinja2 templates to prevent code injection attacks:
+
+```python
+# Templates are rendered securely by default
+from reroute.cli._template_loader import jinja_env
+
+# Auto-escape is enabled for all content
+template = jinja_env.from_string("{{ user_input }}")
+result = template.render(user_input="<script>alert('xss')</script>")
+# Output: &lt;script&gt;alert('xss')&lt;/script&gt; (escaped)
+```
+
+**Security Features:**
+- **StrictUndefined**: Fails loudly on undefined variables
+- **Autoescape Enabled**: All content is HTML-escaped by default
+- **Limited Globals**: No access to dangerous functions (`eval`, `exec`, `open`, etc.)
+- **Policy Restrictions**: Dangerous Jinja2 features disabled
+
+### 6. Request Size Limits (DoS Protection) (v0.2.0+)
+
+Automatic request size limiting prevents denial-of-service attacks:
+
+```python
+# In config.py
+MAX_REQUEST_SIZE = 16 * 1024 * 1024  # 16MB (default)
+
+# Large requests are automatically rejected
+# Response: 413 Request Entity Too Large
+{
+    "error": "Request Entity Too Large",
+    "max_size": 16777216,
+    "received": 50000000
+}
+```
+
+**Features:**
+- Automatic Content-Length validation
+- Configurable size limits
+- Supported on both FastAPI and Flask adapters
+
+### 7. Secure File Permissions (v0.2.0+)
+
+Sensitive files automatically receive secure permissions:
+
+```python
+# Backup files are created with owner-only access
+.reroute_backup      # 0600 permissions (read/write for owner only)
+.reroute/history.json # 0600 permissions
+```
+
+**Features:**
+- Automatic 0600 permissions for sensitive files
+- Cross-platform compatibility
+- Graceful handling when permissions can't be set
+
+### 8. Thread-Safe Operations (v0.2.0+)
+
+All decorator operations use atomic operations to prevent race conditions:
+
+```python
+@rate_limit("100/min")
+def api_endpoint(self):
+    # Rate limiting check is atomic
+    return {"data": "protected"}
+
+@cache(duration=300)
+def expensive_operation(self, key):
+    # Cache operations are thread-safe
+    return calculate_result(key)
+```
+
+**Features:**
+- Threading locks for all critical operations
+- Double-checked locking for cache
+- Atomic rate limit checks
 
 ---
 
@@ -453,6 +588,88 @@ class InternalAPIConfig(Config):
 !!! warning "Security Risk"
     **NEVER use `CORS_ALLOW_ORIGINS = ["*"]` with `CORS_ALLOW_CREDENTIALS = True` in production!**
     This allows any website to make authenticated requests to your API.
+
+---
+
+## 🔒 Secure Error Handling
+
+### Production-Safe Error Responses
+
+REROUTE automatically sanitizes errors to prevent information disclosure:
+
+```python
+from config import AppConfig
+
+class MyRoute(RouteBase):
+    def on_error(self, error: Exception):
+        if AppConfig.DEBUG:
+            # Development: Show full error details
+            return {
+                "error": str(error),
+                "type": type(error).__name__,
+                "route": "/my-route"
+            }
+        else:
+            # Production: Don't expose internal details
+            return {
+                "error": "Internal server error",
+                "type": "ServerError"
+            }
+```
+
+### Automatic Error Sanitization
+
+The framework automatically includes secure error handling in generated routes:
+
+```python
+# Generated route template includes secure error handling
+def on_error(self, error: Exception):
+    """Secure error handling - prevents info disclosure in production"""
+    from config import AppConfig
+
+    if AppConfig.DEBUG:
+        return {
+            "error": str(error),
+            "type": type(error).__name__,
+            "route": "{{ route_path }}"
+        }
+    else:
+        return {
+            "error": "Internal server error",
+            "type": "ServerError"
+        }
+```
+
+### Security Benefits
+
+- **No Stack Traces**: Production errors don't expose system internals
+- **Consistent Format**: Standardized error responses across all routes
+- **Debug Mode Support**: Full errors available in development
+- **Audit Trail**: Errors logged without exposing sensitive data
+
+### Error Logging Best Practices
+
+```python
+from logger import get_logger
+
+logger = get_logger(__name__)
+
+class APIRoute(RouteBase):
+    def on_error(self, error: Exception):
+        # Log full error for debugging (sanitized automatically)
+        logger.error(f"Route error: {type(error).__name__}: {error}", exc_info=True)
+
+        # Return sanitized response to client
+        if AppConfig.DEBUG:
+            return {
+                "error": str(error),
+                "type": type(error).__name__
+            }
+        else:
+            return {
+                "error": "Internal server error"
+            }
+```
 
 ---
 
@@ -872,23 +1089,35 @@ def fetch(self, url: str):
 
 ### Before Production
 
-- [ ] All secrets in environment variables (not hardcoded)
+- [ ] **Secure defaults enabled** (`REROUTE_DEBUG=False`, `REROUTE_HOST=127.0.0.1`)
+- [ ] **Secure secret key generated** (use `python -c "import secrets; print(secrets.token_urlsafe(32))"`)
+- [ ] **All secrets in environment variables** (not hardcoded)
 - [ ] Input validation on all endpoints
 - [ ] SQL injection prevention (parameterized queries)
 - [ ] XSS protection (sanitize HTML)
-- [ ] **CORS configured correctly** (use REROUTE's `Config.CORS_ALLOW_ORIGINS`)
-- [ ] **No `CORS_ALLOW_ORIGINS = ["*"]` in production**
-- [ ] HTTPS enforced
+- [ ] **CORS configured correctly** (restricted origins only)
+- [ ] **No wildcard CORS** (`CORS_ALLOW_ORIGINS != ["*"]`)
+- [ ] **Error sanitization enabled** (automatic with REROUTE)
+- [ ] HTTPS enforced (production)
 - [ ] Rate limiting on sensitive endpoints (use `@rate_limit`)
 - [ ] Authentication implemented
 - [ ] Authorization checks on protected resources
 - [ ] Password hashing (bcrypt/argon2)
 - [ ] CSRF protection (if using cookies)
 - [ ] Security headers configured
-- [ ] Error messages don't expose internal details
-- [ ] Logging configured (but don't log sensitive data)
-- [ ] Dependencies up to date (`pip list --outdated`)
+- [ ] **Secure error handling** (no stack traces in production)
+- [ ] Security logging enabled
+- [ ] Dependencies up to date
 - [ ] Security audit run (`bandit`, `safety check`)
+
+### 🆕 New Security Features (Latest Version)
+
+- [x] **Secure error handling** automatically included in route templates
+- [x] **Secure CORS defaults** (localhost only, restricted origins)
+- [x] **Secure host binding** (localhost in development, configurable in production)
+- [x] **Secure secret key placeholders** (with generation tools)
+- [x] **Secure config loading** (explicit loading prevents race conditions)
+- [x] **Production-safe defaults** (debug disabled by default)
 
 ### Regular Maintenance
 

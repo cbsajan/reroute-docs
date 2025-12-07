@@ -15,31 +15,54 @@ REROUTE is a modern routing framework that brings Next.js-style file-based routi
 ## Prerequisites
 
 - Python 3.8 or higher
-- A web framework (FastAPI, Flask, or Django)
+- UV package manager (recommended) or pip
+- A web framework (FastAPI or Flask)
 - Basic understanding of REST APIs
 
 ## Installation Options
 
-### From PyPI (Recommended)
+### Installation
 
-```bash
-pip install reroute
-```
+=== "UV (Recommended)"
+    ```bash
+    # Install UV first (if not already installed)
+    pip install uv
 
-### With specific framework support
+    # Install REROUTE with UV
+    uv add reroute
+    ```
+
+=== "Traditional pip"
+    ```bash
+    pip install reroute
+    ```
+
+### Framework Support
 
 === "FastAPI"
     ```bash
+    # UV
+    uv add reroute[fastapi]
+
+    # pip
     pip install reroute[fastapi]
     ```
 
 === "Flask"
     ```bash
+    # UV
+    uv add reroute[flask]
+
+    # pip
     pip install reroute[flask]
     ```
 
 === "All frameworks"
     ```bash
+    # UV
+    uv add reroute[all]
+
+    # pip
     pip install reroute[all]
     ```
 
@@ -50,6 +73,56 @@ git clone https://github.com/cbsajan/reroute.git
 cd reroute
 pip install -e .
 ```
+
+## Quick Project Setup
+
+### Using UV (Recommended)
+
+```bash
+# Create virtual environment
+uv venv
+
+# Activate (Windows)
+.venv\Scripts\activate
+
+# Activate (Linux/Mac)
+source .venv/bin/activate
+
+# Create new project
+reroute init myapi
+
+# Install dependencies
+cd myapi
+uv sync
+
+# Run the application
+uv run main.py
+```
+
+### Using Traditional pip
+
+```bash
+# Create virtual environment
+python -m venv venv
+
+# Activate (Windows)
+venv\Scripts\activate
+
+# Activate (Linux/Mac)
+source venv/bin/activate
+
+# Create new project
+reroute init myapi --package-manager pip
+
+# Install dependencies
+cd myapi
+pip install -r requirements.txt
+
+# Run the application
+python main.py
+```
+
+**Note**: UV is the default package manager. Use `--package-manager pip` to use traditional pip.
 
 ## Next Steps
 

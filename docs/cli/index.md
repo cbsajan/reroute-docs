@@ -69,6 +69,18 @@ Creates `app/routes/user/profile/page.py`.
 
     Generate Pydantic models for data validation
 
+-   :material-database: [**create dbmodel**](commands.md#create-dbmodel)
+
+    ---
+
+    Generate SQLAlchemy database models
+
+-   :material-key: [**create auth**](commands.md#create-auth)
+
+    ---
+
+    Generate JWT authentication scaffolding
+
 </div>
 
 ## CLI Options

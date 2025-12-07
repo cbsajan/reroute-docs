@@ -2,7 +2,41 @@
 
 Build your first REROUTE application in 2 minutes using CLI commands!
 
-## Step 1: Install REROUTE
+## Step 1: Create Virtual Environment
+
+=== "UV (Recommended)"
+
+    ```bash
+    # Create virtual environment
+    uv venv
+
+    # Activate (Windows)
+    .venv\Scripts\activate
+
+    # Activate (Linux/Mac)
+    source .venv/bin/activate
+    ```
+
+=== "Traditional pip"
+
+    ```bash
+    # Create virtual environment
+    python -m venv venv
+
+    # Activate (Windows)
+    venv\Scripts\activate
+
+    # Activate (Linux/Mac)
+    source venv/bin/activate
+    ```
+
+## Step 2: Install REROUTE
+
+=== "UV"
+
+    ```bash
+    uv add reroute[fastapi]
+    ```
 
 === "pip"
 
@@ -10,13 +44,7 @@ Build your first REROUTE application in 2 minutes using CLI commands!
     pip install reroute[fastapi]
     ```
 
-=== "uv (faster)"
-
-    ```bash
-    uv pip install reroute[fastapi]
-    ```
-
-## Step 2: Initialize Your Project
+## Step 3: Initialize Your Project
 
 Use the REROUTE CLI to create your project structure automatically:
 
@@ -31,15 +59,27 @@ This creates a complete project structure with everything you need:
 my-reroute-app/
 ├── app/
 │   ├── __init__.py
-│   └── routes/
+│   ├── routes/
+│   │   ├── __init__.py
+│   │   └── root/
+│   │       └── page.py         # Root and health endpoints
+│   ├── config.py               # Configuration with secure defaults
+│   ├── logger.py               # Logging setup
+│   └── models/
 │       └── __init__.py
-├── main.py           # Auto-generated entry point
-├── pyproject.toml    # Modern dependency management (v0.1.5+)
-├── requirements.txt  # Legacy (will be removed in v0.3.0)
+├── main.py                     # Clean adapter entry point
+├── pyproject.toml              # Modern dependency management
+├── .env.example                # Environment template
 └── .gitignore
 ```
 
-**Optional but recommended:** Install project dependencies:
+## Step 4: Install Dependencies
+
+=== "UV (Default)"
+
+    ```bash
+    uv sync
+    ```
 
 === "pip"
 
@@ -47,18 +87,32 @@ my-reroute-app/
     pip install -r requirements.txt
     ```
 
-=== "uv (faster)"
+!!! info "UV is Default"
+    The `reroute init` command uses UV as the default package manager. Use `--package-manager pip` for traditional pip.
 
-    ```bash
-    uv pip install -e .
-    ```
+## Step 5: Configure Environment
 
-This ensures all required packages (FastAPI, uvicorn, etc.) are installed for your project.
+Copy the environment template and configure:
 
-!!! info "Modern Python Packaging"
-    Starting with v0.1.5, projects include `pyproject.toml` for modern dependency management. Use `uv` for 10-100x faster installations!
+```bash
+cp .env.example .env
+```
 
-## Step 3: Generate a Route
+The `.env` file includes secure defaults:
+```env
+# Server Configuration
+DEBUG=False
+HOST=127.0.0.1
+
+# Security
+SECRET_KEY=your-secret-key-here
+DATABASE_URL=sqlite:///./app.db
+
+# Prevent .egg-info creation
+REROUTE_CREATE_EGG_INFO=False
+```
+
+## Step 6: Generate a Route
 
 Use the CLI to generate your first route:
 
@@ -71,6 +125,9 @@ This creates `app/routes/user/page.py` with GET and POST methods:
 ```python
 from reroute import RouteBase
 from reroute.decorators import rate_limit, cache
+from logger import get_logger
+
+logger = get_logger(__name__)
 
 class UserRoutes(RouteBase):
     """UserRoutes handles /user endpoints."""
@@ -84,6 +141,7 @@ class UserRoutes(RouteBase):
     @cache(duration=60)
     def get(self):
         """Handle GET requests - retrieve user"""
+        logger.info("GET request to /user")
         return {
             "users": [
                 {"id": 1, "name": "Alice"},
@@ -94,54 +152,77 @@ class UserRoutes(RouteBase):
     @rate_limit("10/min")
     def post(self):
         """Handle POST requests - create new user"""
+        logger.info("POST request to /user")
         return {"message": "User created", "id": 3}
 ```
 
 **Tip:** Edit the generated file to customize the response data!
 
-## Step 4: Your Application is Ready!
+## Step 7: Your Application is Ready!
 
-The `reroute init` command already created `main.py` for you:
+The `reroute init` command already created a clean `main.py` for you:
 
 ```python
 from fastapi import FastAPI
 from reroute.adapters import FastAPIAdapter
+from config import AppConfig
 from pathlib import Path
+
+# Load configuration from environment
+AppConfig.load_from_env()
 
 app = FastAPI(title="My REROUTE App")
 
+# Clean adapter pattern
 adapter = FastAPIAdapter(
     fastapi_app=app,
-    app_dir=Path(__file__).parent / "app"
+    app_dir=Path(__file__).parent / "app",
+    config=AppConfig
 )
+
 adapter.register_routes()
 
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    adapter.run_server()
 ```
 
-**No manual setup required!** Everything is configured and ready to run.
+**No manual setup required!** Everything is configured with secure defaults and ready to run.
 
-## Step 5: Run the Application
+## Step 8: Run the Application
 
-```bash
-python main.py
-```
+=== "UV"
+
+    ```bash
+    uv run main.py
+    ```
+
+=== "pip"
+
+    ```bash
+    python main.py
+    ```
 
 Visit:
 
-- API Docs: [http://localhost:8000/docs](http://localhost:8000/docs)
-- Users endpoint: [http://localhost:8000/user](http://localhost:8000/user)
+- API Docs: [http://localhost:7376/docs](http://localhost:7376/docs)
+- Root endpoint: [http://localhost:7376/](http://localhost:7376/)
+- Health check: [http://localhost:7376/health](http://localhost:7376/health)
+- Users endpoint: [http://localhost:7376/user](http://localhost:7376/user)
 
-## Step 6: Test Your API
+## Step 9: Test Your API
 
 ```bash
 # Get users
-curl http://localhost:8000/user
+curl http://localhost:7376/user
 
 # Create user
-curl -X POST http://localhost:8000/user
+curl -X POST http://localhost:7376/user
+
+# Health check
+curl http://localhost:7376/health
+
+# Root endpoint
+curl http://localhost:7376/
 ```
 
 ## Add More Features

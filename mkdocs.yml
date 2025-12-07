@@ -81,6 +81,7 @@ nav:
     - Decorators: guides/decorators.md
     - Lifecycle Hooks: guides/lifecycle-hooks.md
     - Configuration: guides/configuration.md
+    - Migration: guides/migration.md
     - CORS Setup: guides/cors.md
     - Error Handling: guides/error-handling.md
     - Security: guides/security.md
