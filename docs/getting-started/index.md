@@ -15,7 +15,7 @@ REROUTE is a modern routing framework that brings Next.js-style file-based routi
 ## Prerequisites
 
 - Python 3.8 or higher
-- A web framework (FastAPI, Flask, or Django)
+- A web framework (FastAPI or Flask)
 - Basic understanding of REST APIs
 
 ## Installation Options
@@ -55,16 +55,20 @@ pip install -e .
 
 <div class="grid cards" markdown>
 
--   :rocket: [**Quick Start**](quickstart.md)
+-   **Quick Start**
 
     ---
 
-    Build your first REROUTE app in 5 minutes
+    Build your first REROUTE app in 5 minutes.
 
--   :material-file-tree: [**First Route**](first-route.md)
+    [:octicons-arrow-right-24: Quick Start](quickstart.md)
+
+-   **First Route**
 
     ---
 
-    Create your first file-based route
+    Create your first file-based route.
+
+    [:octicons-arrow-right-24: First Route](first-route.md)
 
 </div>

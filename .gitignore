@@ -54,3 +54,4 @@ versions.json
 # Local-only documentation (not pushed to GitHub)
 PUBLISHING.md
 IMPLEMENTATION_STATUS.md
+runapp.cmd

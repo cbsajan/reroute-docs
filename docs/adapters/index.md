@@ -6,23 +6,29 @@ REROUTE adapters integrate file-based routing with different Python web framewor
 
 <div class="grid cards" markdown>
 
--   :zap: [**FastAPI**](fastapi.md)
+-   **FastAPI**
 
     ---
 
-    High-performance async framework with automatic API docs
+    High-performance async framework with automatic API docs.
 
--   :material-flask: [**Flask**](flask.md)
+    [:octicons-arrow-right-24: FastAPI Guide](fastapi.md)
 
-    ---
-
-    Lightweight and flexible WSGI framework
-
--   :material-triangle: [**Django**](django.md)
+-   **Flask**
 
     ---
 
-    Full-featured framework (coming soon)
+    Lightweight and flexible WSGI framework with Swagger UI support.
+
+    [:octicons-arrow-right-24: Flask Guide](flask.md)
+
+-   **Django**
+
+    ---
+
+    Full-featured framework (coming soon).
+
+    [:octicons-arrow-right-24: Django Guide](django.md)
 
 </div>
 
@@ -30,42 +36,63 @@ REROUTE adapters integrate file-based routing with different Python web framewor
 
 Adapters translate REROUTE's file-based routes into framework-specific routes:
 
-```python
-from reroute.adapters import FastAPIAdapter
+=== "FastAPI"
 
-adapter = FastAPIAdapter(
-    fastapi_app=app,
-    app_dir=Path(__file__).parent / "app"
-)
-adapter.register_routes()
-```
+    ```python
+    from fastapi import FastAPI
+    from reroute.adapters import FastAPIAdapter
+    from pathlib import Path
+
+    app = FastAPI()
+    adapter = FastAPIAdapter(
+        fastapi_app=app,
+        app_dir=Path(__file__).parent / "app"
+    )
+    adapter.register_routes()
+    ```
+
+=== "Flask"
+
+    ```python
+    from flask import Flask
+    from reroute.adapters import FlaskAdapter
+    from pathlib import Path
+
+    app = Flask(__name__)
+    adapter = FlaskAdapter(
+        flask_app=app,
+        app_dir=Path(__file__).parent / "app"
+    )
+    adapter.register_routes()
+    ```
 
 ## Common Features
 
 All adapters support:
 
-- File-based routing discovery
-- HTTP method mapping (GET, POST, PUT, DELETE, etc.)
-- Lifecycle hooks (before_request, after_request, on_error)
-- Decorator integration
-- Custom configuration
+- **File-based routing discovery** - Automatic route registration from folder structure
+- **HTTP method mapping** - GET, POST, PUT, DELETE, PATCH, OPTIONS
+- **Lifecycle hooks** - before_request, after_request, on_error
+- **Decorator integration** - Rate limiting, caching, validation
+- **Custom configuration** - Framework-specific settings
+- **Security headers** - OWASP-compliant security headers (v0.2.0+)
 
 ## Choosing an Adapter
 
 | Feature | FastAPI | Flask | Django |
 |---------|---------|-------|--------|
-| Async Support | Yes | Partial | Yes |
-| Auto API Docs | Yes | No | No |
+| Async Support | Full | Partial | Full |
+| Auto API Docs | Built-in (Swagger/ReDoc) | Via Flask-Swagger | No |
 | Performance | Excellent | Good | Good |
 | Learning Curve | Medium | Low | High |
 | REROUTE Support | Full | Full | Coming Soon |
 
 ## Framework-Specific Guides
 
-- [FastAPI Integration](fastapi.md) - Setup, async routes, OpenAPI
-- [Flask Integration](flask.md) - Setup, blueprints, extensions
+- [FastAPI Integration](fastapi.md) - Async routes, OpenAPI, dependency injection
+- [Flask Integration](flask.md) - Blueprints, extensions, Swagger UI
 - [Django Integration](django.md) - Coming soon
 
 ## Custom Adapters
 
-You can create custom adapters for other frameworks. See the [API Reference](../api/adapters.md) for the adapter interface.
+You can create custom adapters for other frameworks by extending the base adapter class. See the [Adapters API Reference](../api/adapters.md) for the adapter interface.

@@ -6,29 +6,37 @@ Comprehensive guides to master REROUTE's features.
 
 <div class="grid cards" markdown>
 
--   :material-file-tree: [**File-based Routing**](file-routing.md)
+-   **File-based Routing**
 
     ---
 
-    Learn how folder structure maps to API routes
+    Learn how folder structure maps to API routes.
 
--   :material-code-braces: [**Class-based Routes**](class-routes.md)
+    [:octicons-arrow-right-24: File Routing](file-routing.md)
 
-    ---
-
-    Build routes using Python classes
-
--   :material-alpha-d-box: [**Decorators**](decorators.md)
+-   **Class-based Routes**
 
     ---
 
-    Rate limiting, caching, validation, and more
+    Build routes using Python classes.
 
--   :material-reload: [**Lifecycle Hooks**](lifecycle-hooks.md)
+    [:octicons-arrow-right-24: Class Routes](class-routes.md)
+
+-   **Decorators**
 
     ---
 
-    Control request/response flow
+    Rate limiting, caching, validation, and more.
+
+    [:octicons-arrow-right-24: Decorators](decorators.md)
+
+-   **Lifecycle Hooks**
+
+    ---
+
+    Control request/response flow.
+
+    [:octicons-arrow-right-24: Lifecycle Hooks](lifecycle-hooks.md)
 
 </div>
 
@@ -36,35 +44,54 @@ Comprehensive guides to master REROUTE's features.
 
 <div class="grid cards" markdown>
 
--   :material-cog: [**Configuration**](configuration.md)
+-   **Configuration**
 
     ---
 
-    Customize REROUTE's behavior
+    Customize REROUTE's behavior.
 
--   :material-web: [**CORS Setup**](cors.md)
+    [:octicons-arrow-right-24: Configuration](configuration.md)
 
-    ---
-
-    Configure cross-origin requests
-
--   :material-tools: [**Troubleshooting**](troubleshooting.md)
+-   **CORS Setup**
 
     ---
 
-    Common issues and solutions
+    Configure cross-origin requests.
+
+    [:octicons-arrow-right-24: CORS](cors.md)
+
+-   **Security**
+
+    ---
+
+    Security headers and best practices.
+
+    [:octicons-arrow-right-24: Security](security.md)
+
+-   **Troubleshooting**
+
+    ---
+
+    Common issues and solutions.
+
+    [:octicons-arrow-right-24: Troubleshooting](troubleshooting.md)
 
 </div>
 
 ## Topics
 
-- [File-based Routing](file-routing.md) - Organize routes by filesystem
-- [Class-based Routes](class-routes.md) - HTTP methods as class methods
-- [Decorators](decorators.md) - Built-in and custom decorators
-- [Lifecycle Hooks](lifecycle-hooks.md) - before_request, after_request, on_error
-- [Configuration](configuration.md) - Custom configuration options
-- [CORS Setup](cors.md) - Enable and configure CORS
-- [Troubleshooting](troubleshooting.md) - Common issues and solutions
+| Guide | Description |
+|-------|-------------|
+| [File-based Routing](file-routing.md) | Organize routes by filesystem |
+| [Class-based Routes](class-routes.md) | HTTP methods as class methods |
+| [Decorators](decorators.md) | Built-in and custom decorators |
+| [Lifecycle Hooks](lifecycle-hooks.md) | before_request, after_request, on_error |
+| [Configuration](configuration.md) | Custom configuration options |
+| [CORS Setup](cors.md) | Enable and configure CORS |
+| [Security](security.md) | Security headers and best practices |
+| [Error Handling](error-handling.md) | Handle errors gracefully |
+| [Testing](testing.md) | Test your REROUTE applications |
+| [Troubleshooting](troubleshooting.md) | Common issues and solutions |
 
 ## What's Next?
 

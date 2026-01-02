@@ -489,4 +489,3 @@ def test_error_handling():
 
 - [Security Best Practices](security.md) - Secure your error handling
 - [Testing](testing.md) - Test your error handlers
-- [Lifecycle Hooks](lifecycle-hooks.md) - Learn about before_request, after_request, and on_error hooks

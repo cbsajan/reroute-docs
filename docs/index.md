@@ -1,193 +1,310 @@
-# Welcome to REROUTE
+# REROUTE
 
-**Modern file-based routing for Python backends**
+<div class="hero-section" markdown>
 
----
+<img src="assets/logo.svg" alt="REROUTE Logo" class="hero-logo">
 
-Here are the introductory sections and the tutorials to learn **REROUTE**.
+**File-based routing for Python backends**
 
-You could consider this **a book**, **a course**, the **official** and recommended way to learn REROUTE. 🎓
+<div class="badges" markdown>
 
-REROUTE brings the simplicity and elegance of Next.js-style file-based routing to Python web frameworks. Build clean, maintainable APIs with zero configuration.
-
-## Why REROUTE?
-
-<div class="grid cards" markdown>
-
--   :material-file-tree: **File-based Routing**
-
-    ---
-
-    Organize routes by folders and files, just like Next.js.
-
-    No more manual route registration!
-
--   :material-language-python: **Class-based Handlers**
-
-    ---
-
-    HTTP methods as class methods: `get()`, `post()`, `put()`, `delete()`
-
-    Clean, intuitive, and Pythonic
-
--   :material-speedometer: **Powerful Decorators**
-
-    ---
-
-    Built-in rate limiting, caching, validation, and more
-
-    Extend with custom decorators easily
-
--   :material-grid: **Multi-framework Support**
-
-    ---
-
-    Works with FastAPI (Flask & Django coming soon)
-
-    Switch frameworks without rewriting routes
+[![PyPI version](https://badge.fury.io/py/reroute.svg)](https://pypi.org/project/reroute/)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/cbsajan/reroute/blob/main/LICENSE)
 
 </div>
 
-## Quick Example
+</div>
 
-Get started in 2 minutes using CLI commands:
+---
 
-### 1. Install & Initialize
+REROUTE brings the simplicity and elegance of Next.js-style file-based routing to Python web frameworks. Build clean, maintainable APIs with zero configuration.
 
-```bash
-pip install reroute[fastapi]
-reroute init my-app --framework fastapi
-cd my-app
+---
+
+## Features
+
+<div class="grid cards" markdown>
+
+-   **File-based Routing**
+
+    ---
+
+    Organize routes by folders and files, just like Next.js. No manual route registration needed. Your folder structure becomes your API structure.
+
+    [:octicons-arrow-right-24: Learn more](guides/file-routing.md)
+
+-   **Class-based Handlers**
+
+    ---
+
+    HTTP methods as class methods: `get()`, `post()`, `put()`, `delete()`. Clean, intuitive, and Pythonic approach to API development.
+
+    [:octicons-arrow-right-24: Learn more](guides/class-routes.md)
+
+-   **Powerful Decorators**
+
+    ---
+
+    Built-in rate limiting, caching, validation, and authentication. Extend functionality with custom decorators easily.
+
+    [:octicons-arrow-right-24: Learn more](guides/decorators.md)
+
+-   **Multi-framework Support**
+
+    ---
+
+    Works with FastAPI and Flask. Django coming soon. Switch frameworks without rewriting your route logic.
+
+    [:octicons-arrow-right-24: Adapters](adapters/index.md)
+
+-   **Security Headers**
+
+    ---
+
+    OWASP-compliant security headers out of the box. CSP, HSTS, X-Frame-Options, and more - configured automatically.
+
+    [:octicons-arrow-right-24: Security](guides/security.md)
+
+-   **CLI Scaffolding**
+
+    ---
+
+    Generate projects, routes, and models with CLI commands. `reroute init` and `reroute create` for rapid development.
+
+    [:octicons-arrow-right-24: CLI](cli/index.md)
+
+</div>
+
+---
+
+## Quick Start
+
+### Requirements
+
+- Python 3.8+
+- FastAPI or Flask
+
+### Installation
+
+=== "pip"
+
+    ```bash
+    pip install reroute[fastapi]
+    ```
+
+=== "uv (faster)"
+
+    ```bash
+    uv pip install reroute[fastapi]
+    ```
+
+### Create a Project
+
+<div class="termy">
+
+```console
+$ reroute init my-app --framework fastapi
+
+==================================================
+REROUTE Project Initialization
+==================================================
+
+? Would you like to generate test cases? Yes
+? Would you like to set up a database? No
+
+==================================================
+Project Configuration Review
+==================================================
+  Project Name: my-app
+  Framework: FASTAPI
+  Host: 0.0.0.0
+  Port: 7376
+  Include Tests: Yes
+==================================================
+
+? Does this look correct? Yes
+
+Creating project: my-app
+
+  [ OK ] Creating project structure
+  [ OK ] Creating config.py
+  [ OK ] Creating logger.py
+  [ OK ] Generating FASTAPI application
+  [ OK ] Creating example route
+  [ OK ] Creating root and health routes
+  [ OK ] Creating test cases
+  [ OK ] Creating .env.example
+  [ OK ] Creating requirements.txt
+  [ OK ] Creating pyproject.toml
+
+==================================================
+[SUCCESS] Project created successfully!
+==================================================
+
+  Project: my-app
+  Framework: FASTAPI
+  Location: /path/to/my-app
+
+Next Steps:
+  1. cd my-app
+  2. uv venv
+  3. uv sync
+  4. uv run main.py
+
+Happy Coding!
+
+API Docs: http://localhost:7376/docs
 ```
 
-### 2. Generate a Route
+</div>
 
-```bash
-reroute create route --path /user --name User --methods GET,POST
+### Generate a Route
+
+<div class="termy">
+
+```console
+$ reroute create route --path /users --name User --methods GET,POST
+
+  [ OK ] Creating route directory
+  [ OK ] Generating route file
+
+==================================================
+[SUCCESS] Route created successfully!
+==================================================
+
+  Route: /users
+  File: app/routes/users/page.py
+  Methods: GET, POST
+  Tag: User
 ```
 
-This creates `app/routes/user/page.py`:
+</div>
+
+This creates `app/routes/users/page.py`:
 
 ```python
 from reroute import RouteBase
 from reroute.decorators import cache, rate_limit
 
 class UserRoutes(RouteBase):
-    tag = "User"
+    """User API endpoints."""
+
+    tag = "Users"
 
     @cache(duration=60)
     def get(self):
+        """Get all users."""
         return {"users": ["Alice", "Bob"]}
 
-    @rate_limit("5/min")
+    @rate_limit("10/min")
     def post(self):
-        return {"message": "User created"}
+        """Create a new user."""
+        return {"message": "User created", "id": 1}
 ```
 
-### 3. Run Your API
+### Run the Application
 
 ```bash
-python main.py  # Already created by init!
+python main.py
 ```
 
-That's it! Your routes are now available at `/user` with automatic OpenAPI documentation at `/docs`.
+Visit:
 
-## Features
+- **API Documentation**: [http://localhost:8000/docs](http://localhost:8000/docs)
+- **Users Endpoint**: [http://localhost:8000/users](http://localhost:8000/users)
 
-### File-based Routing
-Organize your API by filesystem structure. Each folder becomes a route segment:
+---
+
+## How It Works
+
+Your folder structure becomes your API routes:
 
 ```
 app/routes/
-├── user/
-│   └── page.py        → /user
-└── product/
-    ├── page.py        → /product
-    └── [id]/
-        └── page.py    → /product/:id
+    users/
+        page.py          -> /users
+        [id]/
+            page.py      -> /users/{id}
+    products/
+        page.py          -> /products
+        categories/
+            page.py      -> /products/categories
 ```
 
-### Decorators
-
-Built-in decorators for common API patterns:
-
-- `@rate_limit("5/min")` - Rate limiting per IP/user
-- `@cache(duration=60)` - Response caching with LRU eviction
-- `@requires("admin", check_func=...)` - Role-based access control
-- `@validate(schema={...})` - Request validation
-- `@timeout(5)` - Request timeout handling
-- `@log_requests()` - Automatic request logging
-
-### Lifecycle Hooks
-
-Control request/response flow with lifecycle methods:
+Each `page.py` contains a class inheriting from `RouteBase` with HTTP methods:
 
 ```python
-class MyRoute(RouteBase):
-    def before_request(self):
-        # Authentication, validation
-        pass
+from reroute import RouteBase
 
-    def after_request(self, response):
-        # Add headers, transform response
-        return response
+class UserRoutes(RouteBase):
+    def get(self):
+        """Handle GET requests."""
+        return {"users": [...]}
 
-    def on_error(self, error):
-        # Custom error handling
-        return {"error": str(error)}
+    def post(self):
+        """Handle POST requests."""
+        return {"message": "Created"}
+
+    def put(self, id: int):
+        """Handle PUT requests."""
+        return {"message": f"Updated {id}"}
+
+    def delete(self, id: int):
+        """Handle DELETE requests."""
+        return {"message": f"Deleted {id}"}
 ```
 
-### Custom Configuration
-
-Fine-tune REROUTE's behavior:
-
-```python
-from reroute import Config
-
-class MyConfig(Config):
-    PORT = 8000
-    API_BASE_PATH = "/api/v1"
-    ENABLE_CORS = True
-    CORS_ALLOW_ORIGINS = ["https://example.com"]
-    VERBOSE_LOGGING = True
-```
+---
 
 ## What's Next?
 
 <div class="grid cards" markdown>
 
--   :rocket: [**Quick Start**](getting-started/quickstart.md)
+-   **Quick Start**
 
     ---
 
-    Get up and running in 2 minutes
+    Get up and running in 5 minutes with the full tutorial.
 
--   :books: [**Guides**](guides/index.md)
+    [:octicons-arrow-right-24: Quick Start](getting-started/quickstart.md)
 
-    ---
-
-    Deep dives into routing, decorators, and more
-
--   :material-api: [**API Reference**](api/index.md)
+-   **User Guide**
 
     ---
 
-    Complete API documentation
+    Deep dives into routing, decorators, lifecycle hooks, and more.
 
--   :material-code-braces: [**Examples**](examples/index.md)
+    [:octicons-arrow-right-24: Guides](guides/index.md)
+
+-   **API Reference**
 
     ---
 
-    Real-world patterns and recipes
+    Complete API documentation for all REROUTE features.
+
+    [:octicons-arrow-right-24: API Reference](api/index.md)
+
+-   **Examples**
+
+    ---
+
+    Real-world patterns: CRUD, authentication, caching, and more.
+
+    [:octicons-arrow-right-24: Examples](examples/index.md)
 
 </div>
+
+---
 
 ## Community & Support
 
 - **GitHub**: [github.com/cbsajan/reroute](https://github.com/cbsajan/reroute)
 - **PyPI**: [pypi.org/project/reroute](https://pypi.org/project/reroute)
 - **Issues**: [Report bugs or request features](https://github.com/cbsajan/reroute/issues)
-- **Contribute**: [Contributing Guide](contributing.md)
+- **Contributing**: [Contributing Guide](contributing.md)
+
+---
 
 ## License
 

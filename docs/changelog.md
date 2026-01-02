@@ -2,6 +2,62 @@
 
 All notable changes to REROUTE are documented here.
 
+## [0.2.2] - 2026-01-02
+
+### Added
+
+#### Animated Terminal Documentation
+- **Termynal.js integration** - Animated terminal effect like FastAPI documentation
+- **Custom.js initialization** - Lazy loading for terminals on scroll
+
+#### Documentation Versioning
+- **Mike-based versioning** - Major version docs (0.1, 0.2) with "latest" alias
+- **Version selector** - Dropdown in header to switch between versions
+- **Auto-deployment** - Docs deploy automatically on PyPI release
+- **Cross-repo trigger** - Main repo release triggers docs deployment
+
+### Changed
+- **Deploy workflow** - Now triggered by PyPI release instead of push to main
+- **README updates** - Both repos updated with new workflow documentation
+
+### Fixed
+- **Terminal output** - Now matches actual CLI output exactly
+- **Header animation** - Fixed REROUTE brand name staying constant (not animated)
+- **versions.json 404** - Added placeholder for local development
+
+---
+
+## [0.2.1] - 2026-01-02
+
+### Added
+
+#### Comprehensive Security Headers
+- **OWASP-compliant security headers** - Automatic CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, and more
+- **SecurityHeadersConfig** - Flexible configuration class for security headers
+- **SecurityHeadersFactory** - Factory methods for common use cases (SPA, API-only, static site)
+- **Environment detection** - Automatic development/production/testing detection
+- **Framework integration** - Security middleware for both FastAPI and Flask adapters
+
+#### Documentation Overhaul
+- **FastAPI-style documentation** - Complete restructure following FastAPI documentation patterns
+- **Deep Blue theme** - Custom theme matching REROUTE logo colors
+- **Styled terminal examples** - Professional terminal output styling for CLI commands
+- **FastAPI-style navigation** - Learn / Reference / Examples / About structure
+- **Version selector** - Documentation versioning with mike support
+- **Announcement bar** - Release announcements at the top of docs
+
+### Changed
+- **Theme colors** - Updated from indigo to Deep Blue (#17469E) matching REROUTE logo
+- **Navigation structure** - Reorganized to match FastAPI documentation pattern
+- **Version references** - All documentation updated to reflect v0.2.1
+
+### Fixed
+- **Flask support claim** - Documentation now correctly shows Flask as fully supported
+- **Incomplete examples** - Fixed undefined method references in lifecycle hooks documentation
+- **Emoji removal** - Removed unprofessional emojis from documentation
+
+---
+
 ## [0.1.4] - 2025-11-21
 
 ### Added
