@@ -1,4 +1,4 @@
-site_name: REROUTE Documentation
+site_name: REROUTE
 site_url: https://cbsajan.github.io/reroute-docs
 site_description: Modern file-based routing for Python backends
 site_author: C B Sajan
@@ -7,18 +7,20 @@ repo_name: cbsajan/reroute
 
 theme:
   name: material
+  logo: assets/logo.svg
+  favicon: assets/favicon.svg
   palette:
     # Light mode
     - scheme: default
-      primary: indigo
-      accent: indigo
+      primary: custom
+      accent: custom
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
     # Dark mode
     - scheme: slate
-      primary: indigo
-      accent: indigo
+      primary: custom
+      accent: custom
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
@@ -35,9 +37,21 @@ theme:
     - content.code.copy
     - content.code.annotate
     - content.tabs.link
+    - announce.dismiss
 
   icon:
     repo: fontawesome/brands/github
+
+# Custom CSS
+extra_css:
+  - stylesheets/extra.css
+  - css/termynal.css
+  - css/custom.css
+
+# Custom JavaScript
+extra_javascript:
+  - js/termynal.js
+  - js/custom.js
 
 # Extensions
 markdown_extensions:
@@ -66,61 +80,72 @@ plugins:
         - en
   - tags
 
-# Page tree
+# Page tree (FastAPI-style navigation)
 nav:
   - Home: index.md
-  - Getting Started:
-    - getting-started/index.md
-    - Installation: getting-started/installation.md
-    - Quick Start: getting-started/quickstart.md
-    - First Route: getting-started/first-route.md
-  - Guides:
-    - guides/index.md
-    - File-based Routing: guides/file-routing.md
-    - Class-based Routes: guides/class-routes.md
-    - Decorators: guides/decorators.md
-    - Lifecycle Hooks: guides/lifecycle-hooks.md
-    - Configuration: guides/configuration.md
-    - CORS Setup: guides/cors.md
-  - Adapters:
-    - adapters/index.md
-    - FastAPI: adapters/fastapi.md
-    - Flask: adapters/flask.md
-    - Django: adapters/django.md
-  - CLI:
-    - cli/index.md
-    - Commands: cli/commands.md
-    - Scaffolding: cli/scaffolding.md
-  - API Reference:
-    - api/index.md
-    - RouteBase: api/routebase.md
-    - Parameters: api/params.md
-    - Decorators: api/decorators.md
-    - Config: api/config.md
-    - Adapters: api/adapters.md
+  - Learn:
+    - learn/index.md
+    - Tutorial:
+      - getting-started/index.md
+      - Installation: getting-started/installation.md
+      - Quick Start: getting-started/quickstart.md
+      - First Route: getting-started/first-route.md
+    - User Guide:
+      - guides/index.md
+      - File-based Routing: guides/file-routing.md
+      - Class-based Routes: guides/class-routes.md
+      - Decorators: guides/decorators.md
+      - Lifecycle Hooks: guides/lifecycle-hooks.md
+      - Configuration: guides/configuration.md
+      - CORS Setup: guides/cors.md
+      - Security: guides/security.md
+      - Error Handling: guides/error-handling.md
+      - Testing: guides/testing.md
+      - Troubleshooting: guides/troubleshooting.md
+    - CLI:
+      - cli/index.md
+      - Commands: cli/commands.md
+      - Scaffolding: cli/scaffolding.md
+    - Deployment:
+      - deployment/index.md
+      - Production: deployment/production.md
+      - Docker: deployment/docker.md
+  - Reference:
+    - reference/index.md
+    - API Reference:
+      - api/index.md
+      - RouteBase: api/routebase.md
+      - Parameters: api/params.md
+      - Decorators: api/decorators.md
+      - Config: api/config.md
+      - Adapters: api/adapters.md
+    - Framework Adapters:
+      - adapters/index.md
+      - FastAPI: adapters/fastapi.md
+      - Flask: adapters/flask.md
+      - Django: adapters/django.md
   - Examples:
     - examples/index.md
-    - Flask Complete Example: examples/flask-example.md
-    - FastAPI Complete Example: examples/fastapi-example.md
+    - Flask Example: examples/flask-example.md
+    - FastAPI Example: examples/fastapi-example.md
     - Basic CRUD: examples/basic-crud.md
     - Authentication: examples/authentication.md
     - Rate Limiting: examples/rate-limiting.md
     - Caching: examples/caching.md
-    - Database Integration: examples/database.md
-  - Deployment:
-    - deployment/index.md
-    - Production: deployment/production.md
-    - Docker: deployment/docker.md
-  - Changelog: changelog.md
-
-  - Contributing: contributing.md
+    - Database: examples/database.md
+  - About:
+    - Changelog: changelog.md
+    - Contributing: contributing.md
 
 # Extra
 extra:
+  version:
+    provider: mike
+    default: latest
+    alias: true
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/cbsajan/reroute
     - icon: fontawesome/brands/python
       link: https://pypi.org/project/reroute
-  version:
-    provider: mike
+  announcement: "REROUTE v0.2.2 is out! Now with animated docs and version selector."

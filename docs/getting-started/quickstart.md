@@ -1,6 +1,6 @@
 # Quick Start
 
-Build your first REROUTE application in 2 minutes using CLI commands!
+Build your first REROUTE application in 5 minutes using CLI commands.
 
 ## Step 1: Install REROUTE
 
@@ -20,31 +20,83 @@ Build your first REROUTE application in 2 minutes using CLI commands!
 
 Use the REROUTE CLI to create your project structure automatically:
 
-```bash
-reroute init my-reroute-app --framework fastapi
-cd my-reroute-app
+<div class="termy">
+
+```console
+$ reroute init my-reroute-app --framework fastapi
+
+==================================================
+REROUTE Project Initialization
+==================================================
+
+? Would you like to generate test cases? Yes
+? Would you like to set up a database? No
+
+==================================================
+Project Configuration Review
+==================================================
+  Project Name: my-reroute-app
+  Framework: FASTAPI
+  Host: 0.0.0.0
+  Port: 7376
+  Include Tests: Yes
+==================================================
+
+? Does this look correct? Yes
+
+Creating project: my-reroute-app
+
+  [ OK ] Creating project structure
+  [ OK ] Creating config.py
+  [ OK ] Creating logger.py
+  [ OK ] Generating FASTAPI application
+  [ OK ] Creating example route
+  [ OK ] Creating root and health routes
+  [ OK ] Creating test cases
+  [ OK ] Creating .env.example
+  [ OK ] Creating requirements.txt
+  [ OK ] Creating pyproject.toml
+
+==================================================
+[SUCCESS] Project created successfully!
+==================================================
+
+  Project: my-reroute-app
+  Framework: FASTAPI
+  Location: /path/to/my-reroute-app
+
+Next Steps:
+  1. cd my-reroute-app
+  2. uv venv
+  3. uv sync
+  4. uv run main.py
+
+Happy Coding!
+
+API Docs: http://localhost:7376/docs
 ```
 
-This creates a complete project structure with everything you need:
+</div>
+
+This creates a complete project structure:
 
 ```
 my-reroute-app/
-├── app/
-│   ├── __init__.py
-│   └── routes/
-│       └── __init__.py
-├── main.py           # Auto-generated entry point
-├── pyproject.toml    # Modern dependency management (v0.1.5+)
-├── requirements.txt  # Legacy (will be removed in v0.3.0)
-└── .gitignore
+    app/
+        __init__.py
+        routes/
+            __init__.py
+    main.py           # Auto-generated entry point
+    pyproject.toml    # Modern dependency management
+    .gitignore
 ```
 
-**Optional but recommended:** Install project dependencies:
+**Optional:** Install project dependencies:
 
 === "pip"
 
     ```bash
-    pip install -r requirements.txt
+    pip install -e .
     ```
 
 === "uv (faster)"
@@ -53,18 +105,32 @@ my-reroute-app/
     uv pip install -e .
     ```
 
-This ensures all required packages (FastAPI, uvicorn, etc.) are installed for your project.
-
 !!! info "Modern Python Packaging"
-    Starting with v0.1.5, projects include `pyproject.toml` for modern dependency management. Use `uv` for 10-100x faster installations!
+    REROUTE projects include `pyproject.toml` for modern dependency management. Use `uv` for faster installations.
 
 ## Step 3: Generate a Route
 
 Use the CLI to generate your first route:
 
-```bash
-reroute create route --path /user --name User --methods GET,POST
+<div class="termy">
+
+```console
+$ reroute create route --path /user --name User --methods GET,POST
+
+  [ OK ] Creating route directory
+  [ OK ] Generating route file
+
+==================================================
+[SUCCESS] Route created successfully!
+==================================================
+
+  Route: /user
+  File: app/routes/user/page.py
+  Methods: GET, POST
+  Tag: User
 ```
+
+</div>
 
 This creates `app/routes/user/page.py` with GET and POST methods:
 
@@ -97,9 +163,10 @@ class UserRoutes(RouteBase):
         return {"message": "User created", "id": 3}
 ```
 
-**Tip:** Edit the generated file to customize the response data!
+!!! tip "Customize"
+    Edit the generated file to customize the response data and add your business logic.
 
-## Step 4: Your Application is Ready!
+## Step 4: Your Application is Ready
 
 The `reroute init` command already created `main.py` for you:
 
@@ -121,34 +188,44 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 ```
 
-**No manual setup required!** Everything is configured and ready to run.
+No manual setup required. Everything is configured and ready to run.
 
 ## Step 5: Run the Application
 
-```bash
-python main.py
+<div class="termy">
+
+```console
+$ python main.py
+INFO:     Started server process [12345]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 ```
+
+</div>
 
 Visit:
 
-- API Docs: [http://localhost:8000/docs](http://localhost:8000/docs)
-- Users endpoint: [http://localhost:8000/user](http://localhost:8000/user)
+- **API Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
+- **Users endpoint**: [http://localhost:8000/user](http://localhost:8000/user)
 
 ## Step 6: Test Your API
 
-```bash
-# Get users
-curl http://localhost:8000/user
+<div class="termy">
 
-# Create user
-curl -X POST http://localhost:8000/user
+```console
+// Get users
+$ curl http://localhost:8000/user
+{"users":[{"id":1,"name":"Alice"},{"id":2,"name":"Bob"}]}
+
+// Create user
+$ curl -X POST http://localhost:8000/user
+{"message":"User created","id":3}
 ```
 
+</div>
+
 ## Add More Features
-
-### Customize Your Generated Routes
-
-The generated route already includes decorators! Edit `app/routes/user/page.py` to customize:
 
 ### Rate Limiting
 
@@ -191,22 +268,28 @@ class UserRoutes(RouteBase):
 
 <div class="grid cards" markdown>
 
--   :material-file-tree: [**File-based Routing**](../guides/file-routing.md)
+-   **File-based Routing**
 
     ---
 
-    Learn how folder structure maps to routes
+    Learn how folder structure maps to routes.
 
--   :material-alpha-d-box: [**Decorators**](../guides/decorators.md)
+    [:octicons-arrow-right-24: File Routing](../guides/file-routing.md)
 
-    ---
-
-    Master rate limiting, caching, and more
-
--   :material-api: [**API Reference**](../api/index.md)
+-   **Decorators**
 
     ---
 
-    Explore all REROUTE features
+    Master rate limiting, caching, and more.
+
+    [:octicons-arrow-right-24: Decorators](../guides/decorators.md)
+
+-   **API Reference**
+
+    ---
+
+    Explore all REROUTE features.
+
+    [:octicons-arrow-right-24: API Reference](../api/index.md)
 
 </div>

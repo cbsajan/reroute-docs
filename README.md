@@ -1,3 +1,9 @@
+<div align="center">
+  <img src="docs/assets/logo.svg" alt="REROUTE Logo" width="200">
+  <h1>REROUTE</h1>
+  <p><em>Modern file-based routing for Python backends</em></p>
+</div>
+
 # REROUTE Documentation
 
 Official documentation for [REROUTE](https://github.com/cbsajan/reroute) - Modern file-based routing for Python backends.
@@ -121,67 +127,9 @@ Contributions are welcome! To contribute to the documentation:
 
 ## Deployment
 
-📖 **[Complete Publishing Guide](PUBLISHING.md)** - Detailed deployment instructions
+Documentation is automatically deployed when a new version is released to PyPI from the main reroute repo.
 
-### Automatic Deployment (GitHub Actions)
-
-Documentation is automatically deployed to GitHub Pages when you push to `main`:
-
-```bash
-git add .
-git commit -m "docs: update feature documentation"
-git push origin main
-```
-
-**What happens automatically:**
-1. GitHub Actions triggers on push to main
-2. Builds documentation with MkDocs
-3. Deploys with mike for version management
-4. Updates `gh-pages` branch
-5. Live in ~2-3 minutes at: `https://cbsajan.github.io/reroute-docs`
-
-### Manual Deployment
-
-For manual control or version releases:
-
-```bash
-# Deploy new version
-mike deploy 0.2.0 latest --update-aliases
-mike set-default latest
-git push origin gh-pages
-```
-
-### Versioning with Mike
-
-The documentation supports multiple versions:
-- **Latest**: Always points to the newest version
-- **Specific versions**: v0.1.0, v0.2.0, etc.
-- **Dev**: Development version from main branch
-
-**Commands:**
-```bash
-mike list                    # List all versions
-mike serve                   # Serve locally with version selector
-mike delete 0.1.0            # Delete a version
-```
-
-### First-Time Setup
-
-1. **Enable GitHub Pages:**
-   - Go to Settings → Pages
-   - Source: `gh-pages` branch, `/ (root)` folder
-   - Save
-
-2. **First deployment:**
-   ```bash
-   mike deploy 0.1.0 latest --update-aliases
-   mike set-default latest
-   git push origin gh-pages
-   ```
-
-3. **Update URL placeholders** in reroute repository:
-   - Replace `DOCS_URL_PLACEHOLDER` with `https://cbsajan.github.io/reroute-docs`
-   - Files: README.md, CONTRIBUTING.md, archive/README.md
+**Manual deployment:** Go to Actions → "Deploy Documentation" → "Run workflow"
 
 ## Technology Stack
 

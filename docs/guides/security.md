@@ -1,13 +1,17 @@
-# Security Best Practices
+# Security Guide
 
-Build secure REROUTE applications with these essential security practices and patterns.
+Build secure REROUTE applications with comprehensive OWASP-compliant protection out of the box.
 
 ---
 
 ## Overview
 
-Security should be a priority from day one. This guide covers:
+REROUTE provides **comprehensive security headers by default** with environment-specific configurations. Maximum protection in production, developer-friendly in development. This guide covers:
 
+- **Comprehensive Security by Default**: OWASP-compliant security headers applied automatically
+- **Environment-Aware Protection**: Development-friendly policies that become strict in production
+- **Full Customization**: Configure all aspects through the Config class
+- **Advanced Features**: CDN domains, API whitelisting, custom headers
 - Input validation and sanitization
 - Authentication and authorization
 - SQL injection prevention
@@ -18,6 +22,171 @@ Security should be a priority from day one. This guide covers:
 - Common vulnerabilities
 
 ---
+
+## Comprehensive Security Headers (Applied by Default)
+
+REROUTE automatically applies these OWASP-compliant security headers in both FastAPI and Flask adapters:
+
+### Active Headers
+
+| Header | Environment | Value | Purpose |
+|--------|------------|-------|---------|
+| `Content-Security-Policy` | All | Environment-aware | Prevents XSS, data injection, mixed content |
+| `X-Content-Type-Options` | All | `nosniff` | Prevents MIME-type sniffing |
+| `X-Frame-Options` | All | `DENY` (Production) / `SAMEORIGIN` (Dev) | Clickjacking protection |
+| `Strict-Transport-Security` | Production Only | `max-age=31536000; includeSubDomains` | HTTPS enforcement |
+| `X-XSS-Protection` | All | `1; mode=block` | Legacy browser XSS filtering |
+| `Referrer-Policy` | All | `strict-origin-when-cross-origin` | Privacy-focused referrer control |
+| `Permissions-Policy` | All | Feature-specific | Browser feature access control |
+
+### Environment-Specific Behavior
+
+**Development Environment:**
+- Permissive CSP with `unsafe-inline` and `unsafe-eval` for development tools
+- HSTS disabled (no HTTPS in development)
+- Frame options set to `SAMEORIGIN` for dev tool compatibility
+- Maximum flexibility for development workflows
+
+**Production Environment:**
+- Strict CSP with no unsafe directives
+- HSTS enabled with 1-year max-age and preload support
+- Frame options set to `DENY` for maximum protection
+- OWASP-comprehensive security configuration
+
+### Implementation Details
+
+**FastAPI Adapter:**
+```python
+# reroute/adapters/fastapi.py - SecurityHeadersMiddleware
+class SecurityHeadersMiddleware(BaseHTTPMiddleware):
+    def __init__(self, app, security_config: SecurityHeadersConfig):
+        super().__init__(app)
+        self.security_config = security_config
+
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+        # Apply all OWASP-compliant security headers
+        security_headers = self.security_config.get_security_headers()
+        for header_name, header_value in security_headers.items():
+            response.headers[header_name] = header_value
+        return response
+```
+
+**Flask Adapter:**
+```python
+# reroute/adapters/flask.py - FlaskSecurityHeadersMiddleware
+class FlaskSecurityHeadersMiddleware:
+    def __init__(self, app, security_config: SecurityHeadersConfig):
+        self.app = app
+        self.security_config = security_config
+        self.app.after_request(self._add_security_headers)
+
+    def _add_security_headers(self, response):
+        security_headers = self.security_config.get_security_headers()
+        for header_name, header_value in security_headers.items():
+            response.headers[header_name] = header_value
+        return response
+```
+
+### Configuration
+
+**Basic Configuration (Automatic):**
+```python
+from reroute import Config
+
+# Security headers are applied automatically - no configuration needed
+class MyAppConfig(Config):
+    # All security headers work out of the box
+    pass
+```
+
+**Advanced Configuration:**
+```python
+class ProductionConfig(Config):
+    # CDN domains for your assets
+    SECURITY_CDN_DOMAINS = ["https://cdn.example.com", "https://assets.example.com"]
+
+    # API endpoints for your backend
+    SECURITY_API_DOMAINS = ["https://api.example.com"]
+
+    # Custom security headers
+    SECURITY_CUSTOM_HEADERS = {
+        "X-Custom-Security": "value",
+        "X-API-Version": "v1"
+    }
+
+    # Strict CSP in production
+    SECURITY_X_FRAME_OPTIONS = "DENY"
+    SECURITY_HSTS_PRELOAD = True
+```
+
+### Customization Examples
+
+**Single Page Application (SPA):**
+```python
+# Using the factory for SPA-specific configuration
+from reroute.security import SecurityHeadersFactory
+
+config = SecurityHeadersFactory.create_for_single_page_app()
+# Automatically configured for React/Vue/Angular applications
+```
+
+```python
+# FastAPI middleware example
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+
+# Add CORS (if needed)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://yourdomain.com"],  # Restrict origins
+    allow_credentials=True,
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"],
+)
+
+@app.middleware("http")
+async def add_security_headers(request, call_next):
+    response = await call_next(request)
+    # Additional security headers for production
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    response.headers["Content-Security-Policy"] = "default-src 'self'"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    return response
+```
+
+```python
+# Flask example
+from flask import Flask
+from flask_cors import CORS
+
+app = Flask(__name__)
+
+# Add CORS (if needed)
+CORS(app, origins=["https://yourdomain.com"])
+
+@app.after_request
+def add_security_headers(response):
+    # Additional security headers for production
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    response.headers["Content-Security-Policy"] = "default-src 'self'"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    return response
+```
+
+!!! note "Add Security When Needed"
+    REROUTE provides the foundation - you add security based on your specific requirements. This approach ensures:
+    - Development workflows aren't blocked by restrictive policies
+    - Production security is tailored to your application's needs
+    - You understand exactly what security measures are in place
+
+---
+
+## Additional Security Features Available
+
+While REROUTE provides only basic security by default, you can enhance your application security with these available features:
 
 ## Built-in Security Features (v0.2.0+)
 

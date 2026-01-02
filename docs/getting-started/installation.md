@@ -3,8 +3,7 @@
 Learn how to install REROUTE in your Python project.
 
 !!! info "Current Version"
-    **Latest Release**: v0.1.5
-    **Release Date**: 23-11-2025
+    **Latest Release**: v0.2.2
     **Python Support**: 3.8, 3.9, 3.10, 3.11, 3.12
 
 ## Requirements
@@ -14,7 +13,7 @@ Learn how to install REROUTE in your Python project.
 
 ## Basic Installation
 
-=== "pip (Traditional)"
+=== "pip"
 
     ```bash
     pip install reroute
@@ -28,7 +27,7 @@ Learn how to install REROUTE in your Python project.
     uv pip install reroute
     ```
 
-    [uv](https://github.com/astral-sh/uv) is an ultra-fast Python package installer written in Rust. It's 10-100x faster than pip!
+    [uv](https://github.com/astral-sh/uv) is an ultra-fast Python package installer written in Rust. It's 10-100x faster than pip.
 
     **Install uv first:**
     ```bash
@@ -43,10 +42,10 @@ Learn how to install REROUTE in your Python project.
     ```
 
 !!! tip "Lazy Loading"
-    Since v0.1.2, REROUTE uses lazy imports for framework adapters. You only need to install the framework you're actually using!
+    REROUTE uses lazy imports for framework adapters. You only need to install the framework you're actually using.
 
 !!! info "pyproject.toml Support"
-    Starting with v0.1.5, REROUTE projects include `pyproject.toml` for modern dependency management with uv. Legacy `requirements.txt` will be removed in v0.3.0.
+    REROUTE projects include `pyproject.toml` for modern dependency management with uv.
 
 ## Framework-Specific Installation
 
@@ -131,11 +130,11 @@ Or use the CLI:
 
 ```bash
 reroute --version
-# Output: REROUTE CLI v0.1.5
+# Output: REROUTE CLI v0.2.2
 ```
 
-!!! success "Automatic Update Notifications"
-    Since v0.1.2, REROUTE automatically checks for updates when you run `reroute --version` or any CLI command. You'll see a notification if a newer version is available!
+!!! note "Update Notifications"
+    REROUTE automatically checks for updates when you run CLI commands. You'll see a notification if a newer version is available.
 
 ## Update REROUTE
 
@@ -144,8 +143,6 @@ To update to the latest version:
 ```bash
 pip install --upgrade reroute
 ```
-
-REROUTE will notify you when updates are available through the CLI.
 
 ## Uninstall
 

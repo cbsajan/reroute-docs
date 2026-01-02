@@ -488,5 +488,4 @@ def test_error_handling():
 ## Next Steps
 
 - [Security Best Practices](security.md) - Secure your error handling
-- [Logging](logging.md) - Set up proper error logging
-- [Testing](../guides/testing.md) - Test your error handlers
+- [Testing](testing.md) - Test your error handlers
