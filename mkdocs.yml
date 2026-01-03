@@ -7,6 +7,7 @@ repo_name: cbsajan/reroute
 
 theme:
   name: material
+  custom_dir: overrides
   logo: assets/logo.svg
   favicon: assets/favicon.svg
   palette:
@@ -144,4 +145,5 @@ extra:
       link: https://github.com/cbsajan/reroute
     - icon: fontawesome/brands/python
       link: https://pypi.org/project/reroute
-  announcement: "REROUTE v0.2.3 is out! Security fixes and improved path validation."
+  announcement: "REROUTE v0.2.4 is out! Critical CLI fix and OpenAPI improvements."
+  announcement_link: "/reroute-docs/changelog/"

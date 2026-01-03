@@ -4,17 +4,29 @@ A comprehensive example of building a REST API with REROUTE and Flask.
 
 ## Project Structure
 
+After running `reroute init` and the commands below:
+
 ```
 my-flask-api/
 ├── app/
-│   ├── routes/
-│   │   ├── users/
-│   │   │   └── page.py
-│   │   └── products/
-│   │       └── page.py
-│   └── models/
-│       └── user.py
+│   ├── __init__.py
+│   ├── root.py                     # Root (/) and health (/health) routes
+│   ├── models/                     # Created by: reroute create model
+│   │   ├── __init__.py
+│   │   └── user.py
+│   └── routes/
+│       ├── __init__.py
+│       ├── hello/                  # Auto-generated example
+│       │   └── page.py
+│       ├── users/                  # Created by: reroute create route
+│       │   └── page.py
+│       └── products/               # Created by: reroute create route
+│           └── page.py
+├── tests/
+│   ├── __init__.py
+│   └── test_main.py
 ├── config.py
+├── logger.py
 ├── main.py
 └── requirements.txt
 ```
@@ -54,26 +66,7 @@ reroute create route --path /products --name ProductRoutes --methods GET,POST --
 # Your project structure is now ready!
 ```
 
-**Note**: The `--http-test` flag is optional. If included, REROUTE automatically generates a `.http` test file with pre-configured API test requests for the route.
-
-**Generated Structure:**
-```
-my-flask-api/
-├── app/
-│   ├── routes/
-│   │   ├── users/
-│   │   │   └── page.py          # UserRoutes class (handles /users and /users/<id>)
-│   │   └── products/
-│   │       └── page.py          # ProductRoutes class
-│   └── models/
-│       └── user.py              # UserBase, UserCreate, UserUpdate, etc.
-├── tests/
-│   ├── users.http               # HTTP test file for user routes (if --http-test used)
-│   └── products.http            # HTTP test file for product routes (if --http-test used)
-├── config.py
-├── main.py
-└── requirements.txt
-```
+**Note**: The `--http-test` flag is optional. If included, REROUTE automatically generates a `.http` test file in the `tests/` directory with pre-configured API test requests for the route.
 
 **Note**: Dynamic path parameters (like `user_id`) are handled in your route methods, not in the folder structure. See the code examples below.
 
