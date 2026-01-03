@@ -6,10 +6,6 @@ on:
     types: [docs-deploy]
   # Manual trigger
   workflow_dispatch:
-  # Also deploy on push to main
-  push:
-    branches:
-      - main
 
 permissions:
   contents: write
