@@ -2,6 +2,22 @@
 
 All notable changes to REROUTE are documented here.
 
+## [0.2.3] - 2026-01-03
+
+### Fixed
+- **SecurityHeadersConfig attribute error** - Fixed `hsts.max_age` access to use flat attribute `hsts_max_age`
+- **security_logger undefined** - Fixed missing import in `cli/utils/security.py`
+- **CSP methods don't exist** - Fixed to use `get_directive().add_source()` pattern
+- **Path containment security bug** - Fixed RouteLoader path validation for proper ancestry checking
+- **Test assertion failures** - Fixed validation error messages and mock patch paths
+- **Testing environment permissions** - Fixed RouteLoader to allow temp directories in testing
+
+### Changed
+- Improved path security with proper ancestry checking
+- Enhanced error messages for validation failures
+
+---
+
 ## [0.2.2] - 2026-01-02
 
 ### Added
