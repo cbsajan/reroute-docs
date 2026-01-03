@@ -4,13 +4,12 @@ on:
   # Trigger when main reroute repo releases
   repository_dispatch:
     types: [docs-deploy]
-  # Manual trigger with version input
+  # Manual trigger
   workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version to deploy (e.g., 0.2)'
-        required: false
-        default: ''
+  # Also deploy on push to main
+  push:
+    branches:
+      - main
 
 permissions:
   contents: write
@@ -21,29 +20,6 @@ jobs:
     steps:
       - name: Checkout docs repo
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Fetch version from reroute repo
-        id: get_version
-        run: |
-          # Fetch pyproject.toml from main reroute repo
-          curl -s https://raw.githubusercontent.com/cbsajan/reroute/main/pyproject.toml > pyproject.toml
-
-          # Extract version (e.g., 0.2.1 -> 0.2)
-          FULL_VERSION=$(grep -Po '(?<=version = ")[^"]*' pyproject.toml)
-          MAJOR_VERSION=$(echo $FULL_VERSION | cut -d. -f1,2)
-
-          # Use input version if provided, otherwise use fetched
-          if [ -n "${{ github.event.inputs.version }}" ]; then
-            VERSION="${{ github.event.inputs.version }}"
-          else
-            VERSION="$MAJOR_VERSION"
-          fi
-
-          echo "full_version=$FULL_VERSION" >> $GITHUB_OUTPUT
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "Deploying docs version: $VERSION (from $FULL_VERSION)"
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -54,28 +30,15 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          key: ${{ runner.os }}-pip-mkdocs
           restore-keys: |
             ${{ runner.os }}-pip-
 
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          pip install mkdocs mkdocs-material mike
+          pip install mkdocs mkdocs-material
 
-      - name: Configure Git
+      - name: Deploy to GitHub Pages
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-
-      - name: Deploy with mike
-        run: |
-          VERSION="${{ steps.get_version.outputs.version }}"
-
-          # Deploy version with 'latest' alias
-          mike deploy --push --update-aliases $VERSION latest
-
-          # Set latest as default
-          mike set-default --push latest
-
-          echo "Deployed version $VERSION with 'latest' alias"
+          mkdocs gh-deploy --force

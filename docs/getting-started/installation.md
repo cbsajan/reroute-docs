@@ -3,7 +3,7 @@
 Learn how to install REROUTE in your Python project.
 
 !!! info "Current Version"
-    **Latest Release**: v0.2.2
+    **Latest Release**: v0.2.3
     **Python Support**: 3.8, 3.9, 3.10, 3.11, 3.12
 
 ## Requirements
@@ -130,7 +130,7 @@ Or use the CLI:
 
 ```bash
 reroute --version
-# Output: REROUTE CLI v0.2.2
+# Output: REROUTE CLI v0.2.3
 ```
 
 !!! note "Update Notifications"

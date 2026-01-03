@@ -139,13 +139,9 @@ nav:
 
 # Extra
 extra:
-  version:
-    provider: mike
-    default: latest
-    alias: true
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/cbsajan/reroute
     - icon: fontawesome/brands/python
       link: https://pypi.org/project/reroute
-  announcement: "REROUTE v0.2.2 is out! Now with animated docs and version selector."
+  announcement: "REROUTE v0.2.3 is out! Security fixes and improved path validation."
