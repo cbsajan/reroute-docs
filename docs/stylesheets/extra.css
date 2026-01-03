@@ -107,9 +107,135 @@
 }
 
 /* ===== Version Selector ===== */
+.md-header__topic {
+  display: flex;
+  align-items: center;
+}
+
+/* Version selector container */
 .md-version {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+  margin-left: 0.8rem;
+}
+
+/* Current version button */
+.md-version__current {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  border-radius: 20px !important;
+  padding: 0.3rem 0.8rem !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.md-version__current:hover,
+.md-version__current:focus,
+.md-version__current:active {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  border-radius: 20px !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove any focus ring or expansion effects */
+.md-version:hover .md-version__current,
+.md-version:focus-within .md-version__current {
+  border-radius: 20px !important;
+  outline: none !important;
+}
+
+/* Fix the version selector wrapper */
+.md-version {
+  position: relative;
+}
+
+.md-version::after,
+.md-version::before {
+  display: none !important;
+}
+
+/* Version dropdown list */
+.md-version__list {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  min-width: 140px;
+  padding: 0.4rem 0;
+  margin-top: 0.3rem;
+}
+
+/* Remove the speech bubble arrow/tail */
+.md-version__list::before,
+.md-version__list::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Also target any parent arrows */
+.md-version ul::before,
+.md-version ul::after,
+.md-select__inner::before,
+.md-select__inner::after {
+  display: none !important;
+  content: none !important;
+  border: none !important;
+}
+
+/* Version dropdown items */
+.md-version__link {
+  display: block;
+  color: #444 !important;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+  text-decoration: none !important;
+}
+
+.md-version__link:hover {
+  background-color: rgba(23, 70, 158, 0.08);
+  color: var(--md-primary-fg-color) !important;
+  border-left-color: var(--md-primary-fg-color);
+}
+
+/* Active/current version in dropdown */
+.md-version__link--active,
+.md-version__link--active:hover {
+  background-color: rgba(23, 70, 158, 0.12);
+  color: var(--md-primary-fg-color) !important;
+  border-left-color: var(--md-primary-fg-color);
+  font-weight: 600;
+}
+
+/* Dark mode version selector */
+[data-md-color-scheme="slate"] .md-version__list {
+  background-color: #1e1e1e;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+[data-md-color-scheme="slate"] .md-version__link {
+  color: #ccc !important;
+}
+
+[data-md-color-scheme="slate"] .md-version__link:hover {
+  background-color: rgba(74, 127, 199, 0.15);
+  color: #6B9AD8 !important;
+  border-left-color: #6B9AD8;
+}
+
+[data-md-color-scheme="slate"] .md-version__link--active,
+[data-md-color-scheme="slate"] .md-version__link--active:hover {
+  background-color: rgba(74, 127, 199, 0.2);
+  color: #6B9AD8 !important;
+  border-left-color: #6B9AD8;
 }
 
 /* ===== Responsive Adjustments ===== */
