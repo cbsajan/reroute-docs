@@ -22,12 +22,52 @@
 
 /* ===== Announcement Bar ===== */
 .md-banner {
-  background-color: var(--md-primary-fg-color);
+  background: linear-gradient(135deg, var(--md-primary-fg-color) 0%, var(--md-primary-fg-color--dark) 100%);
   color: white;
+  padding: 0.3rem 1rem;
+}
+
+.md-banner__inner {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-align: center;
+  width: 100%;
 }
 
 .md-banner a {
+  color: white !important;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.md-banner a:hover {
+  color: white !important;
+  text-decoration: none;
+}
+
+.md-banner a::before {
+  content: "\1F389";
+  font-size: 0.8rem;
+}
+
+
+/* Dismiss button styling */
+.md-banner__button {
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s ease;
+}
+
+.md-banner__button:hover {
   color: white;
+}
+
+/* Dark mode announcement bar */
+[data-md-color-scheme="slate"] .md-banner {
+  background: linear-gradient(135deg, var(--md-primary-fg-color--dark) 0%, #1a3a6e 100%);
 }
 
 /* ===== Header Navigation ===== */

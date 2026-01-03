@@ -2,7 +2,7 @@
 
 <div class="hero-section" markdown>
 
-<img src="assets/logo.svg" alt="REROUTE Logo" class="hero-logo">
+<img src="assets/logo-dark.svg" alt="REROUTE Logo" class="hero-logo">
 
 **File-based routing for Python backends**
 

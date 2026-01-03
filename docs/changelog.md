@@ -2,6 +2,16 @@
 
 All notable changes to REROUTE are documented here.
 
+## [0.2.4] - 2026-01-03
+
+### Fixed
+- **CRITICAL: CLI import error** - Fixed `ModuleNotFoundError` caused by `utils.py` shadowing `utils/` package
+- Renamed `cli/utils.py` to `cli/cli_utils.py` to resolve package conflict
+- **CI environment detection** - GitHub Actions no longer incorrectly detected as production
+- **Python 3.8 compatibility** - Added future annotations for type hint support
+
+---
+
 ## [0.2.3] - 2026-01-03
 
 ### Fixed
